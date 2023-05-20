@@ -33,17 +33,17 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
         <View className="flex flex-row items-center justify-between w-full mb-3">
           <AppText classProps="text-2xl font-bold">Receive Options</AppText>
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => receiveActionSheet.current?.hide()}
             className=""
           >
             <AntDesign name="close" size={30} color="black" />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         {/* Body */}
         <View className="flex flex-col items-center flex-1 ">
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
               navigation.navigate('ReceiveTerminal', {
@@ -63,10 +63,10 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               BTC Lightning
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* BUSD  */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
               navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
@@ -82,10 +82,10 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               BUSD (Binance USD)
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* cUSD */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
               navigation.navigate('ReceiveTerminal', { token: 'cUSD' })
@@ -99,10 +99,10 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               cUSD (Celo Dollar)
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* USDT */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
               navigation.navigate('ReceiveTerminal', { token: 'USDT' })
@@ -125,7 +125,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
                 <AppText classProps="text-xs mx-1">BNB Chain</AppText>
               </View>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </ScrollView>
     </ActionSheet>

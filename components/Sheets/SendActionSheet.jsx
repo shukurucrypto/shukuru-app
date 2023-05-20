@@ -42,7 +42,7 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
 
         {/* Body */}
         <View className="flex flex-col items-center flex-1 ">
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               sendActionSheet.current?.hide()
               navigation.navigate('FindUser', {
@@ -62,10 +62,10 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               BTC Lightning
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* BUSD  */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               sendActionSheet.current?.hide()
               navigation.navigate('FindUser', {
@@ -84,10 +84,10 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               BUSD (Binance USD)
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* cUSD */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               sendActionSheet.current?.hide()
               navigation.navigate('FindUser', {
@@ -104,10 +104,10 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               cUSD (Celo Dollar)
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* USDT */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               sendActionSheet.current?.hide()
               navigation.navigate('FindUser', {
@@ -133,7 +133,7 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
                 <AppText classProps="text-xs mx-1">BNB Chain</AppText>
               </View>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </ScrollView>
     </ActionSheet>

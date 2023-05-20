@@ -60,7 +60,7 @@ const TopupSheet = ({ topupActionSheet }) => {
         </View> */}
 
           {/* BUSD  */}
-          <TouchableOpacity
+          <Pressable
             // onPress={() => {
             //   receiveActionSheet.current?.hide()
             //   navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
@@ -77,7 +77,7 @@ const TopupSheet = ({ topupActionSheet }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               BUSD (Binance USD)
             </AppText>
-          </TouchableOpacity>
+          </Pressable>
 
           {/* cUSD */}
           <View className="flex flex-row items-center w-full h-16 ">
