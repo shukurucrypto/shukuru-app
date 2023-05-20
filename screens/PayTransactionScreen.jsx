@@ -133,18 +133,22 @@ const PayTransactionScreen = () => {
           // console.log('Exact string read from NFC tag:', exactStr)
           nfcActionSheet.current?.hide()
           handleNFCPay(exactStr)
+
+          // await NfcManager.cancelTechnologyRequest()
         }
       } else {
         console.log('NDEF message not found on the tag')
         nfcActionSheet.current?.hide()
+        // await NfcManager.cancelTechnologyRequest()
       }
     } catch (ex) {
       console.log('Oops!', ex)
       nfcActionSheet.current?.hide()
+      await NfcManager.cancelTechnologyRequest()
     } finally {
       // stop the nfc scanning
-      NfcManager.cancelTechnologyRequest()
       nfcActionSheet.current?.hide()
+      await NfcManager.cancelTechnologyRequest()
     }
   }
 

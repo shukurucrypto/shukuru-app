@@ -1,4 +1,5 @@
-export const API_URL = 'https://d1e1-41-210-146-83.ngrok-free.app/app'
-export const SOCKET_SERVER = 'https://d1e1-41-210-146-83.ngrok-free.app'
+// export const API_URL = 'https://92f0-41-75-171-159.ngrok-free.app/app'
+// export const SOCKET_SERVER = 'https://92f0-41-75-171-159.ngrok-free.app'
 
-// 'https://19c5-41-75-170-240.ngrok-free.app/app'
+export const API_URL = 'https://shukuru.up.railway.app/app'
+export const SOCKET_SERVER = 'https://shukuru.up.railway.app'

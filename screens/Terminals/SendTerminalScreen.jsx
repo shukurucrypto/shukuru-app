@@ -79,7 +79,7 @@ const SendTerminalScreen = () => {
             title: 'You received a new payment',
             subtitle: `@${result.data.data.name}`,
             // body: `Paid in ${token} Congrats! 🎉`,
-            body: `Payment via app. Congrats! 🎉`,
+            body: `Recieved via app. Congrats! 🎉`,
           },
           // message: {
           //   title: 'You received a new payment',

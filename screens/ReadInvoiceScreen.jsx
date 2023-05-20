@@ -76,7 +76,9 @@ const ReadInvoiceScreen = () => {
       const invoiceData = {
         from: user.userId,
         invoice: data,
+        amount: invoiceState.amount,
       }
+
       const res = await axios.post(`${API_URL}/invoice/pay`, invoiceData, {
         headers: {
           Authorization: `Bearer ${user.token}`,

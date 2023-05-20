@@ -145,6 +145,7 @@ const QRCodeShownScreen = () => {
       const invoiceData = {
         tagNo: tag,
         invoice: data,
+        amount: amount,
       }
       const res = await axios.post(`${API_URL}/invoice/pay/nfc`, invoiceData, {
         headers: {
