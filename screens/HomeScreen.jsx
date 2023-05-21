@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -204,7 +205,11 @@ const HomeScreen = () => {
                               {!showBalances ? (
                                 <Text className="text-xs font-light">***</Text>
                               ) : (
-                                <>
+                                <ScrollView
+                                  horizontal
+                                  showsHorizontalScrollIndicator={false}
+                                  className="py-3"
+                                >
                                   <Text className="font-light">
                                     SATS {balancesState.balances?.lightning}
                                   </Text>
@@ -220,7 +225,7 @@ const HomeScreen = () => {
                                     USDT{' '}
                                     {balancesState.balances?.usdt.toFixed(2)}
                                   </Text>
-                                </>
+                                </ScrollView>
                               )}
                             </View>
                           </>

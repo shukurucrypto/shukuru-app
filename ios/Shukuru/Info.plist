@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>en</string>
 		<key>CFBundleDisplayName</key>
-		<string>shukuruapp</string>
+		<string>Shukuru</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -36,9 +36,9 @@
 			</dict>
 		</dict>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string></string>
+		<string/>
 		<key>UILaunchStoryboardName</key>
-		<string></string>
+		<string/>
 		<key>UIRequiredDeviceCapabilities</key>
 		<array>
 			<string>armv7</string>
@@ -52,7 +52,7 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>NSContactsUsageDescription</key>
-		<string></string>
+		<string/>
 		<key>UIAppFonts</key>
 		<array>
 			<string>AntDesign.ttf</string>

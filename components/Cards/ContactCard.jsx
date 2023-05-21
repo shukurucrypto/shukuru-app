@@ -9,14 +9,14 @@ import {
 } from 'react-native'
 
 const ContactCard = ({ contact, navigateToTerminal }) => {
-  if (!contact.phoneNumber) return null
+  if (!contact?.phoneNumber) return null
 
   return (
     <Pressable onPress={navigateToTerminal} style={styles.contactCon}>
       <View style={styles.imgCon}>
         <View style={styles.placeholder}>
           {/* <Text style={styles.txt}>{contact?.givenName[0]}</Text> */}
-          {/* <Text style={styles.txt}>{contact?.name.slice(0, 2)}</Text> */}
+          <Text style={styles.txt}>{contact?.name.slice(0, 1)}</Text>
         </View>
       </View>
       <View style={styles.contactDat}>
@@ -26,8 +26,10 @@ const ContactCard = ({ contact, navigateToTerminal }) => {
         </Text> */}
         <Text style={styles.name}>@{contact?.name}</Text>
         <Text style={styles.phoneNumber}>
-          {/* {contact?.phoneNumbers[0]?.number} */}
-          {contact?.phoneNumber}
+          {/* {contact?.phoneNumbers[0]?.number} */}+
+          {contact?.phoneNumber?.slice(0, 3) +
+            '...' +
+            contact?.phoneNumber?.slice(-2)}
         </Text>
       </View>
     </Pressable>
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginRight: 8,
     overflow: 'hidden',
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#f58b56',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -59,6 +61,8 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontSize: 18,
+    color: '#fff',
+    fontWeight: '700',
   },
   name: {
     fontSize: 16,

@@ -130,7 +130,8 @@ const TransactionCards = ({ item }) => {
   } else {
     return (
       <Pressable
-        onPress={() => navigation.navigate('TransactionDetail')}
+        // onPress={() => navigation.navigate('TransactionDetail')}
+        onPress={() => {}}
         className="flex flex-row items-center w-full h-16 my-2 "
       >
         {renderIcon(item.asset)}

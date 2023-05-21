@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  SafeAreaView,
 } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import SendingMoney from '../../components/Loading/SendingMoney'
@@ -145,34 +146,38 @@ const SendTerminalScreen = () => {
   if (failed) return <TransactionFailed />
 
   return (
-    <View style={styles.container}>
-      {/* Headre */}
-      <View className="flex flex-row items-center justify-between w-full px-5">
-        <Pressable onPress={() => navigation.goBack()} className="flex flex-1">
-          <SimpleLineIcons name="arrow-left" size={22} color="black" />
-        </Pressable>
+    <SafeAreaView className="flex flex-1">
+      <View style={styles.container}>
+        {/* Headre */}
+        <View className="flex flex-row items-center justify-between w-full px-5">
+          <Pressable
+            onPress={() => navigation.goBack()}
+            className="flex flex-1"
+          >
+            <SimpleLineIcons name="arrow-left" size={22} color="black" />
+          </Pressable>
 
-        <View className="flex items-center justify-center flex-1">
-          <AppText classProps="text-2xl font-bold">Send to</AppText>
-          <AppText classProps="text-sm font-medium">{contactNumber}</AppText>
+          <View className="flex items-center justify-center flex-1">
+            <AppText classProps="text-2xl font-bold">Send to</AppText>
+            <AppText classProps="text-sm font-medium">{contactNumber}</AppText>
+          </View>
+
+          <View className="flex items-center justify-center flex-1">
+            <AppText classProps="p-2 font-bold bg-yellow-100 rounded-full text-primary">
+              {token}
+            </AppText>
+          </View>
         </View>
 
-        <View className="flex items-center justify-center flex-1">
-          <AppText classProps="p-2 font-bold bg-yellow-100 rounded-full text-primary">
-            {token}
+        {/* Entry */}
+        <View className="flex flex-col items-center justify-center flex-1">
+          <AppText classProps="text-6xl font-bold">
+            {number ? number : '0.00'}
           </AppText>
+          <AppText>{profile.country}</AppText>
         </View>
-      </View>
 
-      {/* Entry */}
-      <View className="flex flex-col items-center justify-center flex-1">
-        <AppText classProps="text-6xl font-bold">
-          {number ? number : '0.00'}
-        </AppText>
-        <AppText>{profile.country}</AppText>
-      </View>
-
-      {/* 
+        {/* 
       <View className="flex w-full px-5">
         <TextInput
           className="w-full p-4 h-16 px-4 border-[0.8px] rounded-lg border-neutral-300"
@@ -181,40 +186,44 @@ const SendTerminalScreen = () => {
       </View>
        */}
 
-      <View style={styles.row}>
-        {renderNumberButton('1')}
-        {renderNumberButton('2')}
-        {renderNumberButton('3')}
-      </View>
-      <View style={styles.row}>
-        {renderNumberButton('4')}
-        {renderNumberButton('5')}
-        {renderNumberButton('6')}
-      </View>
-      <View style={styles.row}>
-        {renderNumberButton('7')}
-        {renderNumberButton('8')}
-        {renderNumberButton('9')}
-      </View>
-      <View style={styles.row}>
-        {renderNumberButton('.')}
-        {renderNumberButton('0')}
-        <TouchableOpacity style={styles.button} onPress={handleBackspacePress}>
-          <Feather name="delete" size={25} color="#404040" />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.row}>
+          {renderNumberButton('1')}
+          {renderNumberButton('2')}
+          {renderNumberButton('3')}
+        </View>
+        <View style={styles.row}>
+          {renderNumberButton('4')}
+          {renderNumberButton('5')}
+          {renderNumberButton('6')}
+        </View>
+        <View style={styles.row}>
+          {renderNumberButton('7')}
+          {renderNumberButton('8')}
+          {renderNumberButton('9')}
+        </View>
+        <View style={styles.row}>
+          {renderNumberButton('.')}
+          {renderNumberButton('0')}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleBackspacePress}
+          >
+            <Feather name="delete" size={25} color="#404040" />
+          </TouchableOpacity>
+        </View>
 
-      <View className="w-full px-6 my-4">
-        <Pressable
-          disabled={loading}
-          onPress={handleSubmit}
-          // onPress={() => refresh()}
-          className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
-        >
-          <AppText classProps="text-xl font-bold">Send</AppText>
-        </Pressable>
+        <View className="w-full px-6 my-4">
+          <Pressable
+            disabled={loading}
+            onPress={handleSubmit}
+            // onPress={() => refresh()}
+            className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+          >
+            <AppText classProps="text-xl font-bold">Send</AppText>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -223,6 +232,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 12,
   },
   row: {
     flexDirection: 'row',

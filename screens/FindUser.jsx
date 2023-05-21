@@ -5,6 +5,7 @@ import {
   TextInput,
   FlatList,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -17,6 +18,8 @@ import ContactCard from '../components/Cards/ContactCard'
 import AppText from '../components/AppText'
 import axios from 'axios'
 import { API_URL } from '../apiURL'
+import SearchLoading from './Animators/SearchLoading'
+import Lottie from 'lottie-react-native'
 
 const FindUser = () => {
   const navigation = useNavigation()
@@ -29,19 +32,22 @@ const FindUser = () => {
   const [error, setError] = useState(null)
   const [searchErr, setSearchErr] = useState(null)
 
+  const [showSearch, setShowSearch] = useState(false)
+
   const [text, setText] = useState('')
 
   const { token, refresh } = route.params
 
   const handleSearch = async () => {
+    Keyboard.dismiss()
     setLoading(true)
     try {
-      const result = await axios.get(`${API_URL}/profile/${text}`)
+      const result = await axios.get(`${API_URL}/profile/name/${text}`)
 
       if (result.data.success) {
         setSearchedContact(result.data.data)
       } else {
-        setSearchErr('Number not found. Make sure you add the country code')
+        setSearchErr(`No user with @${text} found. Try again`)
       }
 
       setLoading(false)
@@ -52,8 +58,9 @@ const FindUser = () => {
   }
 
   useEffect(() => {
-    if (text.length > 10) {
-      handleSearch()
+    if (text.length > 3) {
+      // handleSearch()
+      setShowSearch(true)
     }
   }, [text])
 
@@ -119,22 +126,43 @@ const FindUser = () => {
         ListHeaderComponent={
           <>
             {/* Form */}
-            <View className="flex flex-row items-center justify-center w-full px-4 my-5">
-              <AppText classProps="text-base ">To</AppText>
-              <TextInput
-                placeholder="Enter your phone 256(XXXXXXX) "
-                value={text}
-                onChangeText={(e) => setText(e)}
-                onBlur={() => setSearchedContact({})}
-                className="w-full border-[0.8px] rounded-lg text-base h-12 px-4 border-neutral-400 relative ml-3"
-              />
+            <View className="flex flex-row items-center justify-center w-full h-12 my-5">
+              {/* <AppText classProps="text-base ">To</AppText> */}
 
-              {loading && (
-                <View className="absolute rounded-full right-4">
-                  <ActivityIndicator size={8} color="#ef4444" />
-                </View>
-              )}
+              <View className="flex flex-1">
+                <TextInput
+                  placeholder="Search using a username  "
+                  value={text}
+                  onChangeText={(e) => setText(e)}
+                  onBlur={() => setSearchedContact({})}
+                  className="w-full border-[0.8px] rounded-lg text-base px-4 h-full border-neutral-300 relative "
+                />
+              </View>
+
+              <View className="flex items-center justify-center">
+                {showSearch && (
+                  <Pressable
+                    onPress={handleSearch}
+                    disabled={loading}
+                    className="flex items-center justify-center w-10 h-full ml-2 rounded-md bg-primary"
+                  >
+                    {loading ? (
+                      <ActivityIndicator size={12} color="black" />
+                    ) : (
+                      <AntDesign name="search1" size={20} color="black" />
+                    )}
+                  </Pressable>
+                )}
+              </View>
             </View>
+
+            {text && !loading && showSearch && (
+              <Pressable onPress={handleSearch} className="mb-5">
+                <AppText classProps="font-bold">
+                  Show results for "{text}"
+                </AppText>
+              </Pressable>
+            )}
 
             <View className="flex flex-row items-center w-full p-3 rounded-md bg-neutral-200">
               <View className="mr-3 bg-white rounded-full w-14 h-14" />
@@ -151,7 +179,7 @@ const FindUser = () => {
 
             <View className="mt-4">
               <AppText classProps="font-light text-neutral-500">
-                Contacts
+                Send to:
               </AppText>
 
               {searchedContact && (

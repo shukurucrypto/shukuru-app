@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "shukuruapp.app"
-               BlueprintName = "shukuruapp"
-               ReferencedContainer = "container:shukuruapp.xcodeproj">
+               BuildableName = "Shukuru.app"
+               BlueprintName = "Shukuru"
+               ReferencedContainer = "container:Shukuru.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "shukuruappTests.xctest"
-               BlueprintName = "shukuruappTests"
-               ReferencedContainer = "container:shukuruapp.xcodeproj">
+               BuildableName = "ShukuruTests.xctest"
+               BlueprintName = "ShukuruTests"
+               ReferencedContainer = "container:Shukuru.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "shukuruapp.app"
-            BlueprintName = "shukuruapp"
-            ReferencedContainer = "container:shukuruapp.xcodeproj">
+            BuildableName = "Shukuru.app"
+            BlueprintName = "Shukuru"
+            ReferencedContainer = "container:Shukuru.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "shukuruapp.app"
-            BlueprintName = "shukuruapp"
-            ReferencedContainer = "container:shukuruapp.xcodeproj">
+            BuildableName = "Shukuru.app"
+            BlueprintName = "Shukuru"
+            ReferencedContainer = "container:Shukuru.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
