@@ -1,8 +1,8 @@
 # SHUKURU WALLET
 ---
-<div align="center">
-  <img src="https://github.com/eliashezron/BWC_TokenizedCarbon/assets/60871378/fe681aa2-3c9e-40e7-8d48-77e606774cc9" alt="Video">
-</div>
+<video align="center">
+  <source src="https://github.com/eliashezron/BWC_TokenizedCarbon/assets/60871378/fe681aa2-3c9e-40e7-8d48-77e606774cc9" alt="Video">
+</video>
 
 ---
 
