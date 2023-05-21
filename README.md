@@ -11,11 +11,14 @@ Welcome to Shukuru Wallet, a cutting-edge NFC-powered payment application that r
 As a custodial wallet, Shukuru Wallet offers a secure storage solution for users' cryptocurrencies, providing peace of mind and easy accessibility to their digital assets.
 
 Shukuru Wallet is built on the Binance Smart Chain (BSC). The application is designed to support a wide range of cryptocurrencies, including BUSD, BTC, CUSD and BUSD. Introducing a new and innovative way to make transactions.
-
 ---
 ![](assets/skr.jpeg)
 
 ---
+
+### Market Opportunity
+With the increasing adoption of cryptocurrency in Sub-Saharan Africa, as highlighted in the [Chainalysis report](https://blog.chainalysis.com/reports/sub-saharan-africa-cryptocurrency-geography-report-2022-preview/#:~:text=Sub%2Dsaharan%20Africa%20accounts%20for,growth%20over%20the%20year%20prior.), it is evident that 80% of micro crypto payment transactions (transactions valued at less than $1000) occur in this region. This data signifies a significant market and opportunity for crypto payments in Sub-Saharan Africa.
+
 ## Usecases
 1. **Crypto Payments with NFC Cards**: Shukuru Wallet introduces the use of NFC cards for crypto payments. Users can easily tap their NFC cards on NFC-enabled devices to initiate transactions, simplifying the payment process.
 
