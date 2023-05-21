@@ -135,6 +135,8 @@ const FindUser = () => {
                   value={text}
                   onChangeText={(e) => setText(e)}
                   onBlur={() => setSearchedContact({})}
+                  onSubmitEditing={handleSearch}
+                  returnKeyType="done"
                   className="w-full border-[0.8px] rounded-lg text-base px-4 h-full border-neutral-300 relative "
                 />
               </View>

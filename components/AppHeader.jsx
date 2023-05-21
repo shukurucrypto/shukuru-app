@@ -45,8 +45,14 @@ const AppHeader = ({ refresh }) => {
     <View className="flex flex-row items-center justify-between w-full h-16 px-5 bg-neutral-50">
       <Pressable
         onPress={() => navigation.navigate('ProfileScreen')}
-        className="flex bg-blue-300 rounded-full h-9 w-9"
-      />
+        className="flex items-center justify-center bg-blue-300 rounded-full h-9 w-9"
+      >
+        {profile.profile && (
+          <Text className="text-lg font-bold text-white">
+            {profile?.profile?.name?.slice(0, 2)}
+          </Text>
+        )}
+      </Pressable>
 
       <Image
         source={require('../assets/logos/logo.png')}

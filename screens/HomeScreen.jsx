@@ -174,7 +174,7 @@ const HomeScreen = () => {
                     </View>
                   </View>
 
-                  <View className="flex flex-row">
+                  <View className="flex flex-row h-24 ">
                     <View className="flex flex-col flex-1">
                       {balancesState.loading ? (
                         <>

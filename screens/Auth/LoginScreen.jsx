@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -40,9 +40,14 @@ const LoginScreen = () => {
   const [error, setError] = useState(null)
   const navigation = useNavigation()
 
+  const [showPassword, setShowPassword] = useState(false)
+
   const dispatch = useDispatch()
 
-  const [show, setShow] = useState(false)
+  const usernameRef = useRef(null)
+  const passwordRef = useRef(null)
+
+  const [show, setShow] = useState(true)
 
   const handleSubmit = async (values) => {
     setError(null)
@@ -81,6 +86,12 @@ const LoginScreen = () => {
     } catch (e) {
       // saving error
       console.log(e)
+    }
+  }
+
+  const handleNext = (nextInputRef) => {
+    if (nextInputRef && nextInputRef.current) {
+      nextInputRef.current.focus()
     }
   }
 
@@ -135,6 +146,7 @@ const LoginScreen = () => {
                     <AppText classProps="text-lg font-bold">Username</AppText>
 
                     <TextInput
+                      ref={usernameRef}
                       placeholder="Enter your username"
                       className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 text-black border-neutral-300 w-full"
                       autoCapitalize="none"
@@ -142,6 +154,8 @@ const LoginScreen = () => {
                       onChangeText={handleChange('username')}
                       onBlur={handleBlur('username')}
                       value={values.username}
+                      onSubmitEditing={() => handleNext(passwordRef)}
+                      returnKeyType="next"
                     />
 
                     {touched.username && errors.username && (
@@ -154,8 +168,9 @@ const LoginScreen = () => {
                     <AppText classProps="text-lg font-bold">Password</AppText>
 
                     <TextInput
+                      ref={passwordRef}
                       placeholder="Enter Password"
-                      secureTextEntry={true}
+                      secureTextEntry={show}
                       // autoCapitalize={false}
                       autoCapitalize="none"
                       className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
@@ -163,13 +178,19 @@ const LoginScreen = () => {
                       onChangeText={handleChange('password')}
                       onBlur={handleBlur('password')}
                       value={values.password}
+                      onSubmitEditing={handleSubmit}
+                      returnKeyType="done"
                     />
 
                     <Pressable
                       onPress={() => setShow(!show)}
                       className="absolute right-4 bottom-8"
                     >
-                      <Entypo name={show ? `eye` : `eye-with-line`} size={22} />
+                      <Entypo
+                        name={!show ? `eye` : `eye-with-line`}
+                        size={22}
+                        color="black"
+                      />
                     </Pressable>
 
                     {touched.password && errors.password && (

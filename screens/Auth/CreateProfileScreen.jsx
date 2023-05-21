@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppText from '../../components/AppText'
 import { useRoute } from '@react-navigation/native'
@@ -27,6 +27,9 @@ const CreateProfileScreen = () => {
   const [error, setError] = useState(null)
 
   const route = useRoute()
+
+  const phoneRef = useRef(null)
+  const emailRef = useRef(null)
 
   const dispatch = useDispatch()
 
@@ -83,6 +86,12 @@ const CreateProfileScreen = () => {
     }
   }
 
+  const handleNext = (nextInputRef) => {
+    if (nextInputRef && nextInputRef.current) {
+      nextInputRef.current.focus()
+    }
+  }
+
   // console.log('====================================')
   // console.log(values)
   // console.log('====================================')
@@ -114,12 +123,15 @@ const CreateProfileScreen = () => {
                     <AppText classProps="text-base font-bold">+256</AppText>
                   </View>
                   <TextInput
+                    ref={phoneRef}
                     placeholder="xxxxxx"
                     className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 w-full"
                     disabled={loading}
                     autoCapitalize="none"
                     value={phone}
                     onChangeText={(text) => setPhone(text)}
+                    returnKeyType="next"
+                    onSubmitEditing={() => handleNext(emailRef)}
                   />
                 </View>
               </View>
@@ -131,6 +143,7 @@ const CreateProfileScreen = () => {
                 </AppText>
 
                 <TextInput
+                  ref={emailRef}
                   placeholder="example@mail.com"
                   keyboardType="email-address"
                   disabled={loading}
@@ -138,6 +151,8 @@ const CreateProfileScreen = () => {
                   className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative text-black"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
+                  onSubmitEditing={handleSubmit}
+                  returnKeyType="done"
                 />
               </View>
             </View>

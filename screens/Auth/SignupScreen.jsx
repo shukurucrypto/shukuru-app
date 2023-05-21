@@ -2,7 +2,7 @@ import { View, Text, ScrollView, TextInput, Pressable } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import SelectDropdown from 'react-native-select-dropdown'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -32,7 +32,17 @@ const SignupScreen = () => {
 
   const accType = ['Personal', 'Business']
 
+  const usernameRef = useRef(null)
+  const passwordRef = useRef(null)
+  const confirmPasswordRef = useRef(null)
+
   const [show, setShow] = useState(false)
+
+  const handleNext = (nextInputRef) => {
+    if (nextInputRef && nextInputRef.current) {
+      nextInputRef.current.focus()
+    }
+  }
 
   return (
     <View className="flex flex-col flex-1 p-5">
@@ -104,12 +114,15 @@ const SignupScreen = () => {
                 <AppText classProps="text-lg font-bold">Username</AppText>
 
                 <TextInput
+                  ref={usernameRef}
                   placeholder="Enter username"
                   onChangeText={handleChange('username')}
                   autoCapitalize="none"
                   onBlur={handleBlur('username')}
                   value={values.username}
                   className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 text-black"
+                  returnKeyType="next"
+                  onSubmitEditing={() => handleNext(passwordRef)}
                 />
 
                 {touched.username && errors.username && (
@@ -122,6 +135,7 @@ const SignupScreen = () => {
                 <AppText classProps="text-lg font-bold">Password</AppText>
 
                 <TextInput
+                  ref={passwordRef}
                   placeholder="Enter Password"
                   secureTextEntry={true}
                   onChangeText={handleChange('password')}
@@ -129,6 +143,8 @@ const SignupScreen = () => {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative text-black"
+                  returnKeyType="next"
+                  onSubmitEditing={() => handleNext(confirmPasswordRef)}
                 />
 
                 <Pressable
@@ -150,6 +166,7 @@ const SignupScreen = () => {
                 </AppText>
 
                 <TextInput
+                  ref={confirmPasswordRef}
                   placeholder="Confirm Password"
                   secureTextEntry={true}
                   autoCapitalize="none"
@@ -157,6 +174,8 @@ const SignupScreen = () => {
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
                   className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative"
+                  returnKeyType="next"
+                  onSubmitEditing={handleSubmit}
                 />
                 {touched.confirmPassword && errors.confirmPassword && (
                   <Text className="text-red-600">{errors.confirmPassword}</Text>
