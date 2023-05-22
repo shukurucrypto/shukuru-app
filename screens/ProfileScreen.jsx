@@ -4,6 +4,7 @@ import {
   Pressable,
   ActivityIndicator,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
@@ -62,7 +63,15 @@ const ProfileScreen = () => {
         <>
           {/*  */}
           <View className="flex items-center justify-center flex-1 ">
-            <View className="rounded-full bg-neutral-200 w-28 h-28" />
+            <View className="rounded-full bg-neutral-200 w-28 h-28">
+              <Image
+                source={require('../assets/illustrations/Owl.png')}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </View>
 
             <AppText classProps="text-xl my-2 font-bold">
               @{profile?.name}

@@ -59,7 +59,8 @@ function App() {
         setTimeout(() => {
           getToken()
           setAppReady(true)
-        }, 2000)
+        }, 3000)
+
         // new Promise((resolve) => setTimeout(resolve, 5000)) // wait for 5 secs
       } catch (e) {
         console.warn(e)
@@ -110,7 +111,7 @@ function App() {
   }
 
   // console.log('DEBUG HERE: ', token)
-  if (!appReady && tokenLoading) return <SplashScreen />
+  if (!appReady || tokenLoading) return <SplashScreen />
 
   return (
     <SafeAreaView className="flex flex-1 bg-neutral-50">

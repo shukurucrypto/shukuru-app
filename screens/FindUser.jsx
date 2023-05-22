@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   Keyboard,
+  Image,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -118,7 +119,7 @@ const FindUser = () => {
         </View>
 
         <View className="flex items-end flex-1 ">
-          <Ionicons name="qr-code" size={25} color="black" />
+          {/* <Ionicons name="qr-code" size={25} color="black" /> */}
         </View>
       </View>
 
@@ -167,7 +168,15 @@ const FindUser = () => {
             )}
 
             <View className="flex flex-row items-center w-full p-3 rounded-md bg-neutral-200">
-              <View className="mr-3 bg-white rounded-full w-14 h-14" />
+              <View className="mr-3 overflow-hidden bg-white rounded-full w-14 h-14">
+                <Image
+                  source={require('../assets/illustrations/Rocket.png')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              </View>
               <View className="flex flex-col flex-1">
                 <AppText classProps="text-base font-bold">
                   Invite your friends and get paid in BTC
@@ -181,7 +190,7 @@ const FindUser = () => {
 
             <View className="mt-4">
               <AppText classProps="font-light text-neutral-500">
-                Send to:
+                Send to
               </AppText>
 
               {searchedContact && (

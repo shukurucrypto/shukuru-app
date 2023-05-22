@@ -159,7 +159,9 @@ const SendTerminalScreen = () => {
 
           <View className="flex items-center justify-center flex-1">
             <AppText classProps="text-2xl font-bold">Send to</AppText>
-            <AppText classProps="text-sm font-medium">{contactNumber}</AppText>
+            <AppText classProps="text-sm font-medium">
+              +{contactNumber.slice(0, 3) + '...' + contactNumber.slice(-2)}
+            </AppText>
           </View>
 
           <View className="flex items-center justify-center flex-1">

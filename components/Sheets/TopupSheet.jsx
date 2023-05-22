@@ -116,8 +116,8 @@ const TopupSheet = ({ topupActionSheet }) => {
             {/* Utilities */}
             <View className="flex flex-row items-center w-full h-16 ">
               <Image
-                source={require('../../assets/tokens/usdt.png')}
-                style={{ width: 40, height: 40 }}
+                source={require('../../assets/illustrations/Coffee.png')}
+                style={{ width: 55, height: 55 }}
               />
               <AppText classProps="mx-4 text-lg font-medium ">
                 Buy Utilities
