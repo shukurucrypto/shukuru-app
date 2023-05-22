@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Feather from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppText from '../components/AppText'
 import QRCODE from '../components/QRCode'
@@ -18,9 +19,8 @@ import {
   fetchingUser,
   removeUser,
 } from '../features/user/userSlice'
-import axios from 'axios'
-import { API_URL } from '../apiURL'
 import { removeProfile } from '../features/profile/profileSlice'
+import { removeToken } from '../features/token/tokenSlice'
 
 const ProfileScreen = () => {
   const dispatch = useDispatch()
@@ -32,6 +32,7 @@ const ProfileScreen = () => {
   const logoutUser = async () => {
     try {
       await AsyncStorage.clear()
+      dispatch(removeToken())
       dispatch(removeUser())
       dispatch(removeProfile())
       dispatch(fetchingUser())
@@ -55,34 +56,44 @@ const ProfileScreen = () => {
         <AntDesign name="setting" size={22} color="black" />
       </View>
 
-      {loading ? (
+      {loading && !profile ? (
         <ActivityIndicator size={22} color="black" />
       ) : (
         <>
           {/*  */}
-          <View className="flex items-center justify-center flex-1">
-            <View className="bg-orange-400 rounded-full w-28 h-28" />
+          <View className="flex items-center justify-center flex-1 ">
+            <View className="rounded-full bg-neutral-200 w-28 h-28" />
 
-            <AppText classProps="text-xl my-4 font-bold">
-              @{profile.name}
+            <AppText classProps="text-xl my-2 font-bold">
+              @{profile?.name}
             </AppText>
-            <AppText classProps="text-base font-light">{profile.email}</AppText>
-            <Text className="text-sm text-primary">
+            <View className="flex flex-row items-center justify-center p-2 px-8 my-4 rounded-full bg-neutral-100">
+              <Feather name="link" size={14} />
+              <AppText classProps=" ml-3 text-base font-light">
+                {profile?.email}
+              </AppText>
+            </View>
+            {/* <Text className="my-2 text-sm text-purple-600">
               {profile?.address?.slice(0, 4)} .... {profile?.address?.slice(-4)}
-            </Text>
+            </Text> */}
 
             <TouchableOpacity onPress={() => {}}>
               <Text className="text-sm font-light text-red-500 ">
                 Change currency{' '}
-                <AppText classProps="font-bold">({profile.country})</AppText>
+                <AppText classProps="font-bold">({profile?.country})</AppText>
               </Text>
             </TouchableOpacity>
           </View>
 
-          <View className="flex items-center flex-1 justify-evenly">
-            <QRCODE />
+          <View className="flex items-center justify-center flex-1">
+            <QRCODE data={profile?.address} />
+          </View>
 
-            <Pressable onPress={logoutUser} className="p-5">
+          <View className="flex items-center justify-evenly">
+            <Pressable
+              onPress={logoutUser}
+              className="flex items-center justify-center w-full p-5 mt-4 rounded-full bg-neutral-100"
+            >
               <Text className="text-lg text-red-600">Signout</Text>
             </Pressable>
           </View>

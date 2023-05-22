@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, Pressable, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AppText from '../../components/AppText'
@@ -7,9 +7,19 @@ const StartScreen = () => {
   const navigation = useNavigation()
   return (
     <View className="flex flex-col flex-1 p-5">
-      <View className="flex justify-center flex-1 py-10">
+      <View className="flex flex-1 ">
         <View className="flex flex-1" />
-        <AppText classProps="text-3xl font-bold">
+        <View className="flex flex-1">
+          <Image
+            source={require('../../assets/illustrations/Bull.png')}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            resizeMode="contain"
+          />
+        </View>
+        <AppText classProps="text-3xl  font-bold">
           Secure Borderless Crypto Payments
         </AppText>
       </View>

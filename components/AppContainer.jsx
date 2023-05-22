@@ -1,4 +1,4 @@
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
 import AppHeader from './AppHeader'
 

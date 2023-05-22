@@ -154,7 +154,7 @@ const HomeScreen = () => {
                 </View>
 
                 {/* Balance */}
-                <View className="flex flex-col w-full p-5">
+                <View className="flex flex-col w-full px-5 ">
                   {/* top */}
                   <View className="flex flex-row items-center justify-between w-full">
                     <Text className="text-base font-medium text-neutral-700">
@@ -193,7 +193,7 @@ const HomeScreen = () => {
                               classProps="my-1 text-3xl font-bold"
                             >
                               {showBalances
-                                ? `${profileState.profile.country}` +
+                                ? `${profileState?.profile?.country}` +
                                   balancesState?.balances?.total
                                     .toFixed(2)
                                     .toString()
