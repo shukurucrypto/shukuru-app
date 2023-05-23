@@ -7,10 +7,10 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppText from '../../components/AppText'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import { useDispatch } from 'react-redux'
@@ -26,14 +26,21 @@ const CreateProfileScreen = () => {
   const [email, setEmail] = useState(null)
   const [error, setError] = useState(null)
 
+  const [country, setCountry] = useState({
+    currency: 'UGX',
+    code: '+256',
+  })
+
   const route = useRoute()
+
+  const navigation = useNavigation()
 
   const phoneRef = useRef(null)
   const emailRef = useRef(null)
 
   const dispatch = useDispatch()
 
-  const { values } = route.params
+  const { values, accountType } = route.params
 
   const handleSubmit = async () => {
     setError(null)
@@ -46,13 +53,26 @@ const CreateProfileScreen = () => {
         return
       }
 
+      let phoneWithoutZero
+
+      // Remove first "0" if it exists
+      if (phone.charAt(0) === '0') {
+        phoneWithoutZero = phoneNumber.slice(1)
+      } else {
+        phoneWithoutZero = phone
+      }
+
+      const userPhone = country.code + phoneWithoutZero
+      const cleanedPhone = cleanPhoneNumber(userPhone)
+
       const data = {
         username: values.username.trim(),
         email: email,
-        phone: phone,
+        phone: cleanedPhone,
         password: values.password,
+        accountType: accountType,
+        country: country.currency,
       }
-
       const res = await axios.post(`${API_URL}/auth/signup`, data)
 
       if (res.data.success) {
@@ -76,6 +96,21 @@ const CreateProfileScreen = () => {
     }
   }
 
+  function cleanPhoneNumber(phoneNumber) {
+    // Remove "+" character
+    phoneNumber = phoneNumber.replace(/\+/g, '')
+
+    // Remove spaces
+    phoneNumber = phoneNumber.replace(/\s/g, '')
+
+    // Remove first "0" if it exists
+    if (phoneNumber.charAt(0) === '0') {
+      phoneNumber = phoneNumber.slice(1)
+    }
+
+    return phoneNumber
+  }
+
   const storeToken = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
@@ -92,9 +127,6 @@ const CreateProfileScreen = () => {
     }
   }
 
-  // console.log('====================================')
-  // console.log(values)
-  // console.log('====================================')
   return (
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-col flex-1 p-5">
@@ -119,9 +151,18 @@ const CreateProfileScreen = () => {
                 <AppText classProps="text-lg font-bold">Phone</AppText>
 
                 <View className="flex flex-row items-center flex-1">
-                  <View className="flex items-center justify-center h-full px-3">
-                    <AppText classProps="text-base font-bold">+256</AppText>
-                  </View>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate('SelectCountryScreen', {
+                        setCountry,
+                      })
+                    }
+                    className="flex items-center justify-center h-16 px-3 mt-3 "
+                  >
+                    <AppText classProps="text-lg font-bold">
+                      {country.code}
+                    </AppText>
+                  </Pressable>
                   <TextInput
                     ref={phoneRef}
                     placeholder="xxxxxx"

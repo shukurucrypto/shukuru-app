@@ -39,6 +39,9 @@ import {
 import { io } from 'socket.io-client'
 import useLocalNotification from '../Notifications/Local'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
+import { adverts } from '../data/adverts'
+import { getBanners } from '../lib/supabase'
+import { fetchAds } from '../features/advert/advertSlice'
 
 const socket = io(SOCKET_SERVER)
 
@@ -47,17 +50,12 @@ const HomeScreen = () => {
 
   const profileState = useSelector((state) => state.profile)
 
+  const advertState = useSelector((state) => state.advertState)
+
   const balancesState = useSelector((state) => state.balances)
 
   const transactionsState = useSelector((state) => state.transactions)
 
-  const [fetchLoading, setFetchLoading] = useState(false)
-
-  const [txLoading, setTxLoading] = useState(false)
-
-  const [balance, setBalance] = useState(null)
-  const [btcTx, setBTCTx] = useState(null)
-  const [fetchErr, setFetchErr] = useState(null)
   const [showBalances, setShowBalances] = useState(false)
 
   const dispatch = useDispatch()
@@ -67,6 +65,9 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
+
+    fetchAds(dispatch)
+
     // fetchBTCTransactions()
   }, [])
 
@@ -147,14 +148,23 @@ const HomeScreen = () => {
           }
           ListHeaderComponent={
             <>
-              <View className="flex flex-col flex-1 bg-neutral-50">
+              <View className="flex flex-col flex-1 ">
                 {/* Top ad banner */}
-                <View className="flex flex-col w-full h-48 my-3 bg-white">
-                  <Banner />
-                </View>
+
+                {advertState.banners && (
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    className="flex flex-row h-48 my-3 bg-neutral-50"
+                  >
+                    {advertState?.banners?.map((item) => (
+                      <Banner key={item.id} item={item} />
+                    ))}
+                  </ScrollView>
+                )}
 
                 {/* Balance */}
-                <View className="flex flex-col w-full px-5 ">
+                <View className="flex flex-col w-full px-5 py-3">
                   {/* top */}
                   <View className="flex flex-row items-center justify-between w-full">
                     <Text className="text-base font-medium text-neutral-700">

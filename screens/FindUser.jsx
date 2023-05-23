@@ -21,11 +21,16 @@ import axios from 'axios'
 import { API_URL } from '../apiURL'
 import SearchLoading from './Animators/SearchLoading'
 import Lottie from 'lottie-react-native'
+import { getInnerAd } from '../lib/supabase'
+import { useSelector } from 'react-redux'
+import AdCard from './AdCard'
 
 const FindUser = () => {
   const navigation = useNavigation()
 
   const route = useRoute()
+
+  const advertState = useSelector((state) => state.advertState)
 
   const [loading, setLoading] = useState(false)
   const [searchedContact, setSearchedContact] = useState(null)
@@ -101,7 +106,6 @@ const FindUser = () => {
       <ContactCard contact={item} navigateToTerminal={navigateToTerminal} />
     )
   }
-
   return (
     <View className="flex flex-col flex-1 p-5">
       {/* Header */}
@@ -167,32 +171,8 @@ const FindUser = () => {
               </Pressable>
             )}
 
-            <View className="flex flex-row items-center w-full p-3 rounded-md bg-neutral-200">
-              <View className="mr-3 overflow-hidden bg-white rounded-full w-14 h-14">
-                <Image
-                  source={require('../assets/illustrations/Rocket.png')}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              </View>
-              <View className="flex flex-col flex-1">
-                <AppText classProps="text-base font-bold">
-                  Invite your friends and get paid in BTC
-                </AppText>
-                <AppText classProps="mt-1 font-light">
-                  Optimised to fit the local businesses and markets through
-                  easily helping them to start accepting crypto
-                </AppText>
-              </View>
-            </View>
-
+            {advertState.innersAds && <AdCard item={advertState.innersAds} />}
             <View className="mt-4">
-              <AppText classProps="font-light text-neutral-500">
-                Send to
-              </AppText>
-
               {searchedContact && (
                 <ContactCard
                   contact={searchedContact}

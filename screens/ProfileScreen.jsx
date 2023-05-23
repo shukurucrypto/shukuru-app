@@ -94,7 +94,7 @@ const ProfileScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View className="flex items-center justify-center flex-1">
+          <View className="flex items-center justify-center flex-1 p-6">
             <QRCODE data={profile?.address} />
           </View>
 

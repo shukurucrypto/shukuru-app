@@ -3,9 +3,6 @@ import { API_URL } from './apiURL'
 
 export const getTransactions = async (userId) => {
   const res = await axios.get(`${API_URL}/app/txs/${userId}`)
-  console.log('====================================')
-  console.log(res.data)
-  console.log('====================================')
   return res.data
 }
 

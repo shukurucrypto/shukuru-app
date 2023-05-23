@@ -7,6 +7,7 @@ import StartScreen from '../screens/Auth/StartScreen'
 import SignupScreen from '../screens/Auth/SignupScreen'
 import CreateProfileScreen from '../screens/Auth/CreateProfileScreen'
 import LoginScreen from '../screens/Auth/LoginScreen'
+import SelectCountyScreen from '../screens/SelectCounty'
 
 const Stack = createNativeStackNavigator()
 
@@ -27,6 +28,7 @@ function AuthNavigator() {
         component={CreateProfileScreen}
       />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="SelectCountryScreen" component={SelectCountyScreen} />
     </Stack.Navigator>
   )
 }

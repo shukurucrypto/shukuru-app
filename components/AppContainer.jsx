@@ -4,7 +4,7 @@ import AppHeader from './AppHeader'
 
 const AppContainer = ({ children, refresh }) => {
   return (
-    <SafeAreaView className="flex flex-col flex-1 bg-neutral-50">
+    <SafeAreaView className="flex flex-col flex-1 bg-neutral-100">
       <AppHeader refresh={refresh} />
       {children}
     </SafeAreaView>

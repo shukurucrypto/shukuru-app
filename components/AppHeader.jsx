@@ -42,7 +42,7 @@ const AppHeader = ({ refresh }) => {
   }
 
   return (
-    <View className="flex flex-row items-center justify-between w-full h-16 px-5 bg-neutral-50">
+    <View className="flex flex-row items-center justify-between w-full h-16 px-5 bg-neutral-100">
       <Pressable
         onPress={() => navigation.navigate('ProfileScreen')}
         className="flex items-center justify-center bg-blue-300 rounded-full h-9 w-9"

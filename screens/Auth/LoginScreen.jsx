@@ -15,7 +15,7 @@ import * as Yup from 'yup'
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import AppText from '../../components/AppText'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   failedFetchUser,
   fetchedUser,

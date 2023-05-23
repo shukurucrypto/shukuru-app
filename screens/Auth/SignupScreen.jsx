@@ -32,6 +32,8 @@ const SignupScreen = () => {
 
   const accType = ['Personal', 'Business']
 
+  const [accountType, setAccountType] = useState('Personal')
+
   const usernameRef = useRef(null)
   const passwordRef = useRef(null)
   const confirmPasswordRef = useRef(null)
@@ -71,6 +73,7 @@ const SignupScreen = () => {
           onSubmit={(values) => {
             navigation.navigate('CreateProfileScreen', {
               values,
+              accountType,
             })
           }}
         >
@@ -89,7 +92,8 @@ const SignupScreen = () => {
                 <SelectDropdown
                   data={accType}
                   onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index)
+                    // console.log(selectedItem, index)
+                    setAccountType(selectedItem)
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     // text represented after item is selected
