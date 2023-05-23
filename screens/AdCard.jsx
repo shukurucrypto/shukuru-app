@@ -18,15 +18,17 @@ const AdCard = ({ item }) => {
   return (
     <View className="flex flex-row items-center w-full p-3 rounded-md bg-neutral-200">
       <View className="mr-3 overflow-hidden bg-white rounded-full w-14 h-14">
-        <Image
-          source={{
-            uri: imgURL.signedUrl,
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        />
+        {imgURL && (
+          <Image
+            source={{
+              uri: imgURL.signedUrl,
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        )}
       </View>
       <View className="flex flex-col flex-1">
         <AppText classProps="text-base font-bold">{item.title}</AppText>
