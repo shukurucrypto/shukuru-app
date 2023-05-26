@@ -18,6 +18,7 @@ import AppText from '../../components/AppText'
 import TransactionDone from '../Animators/TransactionDone'
 import { io } from 'socket.io-client'
 import TransactionFailed from '../Animators/TransactionFailed'
+import useSendOneSignal from '../../Notifications/useSendOneSignal'
 
 const socket = io(SOCKET_SERVER)
 
@@ -36,6 +37,8 @@ const SendTerminalScreen = () => {
   const [loading, setLoading] = useState(false)
 
   const navigation = useNavigation()
+
+  const sendOnesignal = useSendOneSignal()
 
   const route = useRoute()
 
@@ -73,6 +76,12 @@ const SendTerminalScreen = () => {
         //   recipientId: userId,
         //   message: 'New transaction here...',
         // })
+
+        sendOnesignal(
+          `You received a new ${result.data.tx.asset} payment`,
+          'Recieved via app. Congrats! 🎉',
+          [result.data.tx.receiver]
+        )
 
         socket.emit('sendTxNotification', {
           recipientId: userId,
@@ -141,7 +150,7 @@ const SendTerminalScreen = () => {
 
   if (loading) return <SendingMoney />
 
-  if (done) return <TransactionDone refresh={refresh} />
+  if (done) return <TransactionDone token={token} refresh={refresh} />
 
   if (failed) return <TransactionFailed />
 
@@ -215,14 +224,20 @@ const SendTerminalScreen = () => {
         </View>
 
         <View className="w-full px-6 my-4">
-          <Pressable
-            disabled={loading}
-            onPress={handleSubmit}
-            // onPress={() => refresh()}
-            className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
-          >
-            <AppText classProps="text-xl font-bold">Send</AppText>
-          </Pressable>
+          {number === '0.00' ? (
+            <View className="flex items-center justify-center w-full p-4 rounded-full bg-neutral-200 ">
+              <Text className="text-xl font-bold text-white">Send</Text>
+            </View>
+          ) : (
+            <Pressable
+              disabled={loading}
+              onPress={handleSubmit}
+              // onPress={() => refresh()}
+              className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+            >
+              <AppText classProps="text-xl font-bold">Send</AppText>
+            </Pressable>
+          )}
         </View>
       </View>
     </SafeAreaView>

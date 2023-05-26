@@ -28,6 +28,7 @@
     "react-native-camera": "^4.2.1",
     "react-native-contacts": "^7.0.5",
     "react-native-nfc-manager": "^3.14.3",
+    "react-native-onesignal": "^4.5.1",
     "react-native-permissions": "3.6.1",
     "react-native-qrcode-scanner": "^1.5.5",
     "react-native-qrcode-svg": "^6.2.0",

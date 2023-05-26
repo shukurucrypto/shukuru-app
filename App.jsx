@@ -17,9 +17,11 @@ import {
   fetchedToken,
   fetchingToken,
 } from './features/token/tokenSlice'
+import OneSignal from 'react-native-onesignal'
 
 const socket = io(SOCKET_SERVER)
 
+OneSignal.setAppId('bdb34439-82ae-4091-bcb3-664874f10810')
 // import SOCKET_SERVER from './apiURL'
 
 function App() {
@@ -59,7 +61,8 @@ function App() {
         setTimeout(() => {
           getToken()
           setAppReady(true)
-        }, 3000)
+          setUpExternalOneSignalId()
+        }, 3500)
 
         // new Promise((resolve) => setTimeout(resolve, 5000)) // wait for 5 secs
       } catch (e) {
@@ -107,6 +110,24 @@ function App() {
       // error reading value
       // setAppReady(true)
       dispatch(failedFetchToken('Failed to get token'))
+    }
+  }
+
+  const setUpExternalOneSignalId = async () => {
+    const pushActivated = await AsyncStorage.getItem('@push')
+
+    if (!pushActivated) {
+      let externalUserId = user?.userId // You will supply the external user id to the OneSignal SDK
+
+      // Setting External User Id with Callback Available in SDK Version 3.9.3+
+      OneSignal.setExternalUserId(externalUserId, async (results) => {
+        // The results will contain push and email success statuses
+        console.log('Results of setting external user id')
+        console.log(results)
+        if (results.push.success) {
+          await AsyncStorage.setItem('@push', 'Yes')
+        }
+      })
     }
   }
 

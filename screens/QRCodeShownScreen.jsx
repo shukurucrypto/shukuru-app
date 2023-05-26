@@ -13,6 +13,7 @@ import NfcManager, { NfcTech } from 'react-native-nfc-manager'
 import NFCSheet from '../components/Sheets/NFCSheet'
 import TransactionFailed from './Animators/TransactionFailed'
 import SendingMoney from '../components/Loading/SendingMoney'
+import useSendOneSignal from '../Notifications/useSendOneSignal'
 
 // Pre-step, call this before any NFC operations
 NfcManager.start()
@@ -34,6 +35,8 @@ const QRCodeShownScreen = () => {
 
   const [failed, setFailed] = useState(false)
   const navigation = useNavigation()
+
+  const sendOnesignal = useSendOneSignal()
 
   const route = useRoute()
 
@@ -156,10 +159,16 @@ const QRCodeShownScreen = () => {
       if (res.data.success) {
         socket.emit('status', { payhash: request, paid: true })
 
+        sendOnesignal(
+          `You sent a ${res.data.tx.asset} payment`,
+          `Payment done with your card! 😎`,
+          [res.data.tx.sender]
+        )
+
         socket.emit('sendTxNotification', {
           recipientId: res.data.data._id,
           message: {
-            title: 'You sent a payment',
+            title: `You sent a ${res.data.tx.asset} payment`,
             subtitle: `to @${res.data.data.name}`,
             body: `Payment done with your card! 😎`,
           },

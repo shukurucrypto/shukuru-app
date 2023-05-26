@@ -178,17 +178,23 @@ const ReceiveTerminalScreen = () => {
       </View>
 
       <View className="w-full px-6 my-4">
-        <Pressable
-          disabled={isLoading}
-          onPress={handleSubmit}
-          className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
-        >
-          {isLoading ? (
-            <ActivityIndicator size={22} color="#fff" />
-          ) : (
-            <AppText classProps="text-xl font-bold">Show QR Code</AppText>
-          )}
-        </Pressable>
+        {number === '0.00' ? (
+          <View className="flex items-center justify-center w-full p-4 rounded-full bg-neutral-200 ">
+            <Text className="text-xl font-bold text-white">Send</Text>
+          </View>
+        ) : (
+          <Pressable
+            disabled={isLoading}
+            onPress={handleSubmit}
+            className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+          >
+            {isLoading ? (
+              <ActivityIndicator size={22} color="#fff" />
+            ) : (
+              <AppText classProps="text-xl font-bold">Show QR Code</AppText>
+            )}
+          </Pressable>
+        )}
       </View>
     </View>
   )
