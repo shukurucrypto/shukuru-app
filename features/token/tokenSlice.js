@@ -26,7 +26,7 @@ export const tokenSlice = createSlice({
       state.error = action.payload
     },
     removeToken: (state) => {
-      state.loading = false
+      // state.loading = false
       state.token = null
       state.error = null
     },

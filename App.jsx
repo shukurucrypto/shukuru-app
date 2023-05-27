@@ -67,10 +67,10 @@ function App() {
         // new Promise((resolve) => setTimeout(resolve, 5000)) // wait for 5 secs
       } catch (e) {
         console.warn(e)
-        setAppReady(true)
+        setAppReady(false)
       } finally {
         SplashScreen.hide()
-        setAppReady(true)
+        setAppReady(false)
       }
     }
     prepare()
@@ -121,9 +121,6 @@ function App() {
 
       // Setting External User Id with Callback Available in SDK Version 3.9.3+
       OneSignal.setExternalUserId(externalUserId, async (results) => {
-        // The results will contain push and email success statuses
-        console.log('Results of setting external user id')
-        console.log(results)
         if (results.push.success) {
           await AsyncStorage.setItem('@push', 'Yes')
         }

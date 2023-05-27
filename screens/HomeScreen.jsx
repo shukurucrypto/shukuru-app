@@ -200,7 +200,8 @@ const HomeScreen = () => {
                           </View>
                         </>
                       ) : (
-                        !balancesState.error && (
+                        !balancesState.error &&
+                        balancesState.balances && (
                           <>
                             <AppText
                               numberOfLines={1}
@@ -225,7 +226,10 @@ const HomeScreen = () => {
                                   className="py-3"
                                 >
                                   <Text className="font-light">
-                                    SATS {balancesState.balances?.lightning}
+                                    SATS{' '}
+                                    {balancesState.balances?.lightning.toFixed(
+                                      2
+                                    )}
                                   </Text>
                                   <Text className="mx-8 font-light">
                                     BUSD{' '}
