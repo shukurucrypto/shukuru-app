@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Lottie from 'lottie-react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import axios from 'axios'
@@ -25,8 +26,6 @@ const QRCodeShownScreen = () => {
 
   const { user } = useSelector((state) => state.user)
   const [hasNfc, setHasNFC] = useState(false)
-
-  const [newBalance, setNewBalance] = useState(0)
 
   const [loading, setLoading] = useState(false)
 
@@ -62,21 +61,26 @@ const QRCodeShownScreen = () => {
   }, [])
 
   useEffect(() => {
-    console.log('ENTER')
-    console.log(updateCount)
     if (updateCount <= 25) {
-      console.log('CALLED!')
       getBTCBalance()
     }
   }, [updateCount])
 
   const getBTCBalance = async () => {
     try {
-      const res = await axios.get(`${API_URL}/wallet/btc/${user.userId}`)
+      const res = await axios.get(`${API_URL}/wallet/btc/${user.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
 
       if (res.data.success) {
         if (res.data.data > balancesState.balances.lightning) {
           setDone(true)
+          setUpdateCount(30)
+
+          // Create Tx here...
+          createExBTCTX()
         }
         setUpdateCount((prev) => (prev += 1))
       } else {
@@ -174,6 +178,27 @@ const QRCodeShownScreen = () => {
     }
   }
 
+  const createExBTCTX = async () => {
+    try {
+      const invoiceData = {
+        invoice: data,
+        amount: amount,
+      }
+      const res = await axios.post(
+        `${API_URL}/wallet/exbtc/create`,
+        invoiceData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      return res.data
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   const handleNFCPay = async (tag) => {
     setLoadSubmit(true)
     try {
@@ -237,7 +262,7 @@ const QRCodeShownScreen = () => {
       </View>
 
       <View className="flex items-center flex-1 justify-evenly ">
-        <View className="flex flex-col items-center justify-center ">
+        <View className="flex flex-col items-center ">
           <View className="flex flex-row">
             <AppText classProps="text-sm">UGX</AppText>
             <AppText classProps="text-6xl font-bold">{amount}</AppText>
@@ -250,10 +275,17 @@ const QRCodeShownScreen = () => {
         <QRCODE data={data} />
 
         <View className="flex flex-col items-center justify-center">
-          <AppText classProps="text-base">Shuku there!</AppText>
+          <AppText classProps="text-base">Hello pay 👋😀</AppText>
         </View>
       </View>
 
+      <View className="w-full h-14 ">
+        <Lottie
+          source={require('../assets/animations/waiting.json')}
+          autoPlay
+          loop
+        />
+      </View>
       <View className="flex flex-row w-full px-5 py-5">
         {hasNfc && (
           <Pressable

@@ -136,12 +136,18 @@ const TransactionCards = ({ item }) => {
       >
         {renderIcon(item.asset)}
         <View className="flex flex-col flex-1 px-4">
-          <AppText classProps="text-lg">
-            +
-            {item?.phoneNumber?.slice(0, 3) +
-              '...' +
-              item?.phoneNumber?.slice(-2)}
-          </AppText>
+          {item.external ? (
+            <Text className="text-lg text-green-700">External deposit</Text>
+          ) : (
+            <>
+              <AppText classProps="text-lg">
+                +
+                {item?.phoneNumber?.slice(0, 3) +
+                  '...' +
+                  item?.phoneNumber?.slice(-2)}
+              </AppText>
+            </>
+          )}
           <AppText classProps="font-light">
             {item.asset} Payment {item.txType}
           </AppText>

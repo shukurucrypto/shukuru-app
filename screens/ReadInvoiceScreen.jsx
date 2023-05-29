@@ -19,6 +19,7 @@ import TransactionFailed from './Animators/TransactionFailed'
 import { io } from 'socket.io-client'
 import NFCSheet from '../components/Sheets/NFCSheet'
 const socket = io(SOCKET_SERVER)
+import Lottie from 'lottie-react-native'
 
 const ReadInvoiceScreen = () => {
   const navigation = useNavigation()
