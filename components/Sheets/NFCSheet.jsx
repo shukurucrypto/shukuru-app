@@ -15,8 +15,6 @@ import { useNavigation } from '@react-navigation/native'
 import AppText from '../AppText'
 
 const NFCSheet = ({ sendActionSheet, refresh }) => {
-  const navigation = useNavigation()
-
   const height = useWindowDimensions().height
 
   return (

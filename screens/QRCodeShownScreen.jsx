@@ -171,9 +171,11 @@ const QRCodeShownScreen = () => {
         console.log('NDEF message not found on the tag')
         nfcActionSheet.current?.hide()
       }
+      NfcManager.cancelTechnologyRequest()
     } catch (ex) {
       console.log('Oops!', ex)
       nfcActionSheet.current?.hide()
+      NfcManager.cancelTechnologyRequest()
     } finally {
       // stop the nfc scanning
       NfcManager.cancelTechnologyRequest()
