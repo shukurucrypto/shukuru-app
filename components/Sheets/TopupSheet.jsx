@@ -9,31 +9,59 @@ import {
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
+import LinearGradient from 'react-native-linear-gradient'
+import TypeWriter from 'react-native-typewriter'
+
 import AppText from '../AppText'
 
 const TopupSheet = ({ topupActionSheet }) => {
   const height = useWindowDimensions().height
+
   return (
     <ActionSheet
       ref={topupActionSheet}
       containerStyle={{
         height: height / 2,
         padding: 15,
+        position: 'relative',
       }}
     >
       <>
+        <View className="absolute top-0 bottom-0 left-0 right-0 z-30">
+          <LinearGradient
+            colors={['rgba(0,0,0,0.3)', 'rgba(251,198,9,9)']}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 40,
+              paddingBottom: 50,
+            }}
+          >
+            {/* Your component content goes here */}
+            {/* <Text className="text-2xl font-extrabold text-center text-black shadow-lg"> */}
+            {/* </Text> */}
+            <TypeWriter
+              className="text-2xl font-extrabold text-center text-black shadow-lg"
+              typing={1}
+            >
+              Top-up crypto & utilities with MOMO coming soon..
+            </TypeWriter>
+          </LinearGradient>
+        </View>
+
         {/* Sheet header */}
         <View className="flex flex-row items-center justify-between w-full mb-3">
           <AppText classProps="text-2xl font-bold">Topup Options</AppText>
 
-          <Pressable
+          {/* <Pressable
             onPress={() => topupActionSheet.current?.hide()}
             className=""
           >
             <AntDesign name="close" size={30} color="black" />
-          </Pressable>
+          </Pressable> */}
         </View>
         <ScrollView
           className="flex flex-1"

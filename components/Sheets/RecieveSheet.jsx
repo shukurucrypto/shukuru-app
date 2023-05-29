@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
 import { useNavigation } from '@react-navigation/native'
 import AppText from '../AppText'
@@ -69,7 +69,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
-              navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
+              // navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
             }}
             className="flex flex-row items-center w-full h-16 "
           >
@@ -88,7 +88,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
-              navigation.navigate('ReceiveTerminal', { token: 'cUSD' })
+              // navigation.navigate('ReceiveTerminal', { token: 'cUSD' })
             }}
             className="flex flex-row items-center w-full h-16 "
           >
@@ -105,7 +105,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
-              navigation.navigate('ReceiveTerminal', { token: 'USDT' })
+              // navigation.navigate('ReceiveTerminal', { token: 'USDT' })
             }}
             className="flex flex-row items-center w-full h-16 "
           >
