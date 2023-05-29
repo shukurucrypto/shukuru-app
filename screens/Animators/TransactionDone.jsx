@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable, StatusBar } from 'react-native'
+import { View, Text, Pressable, StatusBar, Image } from 'react-native'
 import Lottie from 'lottie-react-native'
 import AppText from '../../components/AppText'
 import { useNavigation } from '@react-navigation/native'
@@ -33,7 +33,16 @@ const TransactionDone = ({ refresh, token }) => {
             onPress={() => {}}
             className="w-full border-[0.8px] border-white rounded-md my-4 p-3 flex-row bg-yellow-400 h-20"
           >
-            <View className="w-16 h-full mr-3 bg-blue-500 rounded-md" />
+            <View className="w-16 h-full mr-3 bg-blue-400 rounded-md">
+              <Image
+                source={require('../../assets/illustrations/Bull.png')}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+                resizeMode="contain"
+              />
+            </View>
             <View className="flex flex-col flex-1">
               <Text className="text-base font-bold text-black">
                 Utilities are coming to Shukuru
