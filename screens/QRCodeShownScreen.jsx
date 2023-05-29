@@ -26,6 +26,8 @@ const QRCodeShownScreen = () => {
   const { user } = useSelector((state) => state.user)
   const [hasNfc, setHasNFC] = useState(false)
 
+  const [newBalance, setNewBalance] = useState(0)
+
   const [loading, setLoading] = useState(false)
 
   const [loadSubmit, setLoadSubmit] = useState(false)
@@ -33,8 +35,12 @@ const QRCodeShownScreen = () => {
 
   const [done, setDone] = useState(false)
 
+  const [updateCount, setUpdateCount] = useState(0)
+
   const [failed, setFailed] = useState(false)
   const navigation = useNavigation()
+
+  const balancesState = useSelector((state) => state.balances)
 
   const sendOnesignal = useSendOneSignal()
 
@@ -54,6 +60,32 @@ const QRCodeShownScreen = () => {
     //   socket.disconnect()
     // }
   }, [])
+
+  useEffect(() => {
+    console.log('ENTER')
+    console.log(updateCount)
+    if (updateCount <= 25) {
+      console.log('CALLED!')
+      getBTCBalance()
+    }
+  }, [updateCount])
+
+  const getBTCBalance = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/wallet/btc/${user.userId}`)
+
+      if (res.data.success) {
+        if (res.data.data > balancesState.balances.lightning) {
+          setDone(true)
+        }
+        setUpdateCount((prev) => (prev += 1))
+      } else {
+        setUpdateCount(30)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   useEffect(() => {
     socket.on('status', (data) => {
