@@ -15,6 +15,7 @@ import NFCSheet from '../components/Sheets/NFCSheet'
 import TransactionFailed from './Animators/TransactionFailed'
 import SendingMoney from '../components/Loading/SendingMoney'
 import useSendOneSignal from '../Notifications/useSendOneSignal'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 // Pre-step, call this before any NFC operations
 NfcManager.start()
@@ -33,6 +34,8 @@ const QRCodeShownScreen = () => {
   const nfcActionSheet = useRef(null)
 
   const [done, setDone] = useState(false)
+
+  const [copiedInvoice, setCopiedInvoice] = useState(false)
 
   const [updateCount, setUpdateCount] = useState(0)
 
@@ -193,6 +196,11 @@ const QRCodeShownScreen = () => {
           },
         }
       )
+      sendOnesignal(
+        `You received a new Lightning payment`,
+        'Recieved via app. Congrats! 🎉',
+        [user.userId]
+      )
       return res.data
     } catch (error) {
       console.log(error.message)
@@ -243,6 +251,15 @@ const QRCodeShownScreen = () => {
       setLoadSubmit(false)
       setFailed(true)
     }
+  }
+
+  const copyToClipboard = () => {
+    setCopiedInvoice(true)
+    Clipboard.setString(data)
+
+    setTimeout(() => {
+      setCopiedInvoice(false)
+    }, 4000)
   }
 
   if (loadSubmit) return <SendingMoney />
@@ -296,10 +313,12 @@ const QRCodeShownScreen = () => {
           </Pressable>
         )}
         <Pressable
-          onPress={() => {}}
+          onPress={copyToClipboard}
           className="flex items-center justify-center flex-1 p-4 ml-2 bg-white border-2 rounded-full border-primary"
         >
-          <Text className="text-xl font-bold text-primary">Copy</Text>
+          <Text className="text-xl font-bold text-primary">
+            {copiedInvoice ? 'Copied!' : 'Copy'}
+          </Text>
         </Pressable>
       </View>
       <NFCSheet
