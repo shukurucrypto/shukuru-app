@@ -25,14 +25,11 @@ OneSignal.setAppId('bdb34439-82ae-4091-bcb3-664874f10810')
 // import SOCKET_SERVER from './apiURL'
 
 function App() {
-  const [payhash, setPayHash] = useState('myTX')
-  const { loading, user, error } = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.user)
 
-  const {
-    token,
-    loading: tokenLoading,
-    error: tokenErr,
-  } = useSelector((state) => state.tokenState)
+  const { token, loading: tokenLoading } = useSelector(
+    (state) => state.tokenState
+  )
 
   const [appReady, setAppReady] = useState(false)
 
@@ -51,6 +48,22 @@ function App() {
       // return () => {
       //   socket.disconnect()
       // }
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (token) {
+      // Listen for the 'privateMessage' event
+      socket.on('txNotification', ({ senderId, message }) => {
+        onDisplayNotification(message)
+        fetchBalance(dispatch, user?.userId)
+        fetchTransactions(dispatch, user?.userId)
+      })
+
+      return () => {
+        // Clean up the event listener when the component unmounts
+        socket.off('txNotification')
+      }
     }
   }, [user])
 
@@ -74,22 +87,6 @@ function App() {
       }
     }
     prepare()
-  }, [user])
-
-  useEffect(() => {
-    if (token) {
-      // Listen for the 'privateMessage' event
-      socket.on('txNotification', ({ senderId, message }) => {
-        onDisplayNotification(message)
-        fetchBalance(dispatch, user?.userId)
-        fetchTransactions(dispatch, user?.userId)
-      })
-
-      return () => {
-        // Clean up the event listener when the component unmounts
-        socket.off('txNotification')
-      }
-    }
   }, [user])
 
   const getToken = async () => {

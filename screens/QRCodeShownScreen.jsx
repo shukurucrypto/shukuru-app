@@ -226,12 +226,6 @@ const QRCodeShownScreen = () => {
       if (res.data.success) {
         socket.emit('status', { payhash: request, paid: true })
 
-        sendOnesignal(
-          `You sent a ${res.data.tx.asset} payment`,
-          `Payment done with your card! 😎`,
-          [res.data.tx.sender]
-        )
-
         socket.emit('sendTxNotification', {
           recipientId: res.data.data._id,
           message: {
@@ -240,6 +234,12 @@ const QRCodeShownScreen = () => {
             body: `Payment done with your card! 😎`,
           },
         })
+
+        sendOnesignal(
+          `You sent a ${res.data.tx.asset} payment`,
+          `Payment done with your card! 😎`,
+          [res.data.tx.sender]
+        )
 
         setDone(true)
       } else {

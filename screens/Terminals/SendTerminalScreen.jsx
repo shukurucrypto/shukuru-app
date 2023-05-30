@@ -77,12 +77,6 @@ const SendTerminalScreen = () => {
         //   message: 'New transaction here...',
         // })
 
-        sendOnesignal(
-          `You received a new ${result.data.tx.asset} payment`,
-          'Recieved via app. Congrats! 🎉',
-          [result.data.tx.receiver]
-        )
-
         socket.emit('sendTxNotification', {
           recipientId: userId,
           message: {
@@ -99,6 +93,12 @@ const SendTerminalScreen = () => {
           //   }`,
           // },
         })
+
+        sendOnesignal(
+          `You received a new ${result.data.tx.asset} payment`,
+          'Recieved via app. Congrats! 🎉',
+          [result.data.tx.receiver]
+        )
 
         setLoading(false)
         setNumber('0.00')

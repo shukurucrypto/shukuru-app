@@ -54,7 +54,9 @@ const ProfileScreen = () => {
           <AppText classProps="text-2xl font-bold mx-4">Profile</AppText>
         </Pressable>
 
-        <AntDesign name="setting" size={22} color="black" />
+        <Pressable onPress={() => navigation.navigate('SettingsScreen')}>
+          <AntDesign name="setting" size={22} color="black" />
+        </Pressable>
       </View>
 
       {loading && !profile ? (
