@@ -1,12 +1,15 @@
-import { View, Text, Image, useWindowDimensions } from 'react-native'
+import { View, Text, Image, useWindowDimensions, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AppText from './AppText'
 import { getBannerImgURL } from '../lib/supabase'
+import { useNavigation } from '@react-navigation/native'
 
 const Banner = ({ item }) => {
   const [imgURL, setImgURL] = useState('')
 
   const width = useWindowDimensions().width
+
+  const navigation = useNavigation()
 
   useEffect(() => {
     const getData = async () => {
@@ -17,6 +20,7 @@ const Banner = ({ item }) => {
 
     getData()
   }, [])
+
   return (
     <View
       style={{ width: width - 25 }}
@@ -29,7 +33,9 @@ const Banner = ({ item }) => {
 
         <View className="flex flex-row items-center justify-between w-full">
           {item.btn_title && (
-            <Text className="font-bold text-primary ">{item.btn_title}</Text>
+            <Pressable onPress={() => navigation.navigate(item.btn_route)}>
+              <Text className="font-bold text-primary ">{item.btn_title}</Text>
+            </Pressable>
           )}
           <AppText classProps="">Dismiss</AppText>
         </View>
