@@ -8,7 +8,7 @@ const QRCODE = ({ data }) => {
       logo={require('../assets/logos/logo.png')}
       logoSize={50}
       logoBackgroundColor="transparent"
-      size={300}
+      size={250}
     />
   )
 }

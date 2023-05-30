@@ -51,7 +51,7 @@ const ProfileScreen = () => {
           className="flex flex-row items-center"
         >
           <SimpleLineIcons name="arrow-left" size={22} color="black" />
-          <AppText classProps="text-2xl font-bold mx-4">Profile</AppText>
+          <AppText classProps="text-xl font-bold mx-4">Profile</AppText>
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate('SettingsScreen')}>
@@ -64,8 +64,8 @@ const ProfileScreen = () => {
       ) : (
         <>
           {/*  */}
-          <View className="flex items-center justify-center flex-1 ">
-            <View className="rounded-full bg-neutral-200 w-28 h-28">
+          <View className="flex items-center justify-center flex-1 p-5 ">
+            <View className="w-20 h-20 rounded-full bg-neutral-200">
               <Image
                 source={require('../assets/illustrations/Owl.png')}
                 style={{
@@ -78,12 +78,15 @@ const ProfileScreen = () => {
             <AppText classProps="text-xl my-2 font-bold">
               @{profile?.name}
             </AppText>
-            <View className="flex flex-row items-center justify-center p-2 px-8 my-4 rounded-full bg-neutral-100">
-              <Feather name="link" size={14} />
-              <AppText classProps=" ml-3 text-base font-light">
-                {profile?.email}
-              </AppText>
-            </View>
+
+            {profile?.email && (
+              <View className="flex flex-row items-center justify-center p-2 px-8 my-4 rounded-full bg-neutral-100">
+                <Feather name="link" size={14} />
+                <AppText classProps=" ml-3 text-base font-light">
+                  {profile?.email}
+                </AppText>
+              </View>
+            )}
             {/* <Text className="my-2 text-sm text-purple-600">
               {profile?.address?.slice(0, 4)} .... {profile?.address?.slice(-4)}
             </Text> */}
@@ -96,14 +99,14 @@ const ProfileScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View className="flex items-center justify-center flex-1 p-6">
+          <View className="flex items-center justify-center flex-1 p-6 ">
             <QRCODE data={profile?.address} />
           </View>
 
           <View className="flex items-center justify-evenly">
             <Pressable
               onPress={logoutUser}
-              className="flex items-center justify-center w-full p-5 mt-4 rounded-full bg-neutral-100"
+              className="flex items-center justify-center w-full p-3 mt-4 rounded-full bg-neutral-100"
             >
               <Text className="text-lg text-red-600">Signout</Text>
             </Pressable>

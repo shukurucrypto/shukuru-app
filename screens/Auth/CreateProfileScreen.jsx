@@ -153,7 +153,7 @@ const CreateProfileScreen = () => {
                 <View className="flex flex-row items-center flex-1">
                   <Pressable
                     onPress={() =>
-                      navigation.navigate('SelectCountryScreen', {
+                      navigation.navigate('AuthSelectCountryScreen', {
                         setCountry,
                       })
                     }
