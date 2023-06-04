@@ -64,7 +64,7 @@ const QRCodeShownScreen = () => {
   }, [])
 
   useEffect(() => {
-    if (updateCount <= 25) {
+    if (updateCount <= 60) {
       getBTCBalance()
     }
   }, [updateCount])
@@ -80,14 +80,15 @@ const QRCodeShownScreen = () => {
       if (res.data.success) {
         if (res.data.data > balancesState.balances.lightning) {
           setDone(true)
-          setUpdateCount(30)
+          setUpdateCount(2000)
 
           // Create Tx here...
           createExBTCTX()
+        } else {
+          setUpdateCount((prev) => (prev += 1))
         }
-        setUpdateCount((prev) => (prev += 1))
       } else {
-        setUpdateCount(30)
+        setUpdateCount(2000)
       }
     } catch (error) {
       console.log(error.message)

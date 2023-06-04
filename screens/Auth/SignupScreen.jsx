@@ -177,7 +177,7 @@ const SignupScreen = () => {
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
-                  className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative"
+                  className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
                   returnKeyType="next"
                   onSubmitEditing={handleSubmit}
                 />

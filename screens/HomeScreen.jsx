@@ -210,7 +210,7 @@ const HomeScreen = () => {
                               {showBalances
                                 ? `${profileState?.profile?.country}` +
                                   balancesState?.balances?.total
-                                    .toFixed(2)
+                                    ?.toFixed(2)
                                     .toString()
                                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                 : '****'}
@@ -227,21 +227,21 @@ const HomeScreen = () => {
                                 >
                                   <Text className="font-light">
                                     SATS{' '}
-                                    {balancesState.balances?.lightning.toFixed(
+                                    {balancesState.balances?.lightning?.toFixed(
                                       2
                                     )}
                                   </Text>
                                   <Text className="mx-8 font-light">
                                     BUSD{' '}
-                                    {balancesState?.balances?.busd.toFixed(2)}
+                                    {balancesState?.balances?.busd?.toFixed(2)}
                                   </Text>
                                   <Text className="mr-8 font-light">
                                     cUSD{' '}
-                                    {balancesState.balances?.cusd.toFixed(2)}
+                                    {balancesState.balances?.cusd?.toFixed(2)}
                                   </Text>
                                   <Text className="font-light">
                                     USDT{' '}
-                                    {balancesState.balances?.usdt.toFixed(2)}
+                                    {balancesState.balances?.usdt?.toFixed(2)}
                                   </Text>
                                 </ScrollView>
                               )}

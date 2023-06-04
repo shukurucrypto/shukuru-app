@@ -18,6 +18,7 @@ import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
 import { io } from 'socket.io-client'
 import NFCSheet from '../components/Sheets/NFCSheet'
+import SendingMoney from '../components/Loading/SendingMoney'
 const socket = io(SOCKET_SERVER)
 
 const ReadInvoiceScreen = () => {
@@ -26,13 +27,26 @@ const ReadInvoiceScreen = () => {
 
   const { user } = useSelector((state) => state.user)
 
+  const balancesState = useSelector((state) => state.balances)
+
   const [loading, setLoading] = useState(false)
   const [loadSubmit, setLoadSubmit] = useState(false)
   const [invoiceState, setInvoiceState] = useState({})
   const [done, setDone] = useState(false)
   const [failed, setFailed] = useState(false)
 
+  const [updateCount, setUpdateCount] = useState(0)
+
   const { data, refresh } = router.params
+
+  // useEffect(() => {
+  //   console.log('====================================')
+  //   console.log('CALLED')
+  //   console.log('====================================')
+  //   if (updateCount <= 60) {
+  //     getBTCBalance()
+  //   }
+  // }, [updateCount])
 
   useEffect(() => {
     // client-side
@@ -99,6 +113,34 @@ const ReadInvoiceScreen = () => {
       setLoadSubmit(false)
     }
   }
+
+  const getBTCBalance = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/wallet/btc/${user.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+
+      if (res.data.success) {
+        if (res.data.data < balancesState.balances.lightning) {
+          setDone(true)
+          setUpdateCount(2000)
+
+          // Create Tx here...
+          // createExBTCTX()
+        } else {
+          setUpdateCount((prev) => (prev += 1))
+        }
+      } else {
+        setUpdateCount(2000)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  if (loadSubmit) return <SendingMoney />
 
   if (done) return <TransactionDone refresh={refresh} />
 

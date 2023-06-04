@@ -166,7 +166,7 @@ const CreateProfileScreen = () => {
                   <TextInput
                     ref={phoneRef}
                     placeholder="xxxxxx"
-                    className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 w-full"
+                    className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 w-full text-black"
                     disabled={loading}
                     autoCapitalize="none"
                     value={phone}

@@ -24,7 +24,11 @@ const ScanQRScreen = () => {
 
   const onSuccess = (e) => {
     let invoice = e.data
-    if (invoice.startsWith('lnbc')) {
+    if (
+      invoice.startsWith('lnbc') ||
+      invoice.startsWith('lightning') ||
+      invoice.startsWith('LNBC')
+    ) {
       navigation.navigate('ReadInvoiceScreen', {
         data: e.data,
         refresh: refresh,

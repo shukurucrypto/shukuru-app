@@ -104,7 +104,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           {/* USDT */}
           <Pressable
             onPress={() => {
-              receiveActionSheet.current?.hide()
+              // receiveActionSheet.current?.hide()
               // navigation.navigate('ReceiveTerminal', { token: 'USDT' })
             }}
             className="flex flex-row items-center w-full h-16 "

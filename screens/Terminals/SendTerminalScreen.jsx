@@ -45,6 +45,7 @@ const SendTerminalScreen = () => {
   const { token, contactNumber, userId, refresh } = route.params
 
   const handleSubmit = async () => {
+    // return
     if (number == '0.0') return
     setLoading(true)
     try {
@@ -58,11 +59,25 @@ const SendTerminalScreen = () => {
       }
 
       if (token === 'cUSD') {
-        PAY_URL = `${API_URL}/send/cusd`
+        // PAY_URL = `${API_URL}/send/cusd`
+        setLoading(false)
+        return navigation.navigate('ConfirmTransactionScreen', {
+          data,
+          token,
+          contactNumber,
+          userId,
+        })
       } else if (token === 'BTC-LT') {
         PAY_URL = `${API_URL}/send`
       } else if (token === 'BUSD') {
         PAY_URL = `${API_URL}/send/busd`
+        setLoading(false)
+        return navigation.navigate('ConfirmTransactionScreen', {
+          data,
+          token,
+          contactNumber,
+          userId,
+        })
       }
 
       const result = await axios.post(PAY_URL, data, {

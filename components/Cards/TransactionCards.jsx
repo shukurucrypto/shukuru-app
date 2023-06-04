@@ -137,7 +137,7 @@ const TransactionCards = ({ item }) => {
         {renderIcon(item.asset)}
         <View className="flex flex-col flex-1 px-4">
           {item.external ? (
-            <Text className="text-lg text-green-700">External deposit</Text>
+            <Text className="text-lg text-orange-500">External Tx</Text>
           ) : (
             <>
               <AppText classProps="text-lg">

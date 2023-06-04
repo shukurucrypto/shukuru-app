@@ -109,11 +109,11 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
           {/* USDT */}
           <Pressable
             onPress={() => {
-              sendActionSheet.current?.hide()
-              navigation.navigate('FindUser', {
-                token: 'USDT',
-                refresh: refresh,
-              })
+              // sendActionSheet.current?.hide()
+              // navigation.navigate('FindUser', {
+              //   token: 'USDT',
+              //   refresh: refresh,
+              // })
             }}
             className="flex flex-row items-center w-full h-16 "
           >

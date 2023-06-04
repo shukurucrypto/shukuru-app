@@ -12,6 +12,7 @@ import ReadInvoiceScreen from '../screens/ReadInvoiceScreen'
 import PayTransactionScreen from '../screens/PayTransactionScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import SelectCountyScreen from '../screens/SelectCounty'
+import ConfirmTransactionScreen from '../screens/ConfirmTransactionScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -35,6 +36,10 @@ function MainStackNavigator() {
       <Stack.Screen name="ReadInvoiceScreen" component={ReadInvoiceScreen} />
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="SelectCountryScreen" component={SelectCountyScreen} />
+      <Stack.Screen
+        name="ConfirmTransactionScreen"
+        component={ConfirmTransactionScreen}
+      />
       <Stack.Screen
         name="PayTransactionScreen"
         component={PayTransactionScreen}

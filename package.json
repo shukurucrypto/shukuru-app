@@ -46,6 +46,7 @@
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
+    "rn-slide-to-confirm": "^1.0.6",
     "socket.io-client": "^4.6.1",
     "yup": "^1.1.1"
   },
