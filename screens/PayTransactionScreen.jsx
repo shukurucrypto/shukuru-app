@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity, Pressable } from 'react-native'
+import Lottie from 'lottie-react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
+
 import axios from 'axios'
 import QRCODE from '../components/QRCode'
 import AppText from '../components/AppText'
@@ -19,10 +21,10 @@ import { fetchTransactions } from '../features/transactions/transactionsSlice'
 // Pre-step, call this before any NFC operations
 NfcManager.start()
 
-const socket = io(SOCKET_SERVER)
-
 const PayTransactionScreen = () => {
   const profileState = useSelector((state) => state.profile)
+
+  const balancesState = useSelector((state) => state.balances)
 
   const dispatch = useDispatch()
 
@@ -31,8 +33,12 @@ const PayTransactionScreen = () => {
 
   const [loading, setLoading] = useState(false)
 
+  const [filled, setFilled] = useState(true)
+
   const [loadSubmit, setLoadSubmit] = useState(false)
   const nfcActionSheet = useRef(null)
+
+  const [updateCount, setUpdateCount] = useState(0)
 
   const [done, setDone] = useState(false)
 
@@ -41,30 +47,14 @@ const PayTransactionScreen = () => {
 
   const route = useRoute()
 
-  const { data, amount, request, refresh, token } = route.params
+  const { data, amount, request, refresh, token, convertedAmount } =
+    route.params
 
   useEffect(() => {
-    // client-side
-    socket.on('connect', () => {
-      // console.log(socket.id) // x8WIv7-mJelg7on_ALbx
-    })
-
-    // socket.emit('join', { payhash: request })
-
-    // return () => {
-    //   socket.disconnect()
-    // }
-  }, [])
-
-  useEffect(() => {
-    // socket.on('status', (data) => {
-    //   setDone(data.paid)
-    // })
-  }, [])
-
-  useEffect(() => {
-    // createActiveInvoice()
-  }, [])
+    if (updateCount <= 60) {
+      getWalletBalance()
+    }
+  }, [updateCount])
 
   useEffect(() => {
     const checkIsSupported = async () => {
@@ -79,6 +69,66 @@ const PayTransactionScreen = () => {
 
     checkIsSupported()
   }, [])
+
+  const getWalletBalance = async () => {
+    try {
+      if (token === 'BUSD') {
+        const res = await axios.get(
+          `${API_URL}/raw/wallet/busd/${user.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+
+        if (res.data.success) {
+          if (
+            balancesState.balances.busd &&
+            res.data.data > balancesState.balances.busd
+          ) {
+            setDone(true)
+            setUpdateCount(2000)
+
+            // Create Tx here...
+            // createExBTCTX()
+          } else {
+            setUpdateCount((prev) => (prev += 1))
+          }
+        } else {
+          setUpdateCount(2000)
+        }
+      } else {
+        const res = await axios.get(
+          `${API_URL}/raw/wallet/cusd/${user.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+
+        if (res.data.success) {
+          if (
+            balancesState.balances.cusd &&
+            res.data.data > balancesState.balances.cusd
+          ) {
+            setDone(true)
+            setUpdateCount(2000)
+
+            // Create Tx here...
+            // createExBTCTX()
+          } else {
+            setUpdateCount((prev) => (prev += 1))
+          }
+        } else {
+          setUpdateCount(2000)
+        }
+      }
+    } catch (error) {
+      setFailed(true)
+    }
+  }
 
   const refreshData = () => {
     fetchBalance(dispatch, user?.userId)
@@ -212,7 +262,7 @@ const PayTransactionScreen = () => {
 
         <View className="flex items-center justify-center flex-1">
           <Text className="p-2 font-bold bg-yellow-100 rounded-full text-primary">
-            BUSD
+            {token}
           </Text>
         </View>
 
@@ -232,25 +282,61 @@ const PayTransactionScreen = () => {
           </AppText>
         </View>
 
-        <QRCODE data={data} />
+        <View className="flex flex-row items-center justify-center w-1/3">
+          <Pressable
+            onPress={() => setFilled(!filled)}
+            className={`p-2 px-2 border-[0.8px] rounded-l-full ${
+              filled && 'bg-green-600'
+            } border-green-600  w-full items-center justify-center`}
+          >
+            <Text className={filled ? 'text-white' : 'text-green-600'}>
+              Prefill
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setFilled(!filled)}
+            className={`p-2 px-2 border-[0.8px] rounded-r-full ${
+              !filled && 'bg-green-600'
+            } border-green-600 w-full items-center justify-center`}
+          >
+            <Text className={!filled ? 'text-white' : 'text-green-600'}>
+              Address Only
+            </Text>
+          </Pressable>
+        </View>
+
+        {filled ? (
+          <QRCODE
+            data={`ethereum:${data}?value=${convertedAmount}?token=${token}`}
+          />
+        ) : (
+          <QRCODE data={data} />
+        )}
 
         <View className="flex flex-col items-center justify-center">
-          <AppText classProps="text-base">Shuku there!</AppText>
+          <AppText classProps="text-base">Hello pay 👋😀</AppText>
         </View>
       </View>
 
+      <View className="w-full h-14 ">
+        <Lottie
+          source={require('../assets/animations/waiting.json')}
+          autoPlay
+          loop
+        />
+      </View>
       <View className="flex flex-row w-full px-5 py-5">
         {hasNfc && (
           <Pressable
             onPress={readNFC}
-            className="flex items-center justify-center flex-1 p-4 mr-2 rounded-full bg-primary"
+            className="flex items-center justify-center flex-1 w-full p-4 mr-2 rounded-full bg-primary"
           >
             <AppText classProps="text-xl font-bold">Card</AppText>
           </Pressable>
         )}
         <Pressable
           onPress={() => {}}
-          className="flex items-center justify-center flex-1 p-4 ml-2 bg-white border-2 rounded-full border-primary"
+          className="flex items-center justify-center flex-1 w-full p-4 ml-2 bg-white border-2 rounded-full border-primary"
         >
           <Text className="text-xl font-bold text-primary">Copy</Text>
         </Pressable>

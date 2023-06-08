@@ -24,6 +24,11 @@ const ReceiveTerminalScreen = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
+  const balancesState = useSelector((state) => state.balances)
+
+  const [convertedAmount, setConvertedAmount] = useState(null)
+  const [convertLoading, setConvertLoading] = useState(false)
+
   const [err, setErr] = useState('')
 
   const { loading, user, error } = useSelector((state) => state.user)
@@ -42,13 +47,18 @@ const ReceiveTerminalScreen = () => {
       }
 
       if (token != 'BTC-LT') {
-        navigation.navigate('PayTransactionScreen', {
-          token: token,
-          amount: number,
-          data: profile.address,
-          request: '',
-          refresh: refresh,
-        })
+        const conv = await convertToUSD()
+
+        if (conv.data) {
+          navigation.navigate('PayTransactionScreen', {
+            token: token,
+            amount: number,
+            convertedAmount: conv?.data,
+            data: profile.address,
+            request: '',
+            refresh: refresh,
+          })
+        }
         setIsLoading(false)
         return
       }
@@ -103,6 +113,25 @@ const ReceiveTerminalScreen = () => {
 
     if (!number) {
       setHasPoint(false)
+    }
+  }
+
+  const convertToUSD = async () => {
+    setConvertLoading(true)
+    try {
+      const convertData = {
+        amount: number,
+        to: 'USD',
+        from: profile.country,
+      }
+      const res = await axios.post(`${API_URL}/toethers`, convertData)
+
+      setConvertLoading(false)
+
+      return res.data
+    } catch (error) {
+      console.log(error.message)
+      setConvertLoading(false)
     }
   }
 
@@ -184,11 +213,11 @@ const ReceiveTerminalScreen = () => {
           </View>
         ) : (
           <Pressable
-            disabled={isLoading}
+            disabled={isLoading || balancesState.loading}
             onPress={handleSubmit}
             className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
           >
-            {isLoading ? (
+            {isLoading || convertLoading ? (
               <ActivityIndicator size={22} color="#fff" />
             ) : (
               <AppText classProps="text-xl font-bold">Show QR Code</AppText>

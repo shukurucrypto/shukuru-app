@@ -69,7 +69,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
-              // navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
+              navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
             }}
             className="flex flex-row items-center w-full h-16 "
           >
@@ -88,7 +88,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
           <Pressable
             onPress={() => {
               receiveActionSheet.current?.hide()
-              // navigation.navigate('ReceiveTerminal', { token: 'cUSD' })
+              navigation.navigate('ReceiveTerminal', { token: 'cUSD' })
             }}
             className="flex flex-row items-center w-full h-16 "
           >

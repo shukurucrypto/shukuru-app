@@ -24,19 +24,43 @@ const ScanQRScreen = () => {
 
   const onSuccess = (e) => {
     let invoice = e.data
-    if (
-      invoice.startsWith('lnbc') ||
-      invoice.startsWith('lightning') ||
-      invoice.startsWith('LNBC')
-    ) {
-      navigation.navigate('ReadInvoiceScreen', {
-        data: e.data,
-        refresh: refresh,
-      })
-    } else {
-      setError('Invalid code')
+    render(invoice)
+  }
+  const render = (invoice) => {
+    switch (true) {
+      case invoice.startsWith('lnbc'):
+      case invoice.startsWith('lightning'):
+      case invoice.startsWith('LNBC'):
+        navigation.navigate('ReadInvoiceScreen', {
+          data: invoice,
+          refresh: refresh,
+        })
+        break
+      case invoice.startsWith('ethereum') && invoice.includes('?value='):
+      case invoice.includes('address') && invoice.includes('amount'):
+        navigation.navigate('EVMConfirmTXScreen', { data: invoice })
+        break
+      case invoice.startsWith('ethereum'):
+        const cleanedString = invoice.replace('ethereum:', '')
+
+        // Split the string into parts using "?" as the delimiter
+        const parts = cleanedString.split('?')
+
+        // Extract the address and value from the parts
+        const address = parts[0]
+        navigation.navigate('SendTerminal', {
+          token: 'cUSD',
+          contactNumber: address,
+          userId: 'user',
+          refresh: () => {},
+        })
+        break
+      default:
+        setError('Invalid code')
+        break
     }
   }
+
   return (
     <QRCodeScanner
       onRead={onSuccess}

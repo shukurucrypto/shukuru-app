@@ -121,7 +121,7 @@ const TransactionCards = ({ item }) => {
           >
             {currency
               ? currency.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              : item.amount}
+              : item.amount.toFixed(0)}
           </Text>
           <AppText classProps="text-xs font-light self-end">Apr 22</AppText>
         </View>
@@ -164,7 +164,7 @@ const TransactionCards = ({ item }) => {
             {/* {currency
               ? currency.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               : item.amount} */}
-            {item.amount}
+            {item.amount.toFixed(0)}
           </Text>
           <AppText classProps="text-xs font-light self-end">Apr 22</AppText>
         </View>
