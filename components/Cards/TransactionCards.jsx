@@ -47,7 +47,7 @@ const TransactionCards = ({ item }) => {
     switch (asset) {
       case 'BUSD':
         return (
-          <View className="flex items-center justify-center bg-black rounded-full w-9 h-9">
+          <View className="flex items-center justify-center w-10 h-10 bg-black rounded-full">
             <Image
               source={require('../../assets/tokens/busd.png')}
               style={{ width: 25, height: 25 }}
@@ -57,7 +57,7 @@ const TransactionCards = ({ item }) => {
 
       case 'cUSD':
         return (
-          <View className="relative flex items-center justify-center w-12 h-12 rounded-full ">
+          <View className="relative flex items-center justify-center w-10 h-10 rounded-full ">
             <Image
               source={require('../../assets/tokens/cusd.png')}
               style={{ width: '100%', height: '100%' }}
@@ -77,7 +77,7 @@ const TransactionCards = ({ item }) => {
         )
       default:
         return (
-          <View className="flex items-center justify-center bg-orange-500 rounded-full w-11 h-11">
+          <View className="flex items-center justify-center w-10 h-10 bg-orange-500 rounded-full">
             <MaterialCommunityIcons
               name="lightning-bolt"
               size={30}

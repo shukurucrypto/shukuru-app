@@ -51,7 +51,7 @@ const PayTransactionScreen = () => {
     route.params
 
   useEffect(() => {
-    if (updateCount <= 60) {
+    if (updateCount <= 100) {
       getWalletBalance()
     }
   }, [updateCount])

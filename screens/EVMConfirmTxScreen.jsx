@@ -228,6 +228,31 @@ const EVMConfirmTXScreen = () => {
           </Pressable>
         </View>
 
+        <View className="flex items-center justify-center flex-1 ">
+          {txObj.token === 'cUSD' ? (
+            <View className="relative flex items-center justify-center w-12 h-12 rounded-full ">
+              <Image
+                source={require('../assets/tokens/cusd.png')}
+                style={{ width: '100%', height: '100%' }}
+                resizeMode="cover"
+              />
+            </View>
+          ) : (
+            <View className="flex items-center justify-center w-16 h-16 bg-black rounded-full">
+              <Image
+                source={require('../assets/tokens/busd.png')}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+          )}
+          <View className="items-center">
+            <AppText classProps="font-light my-2">{txObj.token}</AppText>
+            <AppText classProps="text-4xl font-medium ">
+              {profile.country} {Number(localSpend).toFixed(2)}
+            </AppText>
+          </View>
+        </View>
+
         {txObj && (
           <>
             <View className="flex items-center justify-center flex-1 p-5 ">
@@ -257,15 +282,6 @@ const EVMConfirmTXScreen = () => {
                     </Text>
                   </AppText>
                 </View>
-              </View>
-            </View>
-
-            <View className="flex items-center justify-center flex-1 ">
-              <View className="items-center">
-                <AppText classProps="font-light my-2">AMOUNT</AppText>
-                <AppText classProps="text-4xl font-medium ">
-                  {profile.country} {Number(localSpend).toFixed(2)}
-                </AppText>
               </View>
             </View>
 

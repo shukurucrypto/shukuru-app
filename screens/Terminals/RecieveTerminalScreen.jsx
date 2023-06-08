@@ -12,15 +12,19 @@ import {
 import Feather from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import AppText from '../../components/AppText'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { API_URL } from '../../apiURL'
+import { fetchBalance } from '../../features/balances/balancesSlice'
+import { fetchTransactions } from '../../features/transactions/transactionsSlice'
 
 const ReceiveTerminalScreen = () => {
   const [number, setNumber] = useState('0.00')
   const [hasPoint, setHasPoint] = useState(false)
 
   const { profile } = useSelector((state) => state.profile)
+
+  const dispatch = useDispatch()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -46,6 +50,8 @@ const ReceiveTerminalScreen = () => {
         return
       }
 
+      await refreshData()
+
       if (token != 'BTC-LT') {
         const conv = await convertToUSD()
 
@@ -59,6 +65,7 @@ const ReceiveTerminalScreen = () => {
             refresh: refresh,
           })
         }
+
         setIsLoading(false)
         return
       }
@@ -133,6 +140,11 @@ const ReceiveTerminalScreen = () => {
       console.log(error.message)
       setConvertLoading(false)
     }
+  }
+
+  const refreshData = () => {
+    fetchBalance(dispatch, user?.userId)
+    fetchTransactions(dispatch, user?.userId)
   }
 
   const renderNumberButton = (num) => (

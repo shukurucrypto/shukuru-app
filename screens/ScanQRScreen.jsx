@@ -40,6 +40,20 @@ const ScanQRScreen = () => {
       case invoice.includes('address') && invoice.includes('amount'):
         navigation.navigate('EVMConfirmTXScreen', { data: invoice })
         break
+      case invoice.startsWith('0x') && invoice.length == 42:
+        navigation.navigate('ExternalSendTerminal', {
+          to: invoice,
+        })
+        break
+      case invoice.startsWith('celo://') && invoice.includes('address'):
+        const regex = /address=([^&]+)/
+        const match = invoice.match(regex)
+        const celoAddress = match ? match[1] : null
+
+        navigation.navigate('ExternalSendTerminal', {
+          to: celoAddress,
+        })
+        break
       case invoice.startsWith('ethereum'):
         const cleanedString = invoice.replace('ethereum:', '')
 
@@ -48,11 +62,8 @@ const ScanQRScreen = () => {
 
         // Extract the address and value from the parts
         const address = parts[0]
-        navigation.navigate('SendTerminal', {
-          token: 'cUSD',
-          contactNumber: address,
-          userId: 'user',
-          refresh: () => {},
+        navigation.navigate('ExternalSendTerminal', {
+          to: address,
         })
         break
       default:

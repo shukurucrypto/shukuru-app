@@ -99,7 +99,7 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
           >
             <Image
               source={require('../../assets/tokens/cusd.png')}
-              style={{ width: 40, height: 40 }}
+              style={{ width: 35, height: 35 }}
             />
             <AppText classProps="mx-4 text-xl font-medium ">
               cUSD (Celo Dollar)
