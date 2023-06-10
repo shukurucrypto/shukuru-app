@@ -212,9 +212,9 @@ const UtilitiesScreen = () => {
             >
               <View className="flex flex-col">
                 <Text className="">Daily</Text>
-                <Text className="text-base font-bold">
+                <AppText classProps="text-base font-bold">
                   {item.amount} {item.weight}
-                </Text>
+                </AppText>
               </View>
               <Text className="text-base font-bold text-black">
                 UGX {item.price}

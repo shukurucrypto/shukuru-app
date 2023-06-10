@@ -136,7 +136,7 @@ const ConfirmTransactionScreen = () => {
   const refresh = () => {
     fetchBalance(dispatch, userState.user.userId)
     fetchTransactions(dispatch, userState.user.userId)
-    fetchCheckreward(dispatch, user.token)
+    fetchCheckreward(dispatch, userState.user.token)
     // fetchBTCTransactions()
   }
 
