@@ -15,8 +15,10 @@ import LinearGradient from 'react-native-linear-gradient'
 import TypeWriter from 'react-native-typewriter'
 
 import AppText from '../AppText'
+import { useNavigation } from '@react-navigation/native'
 
 const TopupSheet = ({ topupActionSheet }) => {
+  const navigation = useNavigation()
   const height = useWindowDimensions().height
 
   return (
@@ -29,7 +31,7 @@ const TopupSheet = ({ topupActionSheet }) => {
       }}
     >
       <>
-        <View className="absolute top-0 bottom-0 left-0 right-0 z-30">
+        {/* <View className="absolute top-0 bottom-0 left-0 right-0 z-30">
           <LinearGradient
             colors={['rgba(0,0,0,0.3)', 'rgba(251,198,9,9)']}
             style={{
@@ -40,9 +42,6 @@ const TopupSheet = ({ topupActionSheet }) => {
               paddingBottom: 50,
             }}
           >
-            {/* Your component content goes here */}
-            {/* <Text className="text-2xl font-extrabold text-center text-black shadow-lg"> */}
-            {/* </Text> */}
             <TypeWriter
               className="text-2xl font-extrabold text-center text-black shadow-lg"
               typing={1}
@@ -50,23 +49,35 @@ const TopupSheet = ({ topupActionSheet }) => {
               Top-up crypto & utilities with MOMO coming soon..
             </TypeWriter>
           </LinearGradient>
-        </View>
+        </View> */}
 
         {/* Sheet header */}
         <View className="flex flex-row items-center justify-between w-full mb-3">
           <AppText classProps="text-2xl font-bold">Topup Options</AppText>
-
-          {/* <Pressable
-            onPress={() => topupActionSheet.current?.hide()}
-            className=""
-          >
-            <AntDesign name="close" size={30} color="black" />
-          </Pressable> */}
         </View>
         <ScrollView
           className="flex flex-1"
           showsVerticalScrollIndicator={false}
         >
+          {/* Utilities */}
+          <Pressable
+            onPress={() => {
+              topupActionSheet.current?.hide()
+              navigation.navigate('UtilitiesScreen')
+            }}
+            className="flex flex-row items-center w-full h-16 "
+          >
+            <View className="flex items-center justify-center w-10 h-10 overflow-hidden bg-orange-500 rounded-full">
+              <Image
+                source={require('../../assets/illustrations/utilities.png')}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <AppText classProps="mx-4 text-xl font-medium ">
+              Buy Utilities
+            </AppText>
+          </Pressable>
+
           {/* Body */}
           <View className="flex flex-col items-center flex-1 ">
             <View className="flex flex-row items-center w-full h-16 ">
@@ -81,14 +92,6 @@ const TopupSheet = ({ topupActionSheet }) => {
                 BTC Lightning
               </AppText>
             </View>
-
-            {/* BTC  */}
-            {/* <View className="flex flex-row items-center w-full h-16 ">
-          <MaterialCommunityIcons name="bitcoin" size={40} color="#fc7f03" />
-          <AppText classProps="mx-4 text-xl font-medium ">
-            BTC Onchain Address
-          </AppText>
-        </View> */}
 
             {/* BUSD  */}
             <Pressable
@@ -122,7 +125,7 @@ const TopupSheet = ({ topupActionSheet }) => {
             </View>
 
             {/* USDT */}
-            <View className="flex flex-row items-center w-full h-16 ">
+            {/* <View className="flex flex-row items-center w-full h-16 ">
               <Image
                 source={require('../../assets/tokens/usdt.png')}
                 style={{ width: 40, height: 40 }}
@@ -137,20 +140,9 @@ const TopupSheet = ({ topupActionSheet }) => {
                     style={{ width: 18, height: 18 }}
                   />
                   <AppText classProps="text-xs mx-1">BNB Chain</AppText>
-                </View>
-              </View>
-            </View>
-
-            {/* Utilities */}
-            <View className="flex flex-row items-center w-full h-16 ">
-              <Image
-                source={require('../../assets/illustrations/Coffee.png')}
-                style={{ width: 55, height: 55 }}
-              />
-              <AppText classProps="mx-4 text-lg font-medium ">
-                Buy Utilities
-              </AppText>
-            </View>
+                </View> 
+             </View> 
+             </View> */}
           </View>
         </ScrollView>
       </>

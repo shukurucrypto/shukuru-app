@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { API_URL } from '../../apiURL'
+import RewardCard from './RewardCard'
 
 const TransactionCards = ({ item }) => {
   const { profile } = useSelector((state) => state.profile)
@@ -86,6 +87,10 @@ const TransactionCards = ({ item }) => {
           </View>
         )
     }
+  }
+
+  if (item.txType === 'reward') {
+    return <RewardCard item={item} navigation={navigation} />
   }
 
   if (item?.bolt11) {

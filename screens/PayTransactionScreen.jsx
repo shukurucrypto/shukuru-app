@@ -17,6 +17,7 @@ import TransactionFailed from './Animators/TransactionFailed'
 import SendingMoney from '../components/Loading/SendingMoney'
 import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
+import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 
 // Pre-step, call this before any NFC operations
 NfcManager.start()
@@ -133,6 +134,7 @@ const PayTransactionScreen = () => {
   const refreshData = () => {
     fetchBalance(dispatch, user?.userId)
     fetchTransactions(dispatch, user?.userId)
+    fetchCheckreward(dispatch, user.token)
   }
 
   const createActiveInvoice = async () => {

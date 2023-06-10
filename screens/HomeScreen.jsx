@@ -42,6 +42,9 @@ import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { adverts } from '../data/adverts'
 import { getBanners } from '../lib/supabase'
 import { fetchAds } from '../features/advert/advertSlice'
+import RewardCard from '../components/Cards/RewardCard'
+import { fetchCheckreward } from '../features/rewards/rewardsSlice'
+import ClaimReward from '../components/Reward/ClaimReward'
 
 const socket = io(SOCKET_SERVER)
 
@@ -53,6 +56,8 @@ const HomeScreen = () => {
   const advertState = useSelector((state) => state.advertState)
 
   const balancesState = useSelector((state) => state.balances)
+
+  const rewardState = useSelector((state) => state.rewardState)
 
   const transactionsState = useSelector((state) => state.transactions)
 
@@ -67,6 +72,8 @@ const HomeScreen = () => {
     fetchTransactions(dispatch, user.userId)
 
     fetchAds(dispatch)
+
+    fetchCheckreward(dispatch, user.token)
 
     // fetchBTCTransactions()
   }, [])
@@ -127,12 +134,14 @@ const HomeScreen = () => {
   }
 
   const onRefresh = () => {
+    fetchCheckreward(dispatch, user.token)
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
     // fetchBTCTransactions()
   }
 
   const refreshEveryThing = () => {
+    fetchCheckreward(dispatch, user.token)
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
     // fetchBTCTransactions()
@@ -161,6 +170,9 @@ const HomeScreen = () => {
                     showsHorizontalScrollIndicator={false}
                     className="flex flex-row h-48 my-3 bg-neutral-50"
                   >
+                    {!rewardState.loading && !rewardState.error && (
+                      <ClaimReward item={rewardState.reward} />
+                    )}
                     {advertState?.banners?.map((item) => (
                       <Banner key={item.id} item={item} />
                     ))}
@@ -299,6 +311,7 @@ const HomeScreen = () => {
             </>
           }
           data={transactionsState?.transactions?.slice(0, 3)}
+          // data={transactionsState?.transactions}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           onRefresh={onRefresh}

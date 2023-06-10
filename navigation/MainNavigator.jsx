@@ -15,6 +15,9 @@ import SelectCountyScreen from '../screens/SelectCounty'
 import ConfirmTransactionScreen from '../screens/ConfirmTransactionScreen'
 import EVMConfirmTXScreen from '../screens/EVMConfirmTxScreen'
 import ExternalSendTerminalScreen from '../screens/Terminals/ExternalSendTerminalScreen'
+import ClaimRewardsScreen from '../screens/ClaimRewardsScreen'
+import UtilitiesScreen from '../screens/Utilities/UtilitiesScreen'
+import PayUtilityScreen from '../screens/Utilities/PayUtility'
 
 const Stack = createNativeStackNavigator()
 
@@ -39,6 +42,9 @@ function MainStackNavigator() {
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="SelectCountryScreen" component={SelectCountyScreen} />
       <Stack.Screen name="EVMConfirmTXScreen" component={EVMConfirmTXScreen} />
+      <Stack.Screen name="ClaimRewardsScreen" component={ClaimRewardsScreen} />
+      <Stack.Screen name="UtilitiesScreen" component={UtilitiesScreen} />
+      <Stack.Screen name="PayUtilityScreen" component={PayUtilityScreen} />
       <Stack.Screen
         name="ExternalSendTerminal"
         component={ExternalSendTerminalScreen}

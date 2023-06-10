@@ -17,6 +17,7 @@ import transactionsReducer from './features/transactions/transactionsSlice'
 import tokenReducer from './features/token/tokenSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import advertReducer from './features/advert/advertSlice'
+import rewardReducer from './features/rewards/rewardsSlice'
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   transactions: transactionsReducer,
   tokenState: tokenReducer,
   advertState: advertReducer,
+  rewardState: rewardReducer,
 })
 
 const persistConfig = {

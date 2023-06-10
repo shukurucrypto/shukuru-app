@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AppText from './AppText'
 import { getBannerImgURL } from '../lib/supabase'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const Banner = ({ item }) => {
   const [imgURL, setImgURL] = useState('')
@@ -22,7 +23,8 @@ const Banner = ({ item }) => {
   }, [])
 
   return (
-    <View
+    <Pressable
+      // onPress={() => navigation.navigate('ClaimRewardsScreen')}
       style={{ width: width - 25 }}
       className="flex flex-row h-full p-4 px-6 mx-3 bg-white rounded-md"
     >
@@ -55,7 +57,7 @@ const Banner = ({ item }) => {
           )}
         </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 

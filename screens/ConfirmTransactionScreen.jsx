@@ -23,6 +23,7 @@ import TransactionFailed from './Animators/TransactionFailed'
 import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { io } from 'socket.io-client'
+import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 
 const socket = io(SOCKET_SERVER)
 
@@ -135,6 +136,7 @@ const ConfirmTransactionScreen = () => {
   const refresh = () => {
     fetchBalance(dispatch, userState.user.userId)
     fetchTransactions(dispatch, userState.user.userId)
+    fetchCheckreward(dispatch, user.token)
     // fetchBTCTransactions()
   }
 

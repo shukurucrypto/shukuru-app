@@ -28,6 +28,7 @@
     "react-native": "0.71.7",
     "react-native-actions-sheet": "^0.8.29",
     "react-native-camera": "^4.2.1",
+    "react-native-confetti-cannon": "^1.5.2",
     "react-native-contacts": "^7.0.5",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-modal": "^13.0.1",
