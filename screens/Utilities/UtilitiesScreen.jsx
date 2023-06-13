@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 const UtilitiesScreen = () => {
   const navigation = useNavigation()
   const coin = ['BITCOIN', 'CUSD', 'BUSD']
-  const [selectedCoin, setSelectedCoin] = useState('BITCOIN')
+  const [selectedCoin, setSelectedCoin] = useState('CUSD')
 
   const { balances } = useSelector((state) => state.balances)
 
@@ -124,7 +124,16 @@ const UtilitiesScreen = () => {
 
             {/*  */}
             <View className="flex flex-row items-center justify-end flex-1 ">
-              <SelectDropdown
+              <View className="flex items-center justify-center w-6 h-6 rounded-full">
+                <Image
+                  source={require('../../assets/tokens/cusd.png')}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              </View>
+
+              <AppText classProps="text-lg ml-2">cUSD</AppText>
+
+              {/* <SelectDropdown
                 data={coin}
                 onSelect={(selectedItem, index) => {
                   // console.log(selectedItem, index)
@@ -146,9 +155,9 @@ const UtilitiesScreen = () => {
                   backgroundColor: '#fff',
                   width: 110,
                 }}
-              />
+              /> */}
 
-              {renderIcon()}
+              {/* {renderIcon()} */}
             </View>
           </View>
 
