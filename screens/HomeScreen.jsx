@@ -174,21 +174,21 @@ const HomeScreen = () => {
                                   showsHorizontalScrollIndicator={false}
                                   className="py-3"
                                 >
-                                  <Text className="font-light">
+                                  <Text className="font-light text-black">
                                     SATS{' '}
                                     {balancesState.balances?.lightning?.toFixed(
                                       2
                                     )}
                                   </Text>
-                                  <Text className="mx-8 font-light">
+                                  <Text className="mx-8 font-light text-black">
                                     BUSD{' '}
                                     {balancesState?.balances?.busd?.toFixed(2)}
                                   </Text>
-                                  <Text className="mr-8 font-light">
+                                  <Text className="mr-8 font-light text-black">
                                     cUSD{' '}
                                     {balancesState.balances?.cusd?.toFixed(2)}
                                   </Text>
-                                  <Text className="font-light">
+                                  <Text className="font-light text-black">
                                     USDT{' '}
                                     {balancesState.balances?.usdt?.toFixed(2)}
                                   </Text>
