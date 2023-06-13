@@ -6,22 +6,14 @@ import {
   FlatList,
   ActivityIndicator,
   Keyboard,
-  Image,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import Contacts from 'react-native-contacts'
-import { PermissionsAndroid } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, { useEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import ContactCard from '../components/Cards/ContactCard'
 import AppText from '../components/AppText'
 import axios from 'axios'
 import { API_URL } from '../apiURL'
-import SearchLoading from './Animators/SearchLoading'
-import Lottie from 'lottie-react-native'
-import { getInnerAd } from '../lib/supabase'
 import { useSelector } from 'react-redux'
 import AdCard from './AdCard'
 
@@ -34,7 +26,6 @@ const FindUser = () => {
 
   const [loading, setLoading] = useState(false)
   const [searchedContact, setSearchedContact] = useState(null)
-  const [contacts, setContacts] = useState([])
   const [error, setError] = useState(null)
   const [searchErr, setSearchErr] = useState(null)
 
@@ -142,7 +133,7 @@ const FindUser = () => {
                   onBlur={() => setSearchedContact({})}
                   onSubmitEditing={handleSearch}
                   returnKeyType="done"
-                  className="w-full border-[0.8px] rounded-lg text-base px-4 h-full border-neutral-300 relative "
+                  className="w-full border-[0.8px] rounded-lg text-base px-4 h-full border-neutral-300 relative text-black"
                 />
               </View>
 

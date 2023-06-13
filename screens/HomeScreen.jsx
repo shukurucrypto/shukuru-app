@@ -1,19 +1,7 @@
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  useWindowDimensions,
-  FlatList,
-  ActivityIndicator,
-  ScrollView,
-} from 'react-native'
+import { View, Text, Pressable, FlatList, ScrollView } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import React, { useEffect, useRef, useState } from 'react'
-import ActionSheet from 'react-native-actions-sheet'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 
 import AppContainer from '../components/AppContainer'
@@ -24,27 +12,15 @@ import SendActionSheet from '../components/Sheets/SendActionSheet'
 import TopupSheet from '../components/Sheets/TopupSheet'
 import AppText from '../components/AppText'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { API_URL, SOCKET_SERVER } from '../apiURL'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { BlurView } from '@react-native-community/blur'
-import { useQuery } from 'react-query'
-import { getTransactions } from '../db'
-import {
-  failedFetchBalances,
-  fetchBalance,
-  fetchedBalances,
-  fetchingBalances,
-} from '../features/balances/balancesSlice'
+import { SOCKET_SERVER } from '../apiURL'
+import { fetchBalance } from '../features/balances/balancesSlice'
 import { io } from 'socket.io-client'
 import useLocalNotification from '../Notifications/Local'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
-import { adverts } from '../data/adverts'
-import { getBanners } from '../lib/supabase'
 import { fetchAds } from '../features/advert/advertSlice'
-import RewardCard from '../components/Cards/RewardCard'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import ClaimReward from '../components/Reward/ClaimReward'
+import { useNavigation } from '@react-navigation/native'
 
 const socket = io(SOCKET_SERVER)
 
@@ -54,6 +30,8 @@ const HomeScreen = () => {
   const profileState = useSelector((state) => state.profile)
 
   const advertState = useSelector((state) => state.advertState)
+
+  const navigation = useNavigation()
 
   const balancesState = useSelector((state) => state.balances)
 
@@ -81,47 +59,6 @@ const HomeScreen = () => {
   const receiveActionSheet = useRef(null)
   const sendActionSheet = useRef(null)
   const topupActionSheet = useRef(null)
-
-  // const fetchBalance = async () => {
-  //   setFetchLoading(true)
-  //   dispatch(fetchingBalances())
-  //   try {
-  //     const result = await axios.get(`${API_URL}/wallet/${user.userId}`)
-
-  //     if (result.data.success) {
-  //       setBalance(result.data.data)
-
-  //       dispatch(fetchedBalances(result.data.data))
-  //     }
-
-  //     setFetchLoading(false)
-  //   } catch (error) {
-  //     console.log(error.message)
-  //     setFetchErr(error.message)
-  //     setFetchLoading(false)
-  //     dispatch(failedFetchBalances(error.message))
-  //   }
-  // }
-
-  // const fetchTransactions = async () => {
-  //   setTxLoading(true)
-  //   try {
-  //     const result = await axios.get(`${API_URL}/txs/${user.userId}`)
-
-  //     if (result.data.success) {
-  //       setTransactions(result.data.data.transactions)
-  //     }
-  //     setTxLoading(false)
-  //   } catch (error) {
-  //     console.log(error.message)
-  //     setTxLoading(false)
-  //   }
-  // }
-
-  // console.log('====================================')
-  // console.log(user)
-  // console.log('====================================')
-
   const keyExtractor = (item, idx) => {
     return item?.recordID?.toString() || idx.toString()
   }
@@ -289,15 +226,21 @@ const HomeScreen = () => {
                       Recent Activity
                     </Text>
 
-                    {/* View all */}
-                    <View className="flex flex-row items-center">
-                      <Text className="font-bold text-primary">View all</Text>
-                      <MaterialIcons
-                        name="keyboard-arrow-right"
-                        size={18}
-                        color="#FBC609"
-                      />
-                    </View>
+                    {transactionsState?.transactions?.length > 4 && (
+                      <Pressable
+                        onPress={() =>
+                          navigation.navigate('TransactionsScreen')
+                        }
+                        className="flex flex-row items-center"
+                      >
+                        <Text className="font-bold text-primary">View all</Text>
+                        <MaterialIcons
+                          name="keyboard-arrow-right"
+                          size={18}
+                          color="#FBC609"
+                        />
+                      </Pressable>
+                    )}
                   </View>
 
                   {/* Transaction cards */}

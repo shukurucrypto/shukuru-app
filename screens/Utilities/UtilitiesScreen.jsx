@@ -224,7 +224,7 @@ const UtilitiesScreen = () => {
         </View>
       </ScrollView>
       {error && errorShown && (
-        <Text className="absolute z-10 p-1 text-sm text-center text-white rounded-full right-4 bg-neutral-600 bottom-5 left-4">
+        <Text className="absolute z-10 p-1 text-sm text-center text-white rounded-lg right-4 bg-neutral-700 bottom-5 left-4">
           {error}
         </Text>
       )}

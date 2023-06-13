@@ -1,5 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Pressable } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import React, { useEffect, useState } from 'react'
 import AppText from '../AppText'
@@ -76,7 +77,7 @@ const TransactionCards = ({ item }) => {
             />
           </View>
         )
-      default:
+      case 'Lightning':
         return (
           <View className="flex items-center justify-center w-10 h-10 bg-orange-500 rounded-full">
             <MaterialCommunityIcons
@@ -84,6 +85,12 @@ const TransactionCards = ({ item }) => {
               size={30}
               color="#fff"
             />
+          </View>
+        )
+      default:
+        return (
+          <View className="flex items-center justify-center w-10 h-10 bg-purple-600 rounded-full">
+            <AntDesign name="creditcard" size={20} color="#fff" />
           </View>
         )
     }
@@ -141,16 +148,22 @@ const TransactionCards = ({ item }) => {
       >
         {renderIcon(item.asset)}
         <View className="flex flex-col flex-1 px-4">
-          {item.external ? (
-            <Text className="text-lg text-orange-500">External Tx</Text>
+          {item.txType === 'utility' ? (
+            <AppText classProps="text-lg">Bought utility</AppText>
           ) : (
             <>
-              <AppText classProps="text-lg">
-                +
-                {item?.phoneNumber?.slice(0, 3) +
-                  '...' +
-                  item?.phoneNumber?.slice(-2)}
-              </AppText>
+              {item.external ? (
+                <Text className="text-lg text-orange-500">External Tx</Text>
+              ) : (
+                <>
+                  <AppText classProps="text-lg">
+                    +
+                    {item?.phoneNumber?.slice(0, 3) +
+                      '...' +
+                      item?.phoneNumber?.slice(-2)}
+                  </AppText>
+                </>
+              )}
             </>
           )}
           <AppText classProps="font-light">

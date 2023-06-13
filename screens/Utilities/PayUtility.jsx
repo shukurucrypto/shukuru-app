@@ -1,18 +1,67 @@
 import { View, Text, SafeAreaView, Pressable, Image } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import React from 'react'
+import React, { useState } from 'react'
 import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { API_URL } from '../../apiURL'
+import SendingMoney from '../../components/Loading/SendingMoney'
+import TransactionDone from '../Animators/TransactionDone'
+import TransactionFailed from '../Animators/TransactionFailed'
+import { fetchBalance } from '../../features/balances/balancesSlice'
+import { fetchTransactions } from '../../features/transactions/transactionsSlice'
+import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
 
 const PayUtilityScreen = () => {
   const navigation = useNavigation()
   const router = useRoute()
 
+  const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState('')
+  const [done, setDone] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  const { user } = useSelector((state) => state.user)
   const { profile } = useSelector((state) => state.profile)
 
+  const dispatch = useDispatch()
+
   const { payload } = router.params
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    try {
+      const fullPackage = `${payload.item.amount} ${payload.item.weight}`
+
+      const data = {
+        network: payload.provider,
+        package: fullPackage,
+        asset: payload.token,
+        amount: Number(payload.item.price),
+      }
+
+      const res = await axios.post(`${API_URL}/utility/pay`, data, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+
+      if (res.data.success) {
+        setDone(true)
+        setLoading(false)
+      } else {
+        setFailed(true)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log(error.message)
+      setLoading(false)
+      setErrors(error.message)
+      setFailed(true)
+    }
+  }
 
   const renderIcon = () => {
     switch (payload.token) {
@@ -59,6 +108,18 @@ const PayUtilityScreen = () => {
         )
     }
   }
+
+  const refreshData = () => {
+    fetchBalance(dispatch, user?.userId)
+    fetchTransactions(dispatch, user?.userId)
+    fetchCheckreward(dispatch, user.token)
+  }
+
+  if (loading) return <SendingMoney />
+
+  if (done) return <TransactionDone refresh={refreshData} />
+
+  if (failed) return <TransactionFailed />
 
   return (
     <SafeAreaView className="flex flex-1">
@@ -134,20 +195,20 @@ const PayUtilityScreen = () => {
 
               {/*  */}
               <View className="w-full border-t-[0.8px] border-neutral-200 flex flex-row py-3 items-center">
-                <Text className="text-lg font-bold">Total: </Text>
-                <Text className="text-lg font-bold">
+                <AppText classProps="text-lg font-bold">Total: </AppText>
+                <AppText classProps="text-lg font-bold">
                   UGX {Number(payload.item.price)}
-                </Text>
+                </AppText>
               </View>
             </View>
           </View>
 
           <View>
             <Pressable
-              onPress={() => {}}
+              onPress={handleSubmit}
               className="items-center w-full p-4 mb-4 rounded-full bg-primary"
             >
-              <Text className="font-bold">CONFIRM</Text>
+              <Text className="font-bold text-black">CONFIRM</Text>
             </Pressable>
             <Pressable
               onPress={() => navigation.goBack()}

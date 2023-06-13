@@ -18,6 +18,7 @@ import ExternalSendTerminalScreen from '../screens/Terminals/ExternalSendTermina
 import ClaimRewardsScreen from '../screens/ClaimRewardsScreen'
 import UtilitiesScreen from '../screens/Utilities/UtilitiesScreen'
 import PayUtilityScreen from '../screens/Utilities/PayUtility'
+import TransactionsScreen from '../screens/TransactionsScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -45,6 +46,7 @@ function MainStackNavigator() {
       <Stack.Screen name="ClaimRewardsScreen" component={ClaimRewardsScreen} />
       <Stack.Screen name="UtilitiesScreen" component={UtilitiesScreen} />
       <Stack.Screen name="PayUtilityScreen" component={PayUtilityScreen} />
+      <Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />
       <Stack.Screen
         name="ExternalSendTerminal"
         component={ExternalSendTerminalScreen}

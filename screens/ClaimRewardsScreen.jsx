@@ -105,7 +105,7 @@ const ClaimRewardsScreen = () => {
           {done && <ConfettiCannon count={200} origin={{ x: 0, y: 0 }} />}
 
           <View className="flex border-t-[0.8px] border-neutral-200 items-center p-2">
-            {!item.response.claimed ? (
+            {!item?.response?.claimed ? (
               <>
                 {done ? (
                   <Pressable
