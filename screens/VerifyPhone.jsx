@@ -36,8 +36,6 @@ const VerifyPhone = () => {
 
   const router = useRoute()
 
-  const { user: userData, token, phone } = router.params
-
   const navigation = useNavigation()
 
   const handleSubmit = async () => {

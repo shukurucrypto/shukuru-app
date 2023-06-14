@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Feather from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import React from 'react'
@@ -51,7 +52,7 @@ const ProfileScreen = () => {
           className="flex flex-row items-center"
         >
           <SimpleLineIcons name="arrow-left" size={22} color="black" />
-          <AppText classProps="text-xl font-bold mx-4">Profile</AppText>
+          <AppText classProps="text-xl font-bold mx-4">Home</AppText>
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate('SettingsScreen')}>
@@ -73,6 +74,12 @@ const ProfileScreen = () => {
                   height: '100%',
                 }}
               />
+
+              {profile.verified && (
+                <View className="absolute bottom-0 right-0 rounded-full">
+                  <MaterialIcons name="verified" color="#3b82f6" size={20} />
+                </View>
+              )}
             </View>
 
             <AppText classProps="text-xl my-2 font-bold">

@@ -6,6 +6,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -42,15 +43,11 @@ const VerifyScreen = () => {
 
   const navigation = useNavigation()
 
-  const router = useRoute()
-
-  const { automatic } = router.params
-
   useEffect(() => {
-    if (automatic) {
-      const send = async () => await sendVerificationCode()
-      // send()
-    }
+    // if (automatic) {
+    const send = async () => await sendVerificationCode()
+    send()
+    // }
   }, [])
 
   const handleSubmit = async () => {
@@ -67,6 +64,7 @@ const VerifyScreen = () => {
         phoneNumber: user.phone,
         code: code,
       }
+
       const res = await axios.post(`${API_URL}/code`, data, {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -76,7 +74,7 @@ const VerifyScreen = () => {
       if (res.data.success) {
         setCode(null)
 
-        onRefresh()
+        fetchProfile(dispatch, user.userId)
 
         navigation.navigate('Home')
       }
@@ -88,28 +86,6 @@ const VerifyScreen = () => {
       setError(error.message)
     }
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        // Perform your custom logic here
-        // If you want to prevent going back, simply return false
-
-        return false
-      }
-
-      navigation.addListener('beforeRemove', (e) => {
-        // Prevent navigating back when the hardware back button is pressed
-        e.preventDefault()
-        onBackPress()
-      })
-
-      return () => {
-        // Clean up the navigation listener when the component is unmounted
-        navigation.removeListener('beforeRemove')
-      }
-    }, [navigation])
-  )
 
   const sendVerificationCode = async () => {
     // setLoading(true)
@@ -128,7 +104,7 @@ const VerifyScreen = () => {
       if (res.data.success) {
         // setLoading(false)
         setLoadCode(false)
-        navigation.navigate('VerifyScreen')
+        // navigation.navigate('VerifyScreen')
       } else {
         // setLoading(false)
         setLoadCode(false)
@@ -141,12 +117,20 @@ const VerifyScreen = () => {
     }
   }
 
-  const onRefresh = () => {
-    fetchProfile(dispatch, user.userId)
-    fetchCheckreward(dispatch, user.token)
-    fetchBalance(dispatch, user.userId)
-    fetchTransactions(dispatch, user.userId)
-  }
+  useEffect(
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        e.preventDefault()
+
+        if (!profile.verified) {
+          return
+        }
+
+        // Prevent default behavior of leaving the screen
+        // navigation.dispatch(e.data.action)
+      }),
+    [navigation, profile?.verified]
+  )
 
   // if (loadCode)
   //   return (
@@ -165,7 +149,7 @@ const VerifyScreen = () => {
     )
 
   return (
-    <SafeAreaView className="flex flex-1 ">
+    <ScrollView className="flex flex-1 ">
       <View className="flex flex-1">
         <View className="flex flex-row items-center justify-between w-full h-20 px-4"></View>
 
@@ -180,7 +164,7 @@ const VerifyScreen = () => {
             This verifies human identity onchain using MASA-FI
           </AppText>
 
-          <View className="flex items-center w-full px-4 py-5 justify-evenly bg-neutral-50 h-1/3">
+          <View className="flex items-center w-full px-4 py-5 justify-evenly bg-neutral-50 ">
             <View className="flex flex-row items-center justify-between flex-1">
               <View className="flex items-center justify-center">
                 <SimpleLineIcons
@@ -198,7 +182,9 @@ const VerifyScreen = () => {
                   value={code}
                   onChangeText={(e) => setCode(e)}
                   placeholder="6-digit Code"
-                  className="w-full p-4 text-black text-base bg-white border-[0.8px] border-neutral-200 my-2"
+                  onSubmitEditing={handleSubmit}
+                  returnKeyType="done"
+                  className="w-full p-2 px-3 text-black text-base bg-white border-[0.8px] border-neutral-200 my-2"
                 />
               </View>
             </View>
@@ -225,7 +211,7 @@ const VerifyScreen = () => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   )
 }
 

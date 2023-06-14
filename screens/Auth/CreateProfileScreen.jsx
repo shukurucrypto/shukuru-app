@@ -170,6 +170,7 @@ const CreateProfileScreen = () => {
                     disabled={loading}
                     autoCapitalize="none"
                     value={phone}
+                    keyboardType="number-pad"
                     onChangeText={(text) => setPhone(text)}
                     returnKeyType="next"
                     onSubmitEditing={() => handleNext(emailRef)}
