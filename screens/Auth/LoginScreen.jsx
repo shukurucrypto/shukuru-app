@@ -65,12 +65,13 @@ const LoginScreen = () => {
       if (res.data.success) {
         storeToken(res.data.data)
         dispatch(fetchedUser(res.data.data))
+        setLoading(false)
       } else {
         // console.log(res.data.response)
         setError(res.data.response)
         dispatch(failedFetchUser(res.data.response))
+        setLoading(false)
       }
-      setLoading(false)
     } catch (error) {
       dispatch(failedFetchUser('OOPs! Something went wrong'))
       console.log(error.message)

@@ -1,9 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { API_URL } from '../../apiURL'
 
 const initalState = {
   loading: false,
   profile: null,
   error: null,
+}
+
+export const fetchProfile = async (dispatch, userId) => {
+  dispatch(fetchingProfile())
+  try {
+    const result = await axios.get(`${API_URL}/user/${userId}`)
+
+    if (result.data.success) {
+      dispatch(fetchedProfile(result.data.data))
+    }
+  } catch (error) {
+    dispatch(failedFetchProfile(error.message))
+  }
 }
 
 export const profileSlice = createSlice({
