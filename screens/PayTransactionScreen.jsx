@@ -128,6 +128,7 @@ const PayTransactionScreen = () => {
         }
       }
     } catch (error) {
+      console.log(error.message)
       setFailed(true)
     }
   }

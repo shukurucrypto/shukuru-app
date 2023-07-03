@@ -97,19 +97,19 @@ const FillUpGasSheet = ({
             onPress={navigate}
             className="flex flex-row items-center justify-between p-2 py-3 rounded-md bg-neutral-100"
           >
-            <Text className="text-lg ">Let me top up myself</Text>
-            <Feather name="arrow-right" size={22} />
+            <Text className="text-lg text-black">Let me top up myself</Text>
+            <Feather name="arrow-right" size={22} color="black" />
           </Pressable>
 
           <Pressable
             onPress={handleSend}
             className="flex flex-row items-center justify-between p-2 py-3 rounded-md bg-neutral-100"
           >
-            <Text className="text-lg ">Top up for me</Text>
+            <Text className="text-lg text-black">Top up for me</Text>
             {loading ? (
               <ActivityIndicator size={22} color="black" />
             ) : (
-              <Feather name="arrow-right" size={22} />
+              <Feather name="arrow-right" size={22} color="black" />
             )}
           </Pressable>
 

@@ -77,7 +77,7 @@ const TopUpGasScreen = () => {
               onPress={() => navigation.goBack()}
               className="flex flex-1"
             >
-              <AntDesign name="close" size={30} />
+              <AntDesign name="close" size={30} color="black" />
             </Pressable>
 
             <View className="flex items-center justify-center flex-1 ">
@@ -89,7 +89,6 @@ const TopUpGasScreen = () => {
           <View className="flex flex-row items-center justify-between w-full p-2 px-4 bg-green-600">
             {renderTab(gas)}
 
-            {/*  */}
             <Pressable
               onPress={() => {
                 topUpGasSheet.current?.show()
@@ -121,7 +120,8 @@ const TopUpGasScreen = () => {
 
             <View className="flex flex-col flex-1 mx-4">
               <AppText classProps="text-lg font-bold">
-                CELO <Text className="text-xs">(gas)</Text>
+                CELO
+                {/* <Text className="text-xs">(gas)</Text> */}
               </AppText>
               <Text>cUSD</Text>
             </View>
@@ -157,7 +157,8 @@ const TopUpGasScreen = () => {
 
             <View className="flex flex-col flex-1 mx-4">
               <AppText classProps="text-lg font-bold">
-                BNB <Text className="text-xs">(gas)</Text>
+                BNB
+                {/* <Text className="text-xs">(gas)</Text> */}
               </AppText>
               <Text>BUSD</Text>
             </View>

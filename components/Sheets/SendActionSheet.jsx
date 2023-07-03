@@ -84,7 +84,7 @@ const SendActionSheet = ({ sendActionSheet, refresh, balances }) => {
           </Pressable>
 
           {/* BUSD  */}
-          {balances.balances.busd <= 0 ? (
+          {balances?.balances?.busd <= 0 ? (
             <View className="flex flex-row items-center w-full h-16 ">
               <View className="flex items-center justify-center rounded-full bg-neutral-300 w-9 h-9"></View>
               <Text className="mx-4 text-xl font-medium text-neutral-300">
