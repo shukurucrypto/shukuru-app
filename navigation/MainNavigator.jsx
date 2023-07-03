@@ -19,6 +19,8 @@ import ClaimRewardsScreen from '../screens/ClaimRewardsScreen'
 import UtilitiesScreen from '../screens/Utilities/UtilitiesScreen'
 import PayUtilityScreen from '../screens/Utilities/PayUtility'
 import TransactionsScreen from '../screens/TransactionsScreen'
+import TopUpGasScreen from '../screens/TopUpGasScreen'
+import GasQRShownScreen from '../screens/GasQRShownScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -47,6 +49,8 @@ function MainStackNavigator() {
       <Stack.Screen name="UtilitiesScreen" component={UtilitiesScreen} />
       <Stack.Screen name="PayUtilityScreen" component={PayUtilityScreen} />
       <Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />
+      <Stack.Screen name="TopUpGasScreen" component={TopUpGasScreen} />
+      <Stack.Screen name="GasQRShownScreen" component={GasQRShownScreen} />
       <Stack.Screen
         name="ExternalSendTerminal"
         component={ExternalSendTerminalScreen}

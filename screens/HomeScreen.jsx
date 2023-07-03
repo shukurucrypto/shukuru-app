@@ -21,6 +21,7 @@ import { fetchAds } from '../features/advert/advertSlice'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import ClaimReward from '../components/Reward/ClaimReward'
 import { useNavigation } from '@react-navigation/native'
+import { fetchUserGas } from '../features/gas/gasSlice'
 
 const socket = io(SOCKET_SERVER)
 
@@ -30,6 +31,8 @@ const HomeScreen = () => {
   const profileState = useSelector((state) => state.profile)
 
   const advertState = useSelector((state) => state.advertState)
+
+  const tokenState = useSelector((state) => state.tokenState)
 
   const navigation = useNavigation()
 
@@ -53,6 +56,8 @@ const HomeScreen = () => {
 
     fetchCheckreward(dispatch, user.token)
 
+    fetchUserGas(dispatch, user.userId, tokenState.token)
+
     // fetchBTCTransactions()
   }, [])
 
@@ -75,6 +80,7 @@ const HomeScreen = () => {
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
     // fetchBTCTransactions()
+    fetchUserGas(dispatch, user.userId, tokenState.token)
   }
 
   const refreshEveryThing = () => {
@@ -82,6 +88,7 @@ const HomeScreen = () => {
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
     // fetchBTCTransactions()
+    fetchUserGas(dispatch, user.userId, tokenState.token)
   }
 
   return (
@@ -157,7 +164,7 @@ const HomeScreen = () => {
                               classProps="my-1 text-3xl font-bold"
                             >
                               {showBalances
-                                ? `${profileState?.profile?.country}` +
+                                ? `${profileState?.profile?.country} ` +
                                   balancesState?.balances?.total
                                     ?.toFixed(2)
                                     .toString()
@@ -262,15 +269,28 @@ const HomeScreen = () => {
           className="flex flex-1"
         />
         <View className="flex flex-row w-full py-3 bg-transparent">
-          <View className="flex flex-col items-center justify-center flex-1">
-            <Pressable
-              onPress={() => sendActionSheet.current?.show()}
-              className="flex items-center justify-center p-4 rounded-full bg-primary "
-            >
-              <AntDesign name="arrowup" size={22} color="black" />
-            </Pressable>
-            <AppText classProps="mt-1 text-sm">Pay</AppText>
-          </View>
+          {balancesState?.balances?.total?.toFixed(2) <= 0 ? (
+            <View className="flex flex-col items-center justify-center flex-1">
+              <Pressable
+                onPress={() => sendActionSheet.current?.show()}
+                disabled
+                className="flex items-center justify-center p-4 rounded-full bg-neutral-200 "
+              >
+                <AntDesign name="arrowup" size={22} color="white" />
+              </Pressable>
+              <Text className="mt-1 text-sm text-neutral-400">Pay</Text>
+            </View>
+          ) : (
+            <View className="flex flex-col items-center justify-center flex-1">
+              <Pressable
+                onPress={() => sendActionSheet.current?.show()}
+                className="flex items-center justify-center p-4 rounded-full bg-primary "
+              >
+                <AntDesign name="arrowup" size={22} color="black" />
+              </Pressable>
+              <AppText classProps="mt-1 text-sm">Pay</AppText>
+            </View>
+          )}
 
           <View className="flex flex-col items-center justify-center flex-1">
             <Pressable
@@ -300,6 +320,7 @@ const HomeScreen = () => {
         <SendActionSheet
           sendActionSheet={sendActionSheet}
           refresh={refreshEveryThing}
+          balances={balancesState}
         />
         <TopupSheet
           topupActionSheet={topupActionSheet}

@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
@@ -75,6 +76,22 @@ const TopupSheet = ({ topupActionSheet }) => {
             </View>
             <AppText classProps="mx-4 text-xl font-medium ">
               Buy Utilities
+            </AppText>
+          </Pressable>
+
+          {/* Gas */}
+          <Pressable
+            onPress={() => {
+              topupActionSheet.current?.hide()
+              navigation.navigate('TopUpGasScreen')
+            }}
+            className="flex flex-row items-center w-full h-16 "
+          >
+            <View className="flex items-center justify-center w-10 h-10 overflow-hidden bg-purple-600 rounded-full">
+              <FontAwesome5 name="gas-pump" size={18} color="#fff" />
+            </View>
+            <AppText classProps="mx-4 text-xl font-medium ">
+              Network Fees (Gas)
             </AppText>
           </Pressable>
 

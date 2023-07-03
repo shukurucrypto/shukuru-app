@@ -127,9 +127,12 @@ const FindUser = () => {
 
               <View className="flex flex-1">
                 <TextInput
-                  placeholder="Search using a username  "
+                  placeholder="Search using a username"
                   value={text}
                   onChangeText={(e) => setText(e)}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="off"
                   onBlur={() => setSearchedContact({})}
                   onSubmitEditing={handleSearch}
                   returnKeyType="done"

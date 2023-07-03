@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
+import Entypo from 'react-native-vector-icons/Entypo'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import AppText from '../../components/AppText'
 import { useDispatch, useSelector } from 'react-redux'
@@ -40,7 +41,7 @@ const ReceiveTerminalScreen = () => {
   const navigation = useNavigation()
   const router = useRoute()
 
-  const { token, refresh } = router.params
+  const { token, refresh, msg } = router.params
 
   const handleSubmit = async () => {
     setIsLoading(true)
@@ -56,14 +57,25 @@ const ReceiveTerminalScreen = () => {
         const conv = await convertToUSD()
 
         if (conv.data) {
-          navigation.navigate('PayTransactionScreen', {
-            token: token,
-            amount: number,
-            convertedAmount: conv?.data,
-            data: profile.address,
-            request: '',
-            refresh: refresh,
-          })
+          if (token === 'BNB' || token === 'CELO') {
+            navigation.navigate('GasQRShownScreen', {
+              token: token,
+              amount: number,
+              convertedAmount: conv?.data,
+              data: profile.address,
+              request: '',
+              refresh: refresh,
+            })
+          } else {
+            navigation.navigate('PayTransactionScreen', {
+              token: token,
+              amount: number,
+              convertedAmount: conv?.data,
+              data: profile.address,
+              request: '',
+              refresh: refresh,
+            })
+          }
         }
 
         setIsLoading(false)
@@ -185,6 +197,13 @@ const ReceiveTerminalScreen = () => {
         </AppText>
         <AppText>{profile.country}</AppText>
       </View>
+
+      {msg && (
+        <View className="flex flex-row items-center justify-center px-4 bg-purple-100 rounded-md">
+          <Entypo name="info-with-circle" color="#7e22ce" size={16} />
+          <Text className="p-2 font-bold text-purple-700">{msg}</Text>
+        </View>
+      )}
 
       {/* 
       <View className="flex w-full px-5">

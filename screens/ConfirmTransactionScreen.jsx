@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
 } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import React, { useEffect, useState } from 'react'
 import SlideToConfirm from 'rn-slide-to-confirm'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import AppText from '../components/AppText'
 import { useDispatch, useSelector } from 'react-redux'
@@ -232,7 +232,25 @@ const ConfirmTransactionScreen = () => {
                   {profile.country} {Number(gas).toFixed(2)}
                 </AppText>
               ) : (
-                <Text className="text-red-500">Low on gas</Text>
+                <Pressable
+                  onPress={() => navigation.navigate('TopUpGasScreen')}
+                  className="flex flex-col"
+                >
+                  <Text className="text-base text-red-500">
+                    You're low on gas
+                  </Text>
+
+                  <View className="flex flex-row items-center mt-1 ">
+                    <Text className="mr-1 text-xs font-medium text-green-500 ">
+                      Fill up?
+                    </Text>
+                    <MaterialIcons
+                      name="open-in-new"
+                      color="#22c55e"
+                      size={15}
+                    />
+                  </View>
+                </Pressable>
               )}
             </View>
 

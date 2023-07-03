@@ -4,7 +4,6 @@ import {
   Pressable,
   useWindowDimensions,
   Image,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -14,7 +13,7 @@ import ActionSheet from 'react-native-actions-sheet'
 import { useNavigation } from '@react-navigation/native'
 import AppText from '../AppText'
 
-const SendActionSheet = ({ sendActionSheet, refresh }) => {
+const SendActionSheet = ({ sendActionSheet, refresh, balances }) => {
   const navigation = useNavigation()
 
   const height = useWindowDimensions().height
@@ -64,28 +63,6 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             </AppText>
           </Pressable>
 
-          {/* BUSD  */}
-          <Pressable
-            onPress={() => {
-              sendActionSheet.current?.hide()
-              navigation.navigate('FindUser', {
-                token: 'BUSD',
-                refresh: refresh,
-              })
-            }}
-            className="flex flex-row items-center w-full h-16 "
-          >
-            <View className="flex items-center justify-center bg-black rounded-full w-9 h-9">
-              <Image
-                source={require('../../assets/tokens/busd.png')}
-                style={{ width: 25, height: 25 }}
-              />
-            </View>
-            <AppText classProps="mx-4 text-xl font-medium ">
-              BUSD (Binance USD)
-            </AppText>
-          </Pressable>
-
           {/* cUSD */}
           <Pressable
             onPress={() => {
@@ -106,6 +83,36 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             </AppText>
           </Pressable>
 
+          {/* BUSD  */}
+          {balances.balances.busd <= 0 ? (
+            <View className="flex flex-row items-center w-full h-16 ">
+              <View className="flex items-center justify-center rounded-full bg-neutral-300 w-9 h-9"></View>
+              <Text className="mx-4 text-xl font-medium text-neutral-300">
+                BUSD (Binance USD)
+              </Text>
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => {
+                sendActionSheet.current?.hide()
+                navigation.navigate('FindUser', {
+                  token: 'BUSD',
+                  refresh: refresh,
+                })
+              }}
+              className="flex flex-row items-center w-full h-16 "
+            >
+              <View className="flex items-center justify-center bg-black rounded-full w-9 h-9">
+                <Image
+                  source={require('../../assets/tokens/busd.png')}
+                  style={{ width: 25, height: 25 }}
+                />
+              </View>
+              <AppText classProps="mx-4 text-xl font-medium ">
+                BUSD (Binance USD)
+              </AppText>
+            </Pressable>
+          )}
           {/* USDT */}
           <Pressable
             onPress={() => {
@@ -117,20 +124,21 @@ const SendActionSheet = ({ sendActionSheet, refresh }) => {
             }}
             className="flex flex-row items-center w-full h-16 "
           >
-            <Image
+            <View className="rounded-full w-9 h-9 bg-neutral-200" />
+            {/* <Image
               source={require('../../assets/tokens/usdt.png')}
               style={{ width: 40, height: 40 }}
-            />
+            /> */}
             <View className="flex flex-row">
-              <AppText classProps="mx-4 text-xl font-medium ">
+              <Text className="mx-4 text-xl font-medium text-neutral-300">
                 USDT (Tether)
-              </AppText>
+              </Text>
               <View className="flex flex-row">
                 <Image
                   source={require('../../assets/tokens/chain.png')}
                   style={{ width: 18, height: 18 }}
                 />
-                <AppText classProps="text-xs mx-1">BNB Chain</AppText>
+                <Text className="mx-1 text-xs text-neutral-300">BNB Chain</Text>
               </View>
             </View>
           </Pressable>
