@@ -50,13 +50,13 @@ const FillUpGasSheet = ({
         setLoading(false)
       }
 
-      setSuccess(false)
-      // closeSheet()
+      closeSheet()
     } catch (error) {
       console.log(error.message)
       setLoading(false)
       setSuccess(false)
     }
+    setSuccess(false)
   }
 
   const navigate = () => {

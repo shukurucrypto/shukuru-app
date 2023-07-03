@@ -128,7 +128,7 @@ const TopUpGasScreen = () => {
 
             <View className="flex flex-col">
               <AppText classProps="text-lg font-bold">
-                {gas.celo?.toFixed(6)}
+                {gas.celo <= 0 ? '0.0' : gas.celo?.toFixed(6)}
               </AppText>
               {gas.celo <= 0 ? (
                 <Text className="text-xs font-bold text-red-600">LOW</Text>
@@ -164,7 +164,7 @@ const TopUpGasScreen = () => {
 
             <View className="flex flex-col">
               <AppText classProps="text-lg font-bold">
-                {Number(gas.bnb).toFixed(6)}
+                {Number(gas.bnb) <= 0 ? '0.0' : Number(gas.bnb).toFixed(6)}
               </AppText>
               {gas.bnb <= 0 ? (
                 <Text className="text-xs font-bold text-red-600">LOW</Text>
