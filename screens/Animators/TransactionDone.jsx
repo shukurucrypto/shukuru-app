@@ -45,10 +45,10 @@ const TransactionDone = ({ refresh, token }) => {
             </View>
             <View className="flex flex-col flex-1">
               <Text className="text-base font-bold text-black">
-                Utilities are coming to Shukuru
+                Utilities are available on Shukuru
               </Text>
               <Text className="text-xs font-light text-black">
-                Buy digital products using Bitcoin
+                Buy digital products using Bitcoin & cUSD
               </Text>
             </View>
           </Pressable>

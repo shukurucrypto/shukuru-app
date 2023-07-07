@@ -19,7 +19,7 @@ const UtilitiesScreen = () => {
   const navigation = useNavigation()
   // const coin = ['BITCOIN', 'CUSD', 'BUSD']
   const coin = ['BITCOIN', 'CUSD']
-  const [selectedCoin, setSelectedCoin] = useState('BITCOIN')
+  const [selectedCoin, setSelectedCoin] = useState('CUSD')
 
   const { balances } = useSelector((state) => state.balances)
 
@@ -144,7 +144,7 @@ const UtilitiesScreen = () => {
 
                   setSelectedCoin(selectedCoin)
                 }}
-                defaultValue={'BITCOIN'}
+                defaultValue={'CUSD'}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected
