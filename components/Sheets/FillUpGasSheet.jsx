@@ -13,6 +13,7 @@ import AppText from '../AppText'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { API_URL } from '../../apiURL'
+import useLocalNotification from '../../Notifications/Local'
 
 const FillUpGasSheet = ({
   filltopUpGasSheet,
@@ -29,6 +30,8 @@ const FillUpGasSheet = ({
 
   const [success, setSuccess] = useState(false)
 
+  const onDisplayNotification = useLocalNotification()
+
   const handleSend = async () => {
     setLoading(true)
     try {
@@ -44,6 +47,13 @@ const FillUpGasSheet = ({
       })
 
       if (res.data.success) {
+        const notifcationData = {
+          title: 'Gas request sent',
+          body: `We'll send you some ${selected} gas shortly`,
+        }
+
+        await onDisplayNotification(notifcationData)
+
         setLoading(false)
         setSuccess(true)
       } else {

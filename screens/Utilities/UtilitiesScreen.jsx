@@ -17,7 +17,8 @@ import { useSelector } from 'react-redux'
 
 const UtilitiesScreen = () => {
   const navigation = useNavigation()
-  const coin = ['BITCOIN', 'CUSD', 'BUSD']
+  // const coin = ['BITCOIN', 'CUSD', 'BUSD']
+  const coin = ['BITCOIN', 'CUSD']
   const [selectedCoin, setSelectedCoin] = useState('CUSD')
 
   const { balances } = useSelector((state) => state.balances)
@@ -29,10 +30,6 @@ const UtilitiesScreen = () => {
 
   const handleSubmit = (item) => {
     const selectedTokenLowercase = selectedCoin.toLowerCase()
-
-    // console.log('====================================')
-    // console.log(balances[selectedTokenLowercase])
-    // console.log('====================================')
 
     if (balances[selectedTokenLowercase] > 0.0023) {
       const payload = {
@@ -124,22 +121,30 @@ const UtilitiesScreen = () => {
 
             {/*  */}
             <View className="flex flex-row items-center justify-end flex-1 ">
-              <View className="flex items-center justify-center w-6 h-6 rounded-full">
+              {/* <View className="flex items-center justify-center w-6 h-6 rounded-full">
                 <Image
                   source={require('../../assets/tokens/cusd.png')}
                   style={{ width: '100%', height: '100%' }}
                 />
               </View>
 
-              <AppText classProps="text-lg ml-2">cUSD</AppText>
+              <AppText classProps="text-lg ml-2">cUSD</AppText> */}
 
-              {/* <SelectDropdown
+              <SelectDropdown
                 data={coin}
                 onSelect={(selectedItem, index) => {
                   // console.log(selectedItem, index)
-                  setSelectedCoin(selectedItem)
+                  let selectedCoin
+
+                  if (selectedItem === 'BITCOIN') {
+                    selectedCoin = 'lightning'
+                  } else {
+                    selectedCoin = selectedItem
+                  }
+
+                  setSelectedCoin(selectedCoin)
                 }}
-                defaultValue={'BITCOIN'}
+                defaultValue={'CUSD'}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected
@@ -155,9 +160,9 @@ const UtilitiesScreen = () => {
                   backgroundColor: '#fff',
                   width: 110,
                 }}
-              /> */}
+              />
 
-              {/* {renderIcon()} */}
+              {renderIcon()}
             </View>
           </View>
 

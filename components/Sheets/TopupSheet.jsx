@@ -98,16 +98,16 @@ const TopupSheet = ({ topupActionSheet }) => {
           {/* Body */}
           <View className="flex flex-col items-center flex-1 ">
             <View className="flex flex-row items-center w-full h-16 ">
-              <View className="flex items-center justify-center bg-orange-500 rounded-full w-9 h-9">
+              <View className="flex items-center justify-center rounded-full bg-neutral-300 w-9 h-9">
                 <MaterialCommunityIcons
                   name="lightning-bolt"
                   size={30}
                   color="#fff"
                 />
               </View>
-              <AppText classProps="mx-4 text-xl font-medium ">
+              <Text className="mx-4 text-xl font-medium text-neutral-300">
                 BTC Lightning
-              </AppText>
+              </Text>
             </View>
 
             {/* BUSD  */}
@@ -119,26 +119,27 @@ const TopupSheet = ({ topupActionSheet }) => {
               onPress={() => {}}
               className="flex flex-row items-center w-full h-16 "
             >
-              <View className="flex items-center justify-center bg-black rounded-full w-9 h-9">
-                <Image
+              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9">
+                {/* <Image
                   source={require('../../assets/tokens/busd.png')}
                   style={{ width: 25, height: 25 }}
-                />
+                /> */}
               </View>
-              <AppText classProps="mx-4 text-xl font-medium ">
+              <Text className="mx-4 text-xl font-medium text-neutral-200">
                 BUSD (Binance USD)
-              </AppText>
+              </Text>
             </Pressable>
 
             {/* cUSD */}
             <View className="flex flex-row items-center w-full h-16 ">
-              <Image
+              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9" />
+              {/* <Image
                 source={require('../../assets/tokens/cusd.png')}
                 style={{ width: 40, height: 40 }}
-              />
-              <AppText classProps="mx-4 text-lg font-medium ">
+              /> */}
+              <Text className="mx-4 text-lg font-medium text-neutral-200">
                 cUSD (Celo Dollar)
-              </AppText>
+              </Text>
             </View>
 
             {/* USDT */}
