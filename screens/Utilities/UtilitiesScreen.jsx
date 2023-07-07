@@ -19,7 +19,7 @@ const UtilitiesScreen = () => {
   const navigation = useNavigation()
   // const coin = ['BITCOIN', 'CUSD', 'BUSD']
   const coin = ['BITCOIN', 'CUSD']
-  const [selectedCoin, setSelectedCoin] = useState('CUSD')
+  const [selectedCoin, setSelectedCoin] = useState('BITCOIN')
 
   const { balances } = useSelector((state) => state.balances)
 
@@ -103,7 +103,7 @@ const UtilitiesScreen = () => {
               onPress={() => navigation.goBack()}
               className="flex flex-1"
             >
-              <AntDesign name="close" size={30} />
+              <AntDesign name="close" size={30} color="black" />
             </Pressable>
 
             <View className="flex items-center justify-center flex-1 ">
@@ -144,7 +144,7 @@ const UtilitiesScreen = () => {
 
                   setSelectedCoin(selectedCoin)
                 }}
-                defaultValue={'CUSD'}
+                defaultValue={'BITCOIN'}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   // text represented after item is selected
                   // if data array is an array of objects then return selectedItem.property to render after item is selected

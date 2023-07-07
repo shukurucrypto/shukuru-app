@@ -174,7 +174,9 @@ const HomeScreen = () => {
 
                             <View className="flex flex-row items-center">
                               {!showBalances ? (
-                                <Text className="text-xs font-light">***</Text>
+                                <Text className="text-xs font-light text-black">
+                                  ***
+                                </Text>
                               ) : (
                                 <ScrollView
                                   horizontal

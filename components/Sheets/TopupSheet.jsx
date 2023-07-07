@@ -98,7 +98,7 @@ const TopupSheet = ({ topupActionSheet }) => {
           {/* Body */}
           <View className="flex flex-col items-center flex-1 ">
             <View className="flex flex-row items-center w-full h-16 ">
-              <View className="flex items-center justify-center rounded-full bg-neutral-300 w-9 h-9">
+              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9">
                 <MaterialCommunityIcons
                   name="lightning-bolt"
                   size={30}
@@ -109,26 +109,6 @@ const TopupSheet = ({ topupActionSheet }) => {
                 BTC Lightning
               </Text>
             </View>
-
-            {/* BUSD  */}
-            <Pressable
-              // onPress={() => {
-              //   receiveActionSheet.current?.hide()
-              //   navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
-              // }}
-              onPress={() => {}}
-              className="flex flex-row items-center w-full h-16 "
-            >
-              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9">
-                {/* <Image
-                  source={require('../../assets/tokens/busd.png')}
-                  style={{ width: 25, height: 25 }}
-                /> */}
-              </View>
-              <Text className="mx-4 text-xl font-medium text-neutral-200">
-                BUSD (Binance USD)
-              </Text>
-            </Pressable>
 
             {/* cUSD */}
             <View className="flex flex-row items-center w-full h-16 ">
@@ -141,6 +121,26 @@ const TopupSheet = ({ topupActionSheet }) => {
                 cUSD (Celo Dollar)
               </Text>
             </View>
+
+            {/* BUSD  */}
+            <Pressable
+              // onPress={() => {
+              //   receiveActionSheet.current?.hide()
+              //   navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
+              // }}
+              onPress={() => {}}
+              className="flex flex-row items-center w-full h-16 "
+            >
+              <View className="flex items-center justify-center rounded-full bg-neutral-100 w-9 h-9">
+                {/* <Image
+                  source={require('../../assets/tokens/busd.png')}
+                  style={{ width: 25, height: 25 }}
+                /> */}
+              </View>
+              <Text className="mx-4 text-xl font-medium text-neutral-100">
+                BUSD (Binance USD)
+              </Text>
+            </Pressable>
 
             {/* USDT */}
             {/* <View className="flex flex-row items-center w-full h-16 ">

@@ -86,8 +86,8 @@ const SendActionSheet = ({ sendActionSheet, refresh, balances }) => {
           {/* BUSD  */}
           {balances?.balances?.busd <= 0 ? (
             <View className="flex flex-row items-center w-full h-16 ">
-              <View className="flex items-center justify-center rounded-full bg-neutral-300 w-9 h-9"></View>
-              <Text className="mx-4 text-xl font-medium text-neutral-300">
+              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9"></View>
+              <Text className="mx-4 text-xl font-medium text-neutral-200">
                 BUSD (Binance USD)
               </Text>
             </View>
@@ -130,14 +130,14 @@ const SendActionSheet = ({ sendActionSheet, refresh, balances }) => {
               style={{ width: 40, height: 40 }}
             /> */}
             <View className="flex flex-row">
-              <Text className="mx-4 text-xl font-medium text-neutral-300">
+              <Text className="mx-4 text-xl font-medium text-neutral-200">
                 USDT (Tether)
               </Text>
               <View className="flex flex-row">
-                <Image
+                {/* <Image
                   source={require('../../assets/tokens/chain.png')}
                   style={{ width: 18, height: 18 }}
-                />
+                /> */}
                 <Text className="mx-1 text-xs text-neutral-300">BNB Chain</Text>
               </View>
             </View>

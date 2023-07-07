@@ -117,20 +117,21 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             }}
             className="flex flex-row items-center w-full h-16 "
           >
-            <Image
+            <View className="rounded-full h-9 w-9 bg-neutral-200" />
+            {/* <Image
               source={require('../../assets/tokens/usdt.png')}
               style={{ width: 40, height: 40 }}
-            />
+            /> */}
             <View className="flex flex-row">
-              <AppText classProps="mx-4 text-xl font-medium ">
+              <Text className="mx-4 text-xl font-medium text-neutral-200">
                 USDT (Tether)
-              </AppText>
+              </Text>
               <View className="flex flex-row">
-                <Image
+                {/* <Image
                   source={require('../../assets/tokens/chain.png')}
                   style={{ width: 18, height: 18 }}
-                />
-                <AppText classProps="text-xs mx-1">BNB Chain</AppText>
+                /> */}
+                <Text className="mx-1 text-xs text-neutral-200">BNB Chain</Text>
               </View>
             </View>
           </Pressable>
