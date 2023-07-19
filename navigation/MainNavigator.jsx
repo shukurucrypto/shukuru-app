@@ -21,6 +21,8 @@ import PayUtilityScreen from '../screens/Utilities/PayUtility'
 import TransactionsScreen from '../screens/TransactionsScreen'
 import TopUpGasScreen from '../screens/TopUpGasScreen'
 import GasQRShownScreen from '../screens/GasQRShownScreen'
+import LockScreen from '../screens/Lock/LockScreen'
+import CreatePinScreen from '../screens/Lock/CreatePinScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -51,6 +53,8 @@ function MainStackNavigator() {
       <Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />
       <Stack.Screen name="TopUpGasScreen" component={TopUpGasScreen} />
       <Stack.Screen name="GasQRShownScreen" component={GasQRShownScreen} />
+      <Stack.Screen name="LockScreen" component={LockScreen} />
+      <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />
       <Stack.Screen
         name="ExternalSendTerminal"
         component={ExternalSendTerminalScreen}

@@ -5,6 +5,7 @@ import {
   ScrollView,
   Pressable,
   TouchableHighlight,
+  Switch,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -112,7 +113,14 @@ const SettingsScreen = () => {
               Require PIN to Open App
             </AppText>
             <View className="flex flex-row items-center">
-              <Text className="py-5 mr-1 text-base text-green-600">YES</Text>
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                // thumbColor={'#f5dd4b'}
+                // ios_backgroundColor="#3e3e3e"
+                // onValueChange={toggleSwitch}
+                value={true}
+              />
             </View>
           </View>
         </View>
@@ -127,7 +135,14 @@ const SettingsScreen = () => {
           <View className="flex flex-row border-b-[0.8px] border-neutral-400 items-center justify-between w-full">
             <AppText classProps="text-base py-5">Payment alerts</AppText>
             <View className="flex flex-row items-center">
-              <Text className="py-5 mr-1 text-base text-green-600">YES</Text>
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                // thumbColor={'#f5dd4b'}
+                // ios_backgroundColor="#3e3e3e"
+                // onValueChange={toggleSwitch}
+                value={true}
+              />
             </View>
           </View>
 
@@ -135,7 +150,15 @@ const SettingsScreen = () => {
           <View className="flex flex-row border-b-[0.8px] border-neutral-400 items-center justify-between w-full">
             <AppText classProps="text-base py-5">New feature updates</AppText>
             <View className="flex flex-row items-center">
-              <Text className="py-5 mr-1 text-base text-green-600">YES</Text>
+              {/* <Text className="py-5 mr-1 text-base text-green-600">YES</Text> */}
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                // thumbColor={'#f5dd4b'}
+                // ios_backgroundColor="#3e3e3e"
+                // onValueChange={toggleSwitch}
+                value={true}
+              />
             </View>
           </View>
         </View>
