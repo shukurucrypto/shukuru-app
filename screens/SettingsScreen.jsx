@@ -114,9 +114,9 @@ const SettingsScreen = () => {
             </AppText>
             <View className="flex flex-row items-center">
               <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                trackColor={{ false: '#767577', true: '#fce0ac' }}
                 // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                // thumbColor={'#f5dd4b'}
+                thumbColor={'#f5dd4b'}
                 // ios_backgroundColor="#3e3e3e"
                 // onValueChange={toggleSwitch}
                 value={true}
@@ -136,9 +136,9 @@ const SettingsScreen = () => {
             <AppText classProps="text-base py-5">Payment alerts</AppText>
             <View className="flex flex-row items-center">
               <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                trackColor={{ false: '#767577', true: '#fce0ac' }}
                 // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                // thumbColor={'#f5dd4b'}
+                thumbColor={'#f5dd4b'}
                 // ios_backgroundColor="#3e3e3e"
                 // onValueChange={toggleSwitch}
                 value={true}
@@ -152,9 +152,9 @@ const SettingsScreen = () => {
             <View className="flex flex-row items-center">
               {/* <Text className="py-5 mr-1 text-base text-green-600">YES</Text> */}
               <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                trackColor={{ false: '#767577', true: '#fce0ac' }}
                 // thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                // thumbColor={'#f5dd4b'}
+                thumbColor={'#f5dd4b'}
                 // ios_backgroundColor="#3e3e3e"
                 // onValueChange={toggleSwitch}
                 value={true}
