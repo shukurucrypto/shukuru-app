@@ -1,7 +1,15 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const ContactCard = ({ contact, navigateToTerminal }) => {
+const AddRecieverPaymentCard = ({ contact, navigateToTerminal }) => {
   if (!contact?.phoneNumber) return null
 
   return (
@@ -19,6 +27,13 @@ const ContactCard = ({ contact, navigateToTerminal }) => {
             contact?.phoneNumber?.slice(-2)}
         </Text>
       </View>
+
+      <Pressable
+        onPress={navigateToTerminal}
+        className="items-center justify-center "
+      >
+        <AntDesign name="pluscircle" size={24} color="#FBC609" />
+      </Pressable>
     </Pressable>
   )
 }
@@ -60,4 +75,4 @@ const styles = StyleSheet.create({
     color: '#888',
   },
 })
-export default ContactCard
+export default AddRecieverPaymentCard

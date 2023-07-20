@@ -1,3 +1,5 @@
+import autopay from '../assets/animations/autopay.json'
+
 export const transactions = [
   {
     id: 1,
@@ -46,5 +48,29 @@ export const transactions = [
     type: 'recieved',
     amount: 1500,
     date: 'Apr 24',
+  },
+]
+
+export const paymentStreamData = [
+  {
+    id: 1,
+    description:
+      'Automate your salary payments based on each employee preferences.',
+    color: 'tomato',
+    illustration: autopay,
+  },
+  {
+    id: 2,
+    description:
+      'Customize payment amounts for individual employees and choose between monthly, weekly, or yearly salary cycles.',
+    color: 'skyblue',
+    illustration: autopay,
+  },
+  {
+    id: 3,
+    description:
+      'Save time and streamline payroll by simply selecting employee addresses and letting our app handle the rest.',
+    color: 'thistle',
+    illustration: autopay,
   },
 ]

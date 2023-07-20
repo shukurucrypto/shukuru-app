@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
 import LinearGradient from 'react-native-linear-gradient'
 import TypeWriter from 'react-native-typewriter'
+import earn from '../../assets/illustrations/earn.png'
 
 import AppText from '../AppText'
 import { useNavigation } from '@react-navigation/native'
@@ -77,6 +78,23 @@ const TopupSheet = ({ topupActionSheet }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               Buy Utilities
             </AppText>
+          </Pressable>
+
+          {/* Salaries / Wages */}
+          <Pressable
+            onPress={() => {
+              topupActionSheet.current?.hide()
+              navigation.navigate('PaymentOnboardingScreen')
+            }}
+            className="flex flex-row items-center w-full h-16 "
+          >
+            <View className="flex items-center justify-center w-10 h-10 overflow-hidden rounded-full bg-lime-600">
+              <Image source={earn} style={{ width: 25, height: 25 }} />
+            </View>
+            <AppText classProps="ml-4 text-xl font-medium ">
+              Salaries & Wages
+            </AppText>
+            <Text className="ml-1 text-xs font-light text-red-600">BETA</Text>
           </Pressable>
 
           {/* Gas */}
