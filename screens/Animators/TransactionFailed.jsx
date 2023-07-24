@@ -17,7 +17,7 @@ const TransactionFailed = () => {
       </View>
 
       <View className="flex flex-col pb-2">
-        <Text className="text-2xl font-bold text-black">$BTC</Text>
+        {/* <Text className="text-2xl font-bold text-black">$BTC</Text> */}
         <Text className="text-5xl font-extrabold text-red-600 shadow-md">
           PAYMENT
         </Text>

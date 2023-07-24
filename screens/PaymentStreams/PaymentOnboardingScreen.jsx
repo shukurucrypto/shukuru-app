@@ -7,16 +7,57 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { SwiperFlatList } from 'react-native-swiper-flatlist'
 import { paymentStreamData } from '../../data'
 import TypeWriter from 'react-native-typewriter'
 import Lottie from 'lottie-react-native'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
+import { API_URL } from '../../apiURL'
+import { useSelector } from 'react-redux'
 
 const PaymentOnboardingScreen = () => {
   const navigation = useNavigation()
+
+  const [loading, setLoading] = useState(false)
+  const [stream, setStream] = useState(null)
+  const [error, setError] = useState(null)
+
+  const { token } = useSelector((state) => state.tokenState)
+
+  useEffect(() => {
+    getSavedStream()
+  }, [])
+
+  const getSavedStream = async () => {
+    setLoading(true)
+
+    try {
+      const result = await axios.get(`${API_URL}/stream`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      console.log('====================================')
+      console.log(result.data)
+      console.log('====================================')
+
+      if (result.data.success) {
+        setStream(result.data.response)
+        setLoading(false)
+      } else {
+        setLoading(false)
+        setError('OOPs!, Failed to fetch data')
+      }
+    } catch (error) {
+      setLoading(false)
+      setError('Something went very wrong')
+    }
+  }
+
   return (
     <ScrollView showsHorizontalScrollIndicator={false} className="flex flex-1">
       <Pressable onPress={() => navigation.goBack()} className="flex m-2">
@@ -94,13 +135,26 @@ const PaymentOnboardingScreen = () => {
           />
         </View>
 
-        <View className="flex flex-row items-center justify-between w-full px-6">
+        <View className="flex flex-col items-center justify-between w-full px-6">
           <Pressable
             onPress={() => navigation.navigate('FindRecieverScreen')}
             className="flex items-center w-full p-4 mb-8 rounded-lg bg-primary"
           >
             <Text className="text-lg font-bold text-black">Setup Now</Text>
           </Pressable>
+
+          {!loading && stream && (
+            <Pressable
+              onPress={() =>
+                navigation.navigate('CurrentStreamsScreen', { item: stream })
+              }
+              className="flex items-center w-full p-4 mb-8 bg-white rounded-lg"
+            >
+              <Text className="text-lg font-bold text-primary">
+                See my Streams
+              </Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </ScrollView>

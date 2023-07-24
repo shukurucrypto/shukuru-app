@@ -26,6 +26,7 @@ import CreatePinScreen from '../screens/Lock/CreatePinScreen'
 import PaymentOnboardingScreen from '../screens/PaymentStreams/PaymentOnboardingScreen'
 import FindRecieverScreen from '../screens/PaymentStreams/FindRecieverScreen'
 import EnterSalaryAmountScreen from '../screens/PaymentStreams/EnterSalaryAmountScreen'
+import CurrentStreamsScreen from '../screens/PaymentStreams/CurrentStreamsScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -59,6 +60,10 @@ function MainStackNavigator() {
       <Stack.Screen name="LockScreen" component={LockScreen} />
       <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />
       <Stack.Screen name="FindRecieverScreen" component={FindRecieverScreen} />
+      <Stack.Screen
+        name="CurrentStreamsScreen"
+        component={CurrentStreamsScreen}
+      />
       <Stack.Screen
         name="EnterSalaryAmountScreen"
         component={EnterSalaryAmountScreen}
