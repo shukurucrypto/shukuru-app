@@ -46,8 +46,6 @@ const HomeScreen = () => {
 
   const dispatch = useDispatch()
 
-  const onDisplayNotification = useLocalNotification()
-
   useEffect(() => {
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
