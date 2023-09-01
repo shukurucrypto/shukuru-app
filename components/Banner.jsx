@@ -5,7 +5,7 @@ import { getBannerImgURL } from '../lib/supabase'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
-const Banner = ({ item }) => {
+const Banner = ({ item, dismiss }) => {
   const [imgURL, setImgURL] = useState('')
 
   const width = useWindowDimensions().width
@@ -39,7 +39,10 @@ const Banner = ({ item }) => {
               <Text className="font-bold text-primary ">{item.btn_title}</Text>
             </Pressable>
           )}
-          <AppText classProps="">Dismiss</AppText>
+
+          <Pressable onPress={dismiss}>
+            <AppText classProps="">Dismiss</AppText>
+          </Pressable>
         </View>
       </View>
 

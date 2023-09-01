@@ -171,7 +171,7 @@ const PayTransactionScreen = () => {
           </AppText>
         </View>
 
-        <View className="flex flex-row items-center justify-center w-1/3">
+        <View className="flex flex-row items-center justify-center w-1/3 my-4">
           <Pressable
             onPress={() => setFilled(!filled)}
             className={`p-2 px-2 border-[0.8px] rounded-l-full ${
@@ -202,7 +202,7 @@ const PayTransactionScreen = () => {
           <QRCODE data={data} />
         )}
 
-        <View className="flex flex-col items-center justify-center">
+        <View className="flex flex-col items-center justify-center mt-3">
           <AppText classProps="text-base">Hello pay 👋😀</AppText>
         </View>
       </View>

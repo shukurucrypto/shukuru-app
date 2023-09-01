@@ -5,6 +5,7 @@ import {
   Pressable,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -88,7 +89,7 @@ const EnterNumberScreen = () => {
   }
 
   return (
-    <SafeAreaView className="flex flex-1">
+    <ScrollView className="flex flex-1">
       <View className="flex flex-1 p-5">
         <View className="flex flex-col flex-1">
           <View className="flex flex-row w-full ">
@@ -106,7 +107,7 @@ const EnterNumberScreen = () => {
             <View className="flex flex-1" />
           </View>
 
-          <View className="flex flex-row items-center justify-center w-full h-20 my-10 ">
+          <View className="flex flex-row items-center justify-center w-full h-20 my-6 ">
             {renderIcon()}
             <AntDesign name="doubleright" size={25} color="black" />
             <View className="w-20 h-full ml-5 overflow-hidden rounded-full ">
@@ -148,7 +149,7 @@ const EnterNumberScreen = () => {
             <Pressable
               onPress={handleSubmit}
               disabled={!phone || error || phone.length < 9}
-              className={`items-center w-full p-4 mb-4 rounded-full ${
+              className={`items-center w-full p-4 my-4 rounded-full ${
                 !phone || error || phone.length < 9
                   ? 'bg-neutral-200'
                   : 'bg-primary'
@@ -167,7 +168,7 @@ const EnterNumberScreen = () => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   )
 }
 

@@ -44,6 +44,8 @@ const HomeScreen = () => {
 
   const [showBalances, setShowBalances] = useState(false)
 
+  const [hideBanner, setHidebanner] = useState(false)
+
   const dispatch = useDispatch()
 
   const onDisplayNotification = useLocalNotification()
@@ -108,20 +110,29 @@ const HomeScreen = () => {
               <View className="flex flex-col flex-1 ">
                 {/* Top ad banner */}
 
-                {advertState.banners && (
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    className="flex flex-row h-48 my-3 bg-neutral-50"
-                  >
-                    {!rewardState.loading && !rewardState.error && (
-                      <ClaimReward item={rewardState.reward} />
-                    )}
-                    {advertState?.banners?.map((item) => (
-                      <Banner key={item.id} item={item} />
-                    ))}
-                  </ScrollView>
-                )}
+                <>
+                  {!hideBanner && advertState.banners && (
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      className="flex flex-row h-48 my-3 bg-neutral-50"
+                    >
+                      {!rewardState.loading && !rewardState.error && (
+                        <ClaimReward
+                          item={rewardState.reward}
+                          dismiss={() => setHidebanner(true)}
+                        />
+                      )}
+                      {advertState?.banners?.map((item) => (
+                        <Banner
+                          key={item.id}
+                          item={item}
+                          dismiss={() => setHidebanner(true)}
+                        />
+                      ))}
+                    </ScrollView>
+                  )}
+                </>
 
                 {/* Balance */}
                 <View className="flex flex-col w-full px-5 py-3">
