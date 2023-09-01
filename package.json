@@ -21,7 +21,6 @@
     "@supabase/supabase-js": "^2.22.0",
     "axios": "^1.4.0",
     "formik": "^2.2.9",
-    "lottie-ios": "3.4.1",
     "lottie-react-native": "^5.1.5",
     "nativewind": "^2.0.11",
     "react": "18.2.0",

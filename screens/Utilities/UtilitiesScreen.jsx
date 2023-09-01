@@ -37,7 +37,8 @@ const UtilitiesScreen = () => {
         provider: provider,
         item: item,
       }
-      navigation.navigate('PayUtilityScreen', { payload })
+      // navigation.navigate('PayUtilityScreen', { payload })
+      navigation.navigate('EnterNumberScreen', { payload })
     } else {
       setError(`You have insufficient ${selectedCoin} to buy this bundle`)
 

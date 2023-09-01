@@ -1,4 +1,11 @@
-import { View, Text, SafeAreaView, Pressable, Image } from 'react-native'
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  Image,
+  TextInput,
+} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import React, { useState } from 'react'
@@ -14,54 +21,29 @@ import { fetchBalance } from '../../features/balances/balancesSlice'
 import { fetchTransactions } from '../../features/transactions/transactionsSlice'
 import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
 
-const PayUtilityScreen = () => {
+const EnterNumberScreen = () => {
+  const [phone, setPhone] = useState('')
+  const [error, setError] = useState(null)
+
   const navigation = useNavigation()
   const router = useRoute()
-
-  const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState('')
-  const [done, setDone] = useState(false)
-  const [failed, setFailed] = useState(false)
 
   const { user } = useSelector((state) => state.user)
   const { profile } = useSelector((state) => state.profile)
 
   const dispatch = useDispatch()
 
-  const { payload, phone } = router.params
+  const { payload } = router.params
 
   const handleSubmit = async () => {
-    setLoading(true)
     try {
-      const fullPackage = `${payload.item.amount} ${payload.item.weight}`
-
-      const data = {
-        network: payload.provider,
-        package: fullPackage,
-        asset: payload.token,
-        amount: Number(payload.item.price),
-        phone: phone,
+      if (!phone || phone.length < 9) {
+        setError('Enter a valid phone number')
+        return
       }
 
-      const res = await axios.post(`${API_URL}/utility/pay`, data, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-
-      if (res.data.success) {
-        setDone(true)
-        setLoading(false)
-      } else {
-        setFailed(true)
-        setLoading(false)
-      }
-    } catch (error) {
-      console.log(error.message)
-      setLoading(false)
-      setErrors(error.message)
-      setFailed(true)
-    }
+      navigation.navigate('PayUtilityScreen', { payload, phone: '256' + phone })
+    } catch (error) {}
   }
 
   const renderIcon = () => {
@@ -116,12 +98,6 @@ const PayUtilityScreen = () => {
     fetchCheckreward(dispatch, user.token)
   }
 
-  if (loading) return <SendingMoney />
-
-  if (done) return <TransactionDone refresh={refreshData} />
-
-  if (failed) return <TransactionFailed />
-
   return (
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-1 p-5">
@@ -135,7 +111,7 @@ const PayUtilityScreen = () => {
             </Pressable>
 
             <View className="flex items-center justify-center">
-              <AppText classProps="text-lg font-bold">Make payment</AppText>
+              <AppText classProps="text-lg font-bold">Buy Data</AppText>
             </View>
 
             <View className="flex flex-1" />
@@ -160,46 +136,23 @@ const PayUtilityScreen = () => {
           </View>
 
           <View className="flex flex-col flex-1 py-5 ">
-            <View className="border-[0.8px] border-neutral-200 p-5 rounded-md">
-              <View className="flex flex-row items-center mb-3">
-                <AppText classProps="font-bold text-base">Provider: </AppText>
-                <AppText classProps="text-base">{payload.provider}</AppText>
-              </View>
+            <View className="border-[0.8px] border-neutral-200 p-3 rounded-md">
+              <View className="flex flex-col mb-3">
+                <AppText classProps=" text-sm">Recipient Number: </AppText>
 
-              {/*  */}
-              <View className="flex flex-row items-center mb-3">
-                <AppText classProps="font-bold text-base">Phone: </AppText>
-                <AppText classProps="text-base">+{phone}</AppText>
-              </View>
-
-              {/*  */}
-              <View className="flex flex-row items-center mb-3">
-                <AppText classProps="font-bold text-base">Bundle: </AppText>
-                <AppText classProps="text-base">
-                  {payload.item.amount} {payload.item.weight}
-                </AppText>
-              </View>
-
-              {/*  */}
-              <View className="flex flex-row items-center mb-3">
-                <AppText classProps="font-bold text-base">Pay with: </AppText>
-                <AppText classProps="text-base">{payload.token}</AppText>
-              </View>
-
-              {/*  */}
-              <View className="flex flex-row items-center mb-3">
-                <AppText classProps="font-bold text-base">Amount: </AppText>
-                <AppText classProps="text-base">
-                  UGX {payload.item.price}
-                </AppText>
-              </View>
-
-              {/*  */}
-              <View className="w-full border-t-[0.8px] border-neutral-200 flex flex-row py-3 items-center">
-                <AppText classProps="text-lg font-bold">Total: </AppText>
-                <AppText classProps="text-lg font-bold">
-                  UGX {Number(payload.item.price)}
-                </AppText>
+                <View className="flex flex-row items-center mt-5">
+                  <View className="flex items-center justify-center h-10 rounded-md w-14 ">
+                    <Text className="text-4xl text-center">🇺🇬</Text>
+                  </View>
+                  <Text className="mx-2 text-lg text-black">+256</Text>
+                  <TextInput
+                    placeholder="256235765276"
+                    keyboardType="phone-pad"
+                    value={phone}
+                    onChangeText={(e) => setPhone(e)}
+                    className="flex flex-1 text-lg text-black border-b border-neutral-300"
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -207,15 +160,22 @@ const PayUtilityScreen = () => {
           <View>
             <Pressable
               onPress={handleSubmit}
-              className="items-center w-full p-4 mb-4 rounded-full bg-primary"
+              disabled={!phone || error || phone.length < 9}
+              className={`items-center w-full p-4 mb-4 rounded-full ${
+                !phone || error || phone.length < 9
+                  ? 'bg-neutral-200'
+                  : 'bg-primary'
+              }`}
             >
-              <Text className="font-bold text-black">CONFIRM</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('Home')}
-              className="items-center w-full p-4 rounded-full "
-            >
-              <Text className="font-bold text-primary">CANCEL</Text>
+              <Text
+                className={`font-bold ${
+                  !phone || error || phone.length < 9
+                    ? 'text-white'
+                    : 'text-black'
+                }`}
+              >
+                CONTINUE
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -224,4 +184,4 @@ const PayUtilityScreen = () => {
   )
 }
 
-export default PayUtilityScreen
+export default EnterNumberScreen
