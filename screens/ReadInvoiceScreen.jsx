@@ -17,7 +17,6 @@ import { API_URL, SOCKET_SERVER } from '../apiURL'
 import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
 import { io } from 'socket.io-client'
-import NFCSheet from '../components/Sheets/NFCSheet'
 import SendingMoney from '../components/Loading/SendingMoney'
 const socket = io(SOCKET_SERVER)
 

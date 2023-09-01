@@ -11,17 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { API_URL, SOCKET_SERVER } from '../apiURL'
 import { io } from 'socket.io-client'
 import TransactionDone from './Animators/TransactionDone'
-import NfcManager, { NfcTech } from 'react-native-nfc-manager'
-import NFCSheet from '../components/Sheets/NFCSheet'
 import TransactionFailed from './Animators/TransactionFailed'
 import SendingMoney from '../components/Loading/SendingMoney'
 import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import { fetchUserGas } from '../features/gas/gasSlice'
-
-// Pre-step, call this before any NFC operations
-NfcManager.start()
 
 const PayTransactionScreen = () => {
   const profileState = useSelector((state) => state.profile)
@@ -31,14 +26,12 @@ const PayTransactionScreen = () => {
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.user)
-  const [hasNfc, setHasNFC] = useState(false)
 
   const [loading, setLoading] = useState(false)
 
   const [filled, setFilled] = useState(true)
 
   const [loadSubmit, setLoadSubmit] = useState(false)
-  const nfcActionSheet = useRef(null)
 
   const [updateCount, setUpdateCount] = useState(0)
 
@@ -57,20 +50,6 @@ const PayTransactionScreen = () => {
       getWalletBalance()
     }
   }, [updateCount])
-
-  useEffect(() => {
-    const checkIsSupported = async () => {
-      const deviceIsSupported = await NfcManager.isSupported()
-
-      setHasNFC(deviceIsSupported)
-
-      if (deviceIsSupported) {
-        await NfcManager.start()
-      }
-    }
-
-    checkIsSupported()
-  }, [])
 
   const getWalletBalance = async () => {
     try {
@@ -159,101 +138,6 @@ const PayTransactionScreen = () => {
     }
   }
 
-  const readNFC = async () => {
-    nfcActionSheet.current?.show()
-    try {
-      // Register for the NFC tag with NDEF in it
-      await NfcManager.requestTechnology(NfcTech.Ndef)
-
-      // Get the tag object
-      const tag = await NfcManager.getTag()
-
-      // Get the NDEF message from the tag
-      const ndef = tag.ndefMessage
-
-      if (ndef && ndef.length > 0) {
-        // Get the first record from the NDEF message
-        const record = ndef[0]
-
-        if (record && record.payload) {
-          // Parse the string data from the payload
-          const textData = record.payload
-            .map((byte) => String.fromCharCode(byte))
-            .join('')
-
-          // Remove the 'en' prefix and get the exact string
-          const exactStr = textData.substring(3)
-
-          // Display the exact string
-          // console.log('Exact string read from NFC tag:', exactStr)
-          nfcActionSheet.current?.hide()
-          handleNFCPay(exactStr)
-
-          // await NfcManager.cancelTechnologyRequest()
-        }
-      } else {
-        console.log('NDEF message not found on the tag')
-        nfcActionSheet.current?.hide()
-        // await NfcManager.cancelTechnologyRequest()
-      }
-    } catch (ex) {
-      console.log('Oops!', ex)
-      nfcActionSheet.current?.hide()
-      await NfcManager.cancelTechnologyRequest()
-    } finally {
-      // stop the nfc scanning
-      nfcActionSheet.current?.hide()
-      await NfcManager.cancelTechnologyRequest()
-    }
-  }
-
-  const handleNFCPay = async (tag) => {
-    setLoadSubmit(true)
-    try {
-      const invoiceData = {
-        tagNo: tag,
-        invoice: data,
-        to: user.userId,
-        amount: amount,
-        token: token,
-      }
-
-      const res = await axios.post(
-        `${API_URL}/invoice/pay/busd/nfc`,
-        invoiceData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      )
-
-      if (res.data.success) {
-        // socket.emit('status', { payhash: request, paid: true })
-
-        // socket.emit('sendTxNotification', {
-        //   recipientId: res.data.data._id,
-        //   message: {
-        //     title: 'You sent a payment',
-        //     subtitle: `to @${res.data.data.name}`,
-        //     body: `Payment done with your card! 😎`,
-        //   },
-        // })
-
-        setDone(true)
-      } else {
-        setFailed(true)
-        // socket.emit('status', { payhash: request, paid: false })
-      }
-
-      setLoadSubmit(false)
-    } catch (error) {
-      console.log(error.message)
-      setLoadSubmit(false)
-      setFailed(true)
-    }
-  }
-
   if (loadSubmit) return <SendingMoney />
 
   if (done) return <TransactionDone refresh={refreshData} />
@@ -331,14 +215,6 @@ const PayTransactionScreen = () => {
         />
       </View>
       <View className="flex flex-row w-full px-5 py-5">
-        {hasNfc && (
-          <Pressable
-            onPress={readNFC}
-            className="flex items-center justify-center flex-1 w-full p-4 mr-2 rounded-full bg-primary"
-          >
-            <AppText classProps="text-xl font-bold">Card</AppText>
-          </Pressable>
-        )}
         <Pressable
           onPress={() => {}}
           className="flex items-center justify-center flex-1 w-full p-4 ml-2 bg-white border-2 rounded-full border-primary"
@@ -346,10 +222,6 @@ const PayTransactionScreen = () => {
           <Text className="text-xl font-bold text-primary">Copy</Text>
         </Pressable>
       </View>
-      <NFCSheet
-        sendActionSheet={nfcActionSheet}
-        // refresh={refreshEveryThing}
-      />
     </View>
   )
 }

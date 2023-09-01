@@ -17,8 +17,6 @@ import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import { fetchUserGas } from '../features/gas/gasSlice'
 
-// Pre-step, call this before any NFC operations
-
 const GasQRShownScreen = () => {
   const profileState = useSelector((state) => state.profile)
 
