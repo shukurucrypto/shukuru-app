@@ -12,11 +12,6 @@ import React, { useState } from 'react'
 import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { API_URL } from '../../apiURL'
-import SendingMoney from '../../components/Loading/SendingMoney'
-import TransactionDone from '../Animators/TransactionDone'
-import TransactionFailed from '../Animators/TransactionFailed'
 import { fetchBalance } from '../../features/balances/balancesSlice'
 import { fetchTransactions } from '../../features/transactions/transactionsSlice'
 import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
@@ -92,12 +87,6 @@ const EnterNumberScreen = () => {
     }
   }
 
-  const refreshData = () => {
-    fetchBalance(dispatch, user?.userId)
-    fetchTransactions(dispatch, user?.userId)
-    fetchCheckreward(dispatch, user.token)
-  }
-
   return (
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-1 p-5">
@@ -136,21 +125,19 @@ const EnterNumberScreen = () => {
           </View>
 
           <View className="flex flex-col flex-1 py-5 ">
-            <View className="border-[0.8px] border-neutral-200 p-3 rounded-md">
-              <View className="flex flex-col mb-3">
-                <AppText classProps=" text-sm">Recipient Number: </AppText>
+            <View className="border-[0.8px] border-neutral-200 p-3 rounded-md w-full h-36">
+              <View className="flex flex-col flex-1 py-2">
+                <AppText classProps=" text-sm mb-2">Recipient Number: </AppText>
 
-                <View className="flex flex-row items-center mt-5">
-                  <View className="flex items-center justify-center h-10 rounded-md w-14 ">
-                    <Text className="text-4xl text-center">🇺🇬</Text>
-                  </View>
-                  <Text className="mx-2 text-lg text-black">+256</Text>
+                <View className="flex flex-row items-center flex-1">
+                  <Text className="text-3xl text-center">🇺🇬</Text>
+                  <Text className="mx-3 text-black">+256</Text>
+
                   <TextInput
-                    placeholder="256235765276"
                     keyboardType="phone-pad"
                     value={phone}
                     onChangeText={(e) => setPhone(e)}
-                    className="flex flex-1 text-lg text-black border-b border-neutral-300"
+                    className="flex flex-1 h-10 px-3 text-black rounded-md bg-neutral-100"
                   />
                 </View>
               </View>
