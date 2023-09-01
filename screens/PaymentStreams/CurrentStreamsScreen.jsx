@@ -15,10 +15,12 @@ import AppText from '../../components/AppText'
 
 import stream from '../../assets/animations/stream.json'
 import dai from '../../assets/tokens/dai.png'
+import usdc from '../../assets/tokens/usdc.png'
 import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import { useSelector } from 'react-redux'
 import useSendOneSignal from '../../Notifications/useSendOneSignal'
+import { streamToken } from '../../config/config'
 
 const CurrentStreamsScreen = () => {
   const [paid, setPaid] = useState(4.345)
@@ -154,7 +156,9 @@ const CurrentStreamsScreen = () => {
           <Text className="text-base font-bold text-black">Active </Text>
 
           <View className="flex flex-row">
-            <Text className="text-xs font-extralight ">Powered by </Text>
+            <Text className="text-xs text-black font-extralight ">
+              Powered by{' '}
+            </Text>
             <Text className="text-xs text-black">Superfluid</Text>
           </View>
         </View>
@@ -178,9 +182,9 @@ const CurrentStreamsScreen = () => {
 
               {/* Amount streamed */}
               <View className="flex flex-row items-center mt-6">
-                <View className="flex items-center justify-center w-12 h-12 bg-[#F5AC37] rounded-full p-1">
+                <View className="w-12 h-12 p-1 bg-[#2774CA] rounded-full">
                   <Image
-                    source={dai}
+                    source={streamToken.icon}
                     style={{ width: '100%', height: '100%' }}
                   />
                 </View>
@@ -194,7 +198,9 @@ const CurrentStreamsScreen = () => {
                   {Number(superTokenBalance).toFixed(2)}
                 </AppText>
 
-                <Text className="text-lg font-bold text-green-500">fDAIx</Text>
+                <Text className="text-lg font-bold text-green-500">
+                  {streamToken.name}
+                </Text>
               </View>
 
               {item.to != profile._id && (
@@ -268,7 +274,7 @@ const CurrentStreamsScreen = () => {
                 <>
                   <AppText classProps="text-base font-medium">
                     You're earning{' '}
-                    <Text className="font-bold">{item.amount}</Text> fDAlx per
+                    <Text className="font-bold">{item.amount}</Text> USDC per
                     month
                   </AppText>
                 </>
@@ -276,7 +282,7 @@ const CurrentStreamsScreen = () => {
                 <>
                   <AppText classProps="text-base font-medium">
                     You're streaming{' '}
-                    <Text className="font-bold">{flowRate}</Text> fDAlx per sec
+                    <Text className="font-bold">{flowRate}</Text> USDC per sec
                   </AppText>
                 </>
               )}

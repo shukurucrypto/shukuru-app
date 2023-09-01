@@ -9,16 +9,16 @@ import {
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SelectDropdown from 'react-native-select-dropdown'
-import dai from '../../assets/tokens/dai.png'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import SendingMoney from '../../components/Loading/SendingMoney'
 import TransactionFailed from '../Animators/TransactionFailed'
 import useSendOneSignal from '../../Notifications/useSendOneSignal'
+import { streamToken } from '../../config/config'
+import useLocalNotification from '../../Notifications/Local'
 
 const EnterSalaryAmountScreen = () => {
   const [amount, setAmount] = useState('0.0')
@@ -35,6 +35,8 @@ const EnterSalaryAmountScreen = () => {
   const [submitErr, setSubmitErr] = useState('')
 
   const navigation = useNavigation()
+
+  const onDisplayNotification = useLocalNotification()
 
   const { token } = useSelector((state) => state.tokenState)
 
@@ -91,13 +93,20 @@ const EnterSalaryAmountScreen = () => {
       if (result.data.success) {
         const { to } = result.data.response
 
+        const notifcationData = {
+          title: 'Stream Created! 🎉',
+          body: `You'll stream ${profile.country} ${amount} to ${profile.name} per ${selecetedDuration}`,
+        }
+
+        await onDisplayNotification(notifcationData)
+
         sendOnesignal(
           `${profile.name} has add you to their ${selecetedDuration} earner's list`,
           `You will earn ${profile.country} ${amount} per ${selecetedDuration}! 🎉`,
           [to]
         )
 
-        navigation.navigate('CurrentStreamsScreen')
+        navigation.navigate('Home')
 
         setSubmitLoading(false)
       } else {
@@ -216,13 +225,15 @@ const EnterSalaryAmountScreen = () => {
                 </Text>
 
                 <View className="flex flex-row items-center">
-                  <View className="w-8 h-8 p-1 bg-[#F5AC37] rounded-full">
+                  <View className="w-8 h-8 p-1 bg-[#2774CA] rounded-full">
                     <Image
-                      source={dai}
+                      source={streamToken.icon}
                       style={{ width: '100%', height: '100%' }}
                     />
                   </View>
-                  <Text className="mx-2 text-lg text-black">fDAIx</Text>
+                  <Text className="mx-2 text-lg text-black">
+                    {streamToken.name}
+                  </Text>
                 </View>
               </View>
 
