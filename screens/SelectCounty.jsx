@@ -147,6 +147,7 @@ const SelectCountyScreen = () => {
                 <View className="flex items-center justify-center flex-1">
                   <TextInput
                     placeholder="Search for your country"
+                    placeholderTextColor="black"
                     className="w-full p-4 px-4 text-black rounded-md bg-neutral-100 "
                     // onBlur={searchForCountry}
                     value={text}

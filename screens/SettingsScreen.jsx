@@ -44,7 +44,7 @@ const SettingsScreen = () => {
         />
         <View className="flex justify-center w-full h-16 ">
           <Pressable onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back-ios" size={25} />
+            <MaterialIcons name="arrow-back-ios" size={25} color="black" />
           </Pressable>
         </View>
         <AppText classProps="text-xl font-medium mb-3">Settings</AppText>
