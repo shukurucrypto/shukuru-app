@@ -48,8 +48,6 @@ const HomeScreen = () => {
 
   const dispatch = useDispatch()
 
-  const onDisplayNotification = useLocalNotification()
-
   useEffect(() => {
     fetchBalance(dispatch, user.userId)
     fetchTransactions(dispatch, user.userId)
@@ -322,7 +320,7 @@ const HomeScreen = () => {
             >
               <AntDesign name="creditcard" size={22} color="black" />
             </Pressable>
-            <AppText classProps="mt-1 text-sm">Topup</AppText>
+            <AppText classProps="mt-1 text-sm">Bills</AppText>
           </View>
         </View>
 

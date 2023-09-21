@@ -9,7 +9,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import React from 'react'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppText from '../components/AppText'
 import QRCODE from '../components/QRCode'
@@ -22,11 +23,14 @@ import {
 } from '../features/user/userSlice'
 import { removeProfile } from '../features/profile/profileSlice'
 import { removeToken } from '../features/token/tokenSlice'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 const ProfileScreen = () => {
   const dispatch = useDispatch()
 
   const { loading, profile, error } = useSelector((state) => state.profile)
+
+  const [copiedInvoice, setCopiedInvoice] = useState(false)
 
   const navigation = useNavigation()
 
@@ -41,6 +45,15 @@ const ProfileScreen = () => {
       console.log(error)
       dispatch(failedFetchUser())
     }
+  }
+
+  const copyToClipboard = () => {
+    setCopiedInvoice(true)
+    Clipboard.setString(profile.address)
+
+    setTimeout(() => {
+      setCopiedInvoice(false)
+    }, 4000)
   }
 
   return (
@@ -91,12 +104,26 @@ const ProfileScreen = () => {
               {profile?.address?.slice(0, 4)} .... {profile?.address?.slice(-4)}
             </Text> */}
 
-            <TouchableOpacity onPress={() => {}}>
+            <Pressable
+              onPress={copyToClipboard}
+              className="flex flex-row items-center justify-center "
+            >
+              <Text className="mr-2 text-blue-500">
+                {copiedInvoice
+                  ? 'Copied!'
+                  : profile?.address?.slice(0, 4) +
+                    '...' +
+                    profile?.address?.slice(-4)}
+              </Text>
+              <Ionicons name="copy-outline" color="#3b82f6" />
+            </Pressable>
+
+            {/* <TouchableOpacity onPress={() => {}}>
               <Text className="text-sm font-light text-red-500 ">
                 Change currency{' '}
                 <AppText classProps="font-bold">({profile?.country})</AppText>
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View className="flex items-center justify-center flex-1 p-6 ">

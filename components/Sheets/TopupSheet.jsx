@@ -79,6 +79,23 @@ const TopupSheet = ({ topupActionSheet }) => {
             </AppText>
           </Pressable>
 
+          {/* Withdraws */}
+          <Pressable
+            onPress={() => {
+              topupActionSheet.current?.hide()
+              // navigation.navigate('WithdrawScreen')
+              navigation.navigate('SelectWithdrawAssetScreen')
+            }}
+            className="flex flex-row items-center w-full h-16 "
+          >
+            <View className="flex items-center justify-center w-10 h-10 overflow-hidden bg-green-500 rounded-full">
+              <FontAwesome5 name="coins" size={18} color="#fff" />
+            </View>
+            <AppText classProps="mx-4 text-xl font-medium ">
+              Withdraw Funds
+            </AppText>
+          </Pressable>
+
           {/* Gas */}
           <Pressable
             onPress={() => {

@@ -23,7 +23,12 @@ import TopUpGasScreen from '../screens/TopUpGasScreen'
 import GasQRShownScreen from '../screens/GasQRShownScreen'
 import LockScreen from '../screens/Lock/LockScreen'
 import CreatePinScreen from '../screens/Lock/CreatePinScreen'
-import EnterNumberScreen from '../screens/Utilities/EnterNumberScreen'
+import SelectWithdrawAssetScreen from '../screens/Withdraw/SelectWithdrawAssetScreen'
+import TerminalScreen from '../screens/Terminals/TerminalScreen'
+import EnterPhoneScreen from '../screens/Withdraw/EnterPhoneScreen'
+import WithdrawScreen from '../screens/Withdraw/WithdrawScreen'
+import ReviewScreen from '../screens/Withdraw/ReviewScreen'
+import SuccessScreen from '../screens/Withdraw/SuccessScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -56,7 +61,15 @@ function MainStackNavigator() {
       <Stack.Screen name="GasQRShownScreen" component={GasQRShownScreen} />
       <Stack.Screen name="LockScreen" component={LockScreen} />
       <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />
-      <Stack.Screen name="EnterNumberScreen" component={EnterNumberScreen} />
+      <Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
+      <Stack.Screen name="TerminalScreen" component={TerminalScreen} />
+      <Stack.Screen name="EnterPhoneScreen" component={EnterPhoneScreen} />
+      <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
+      <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen
+        name="SelectWithdrawAssetScreen"
+        component={SelectWithdrawAssetScreen}
+      />
       <Stack.Screen
         name="ExternalSendTerminal"
         component={ExternalSendTerminalScreen}
