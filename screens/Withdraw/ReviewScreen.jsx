@@ -152,7 +152,7 @@ const ReviewScreen = () => {
 
   return (
     <SafeAreaView className="flex flex-1">
-      <BackHeader title="Review" cancel />
+      <BackHeader title="Review" subTitle="Powered by" cancel />
 
       <View className="flex flex-col flex-1 p-5">
         <View className="flex flex-row items-center justify-between h-20 border-b border-b-neutral-300 ">

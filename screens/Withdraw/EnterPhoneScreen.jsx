@@ -42,7 +42,7 @@ const EnterPhoneScreen = () => {
 
   return (
     <SafeAreaView className="flex flex-1">
-      <BackHeader title="Enter Mobile" subTitle="Powered by OneRamp" cancel />
+      <BackHeader title="Enter Mobile" subTitle="By" cancel />
 
       <View className="flex-col flex-1 p-5">
         <AppText classProps="text-base mb-3">Select mobile network</AppText>

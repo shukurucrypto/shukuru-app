@@ -22,7 +22,7 @@ const SelectWithdrawAssetScreen = () => {
   const navigation = useNavigation()
   return (
     <SafeAreaView className="flex flex-1">
-      <BackHeader title="Withdraw Funds" subTitle="Powered by OneRamp" />
+      <BackHeader title="Withdraw Funds" subTitle="By" />
       <View className="flex flex-col flex-1 p-5">
         <AppText classProps="text-lg font-medium">Select an asset</AppText>
 
