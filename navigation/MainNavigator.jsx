@@ -29,6 +29,7 @@ import EnterPhoneScreen from '../screens/Withdraw/EnterPhoneScreen'
 import WithdrawScreen from '../screens/Withdraw/WithdrawScreen'
 import ReviewScreen from '../screens/Withdraw/ReviewScreen'
 import SuccessScreen from '../screens/Withdraw/SuccessScreen'
+import EnterNumberScreen from '../screens/Utilities/EnterNumberScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -58,6 +59,7 @@ function MainStackNavigator() {
       <Stack.Screen name="PayUtilityScreen" component={PayUtilityScreen} />
       <Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />
       <Stack.Screen name="TopUpGasScreen" component={TopUpGasScreen} />
+      <Stack.Screen name="EnterNumberScreen" component={EnterNumberScreen} />
       <Stack.Screen name="GasQRShownScreen" component={GasQRShownScreen} />
       <Stack.Screen name="LockScreen" component={LockScreen} />
       <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />

@@ -13,9 +13,6 @@ import React, { useState } from 'react'
 import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchBalance } from '../../features/balances/balancesSlice'
-import { fetchTransactions } from '../../features/transactions/transactionsSlice'
-import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
 
 const EnterNumberScreen = () => {
   const [phone, setPhone] = useState('')

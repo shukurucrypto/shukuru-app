@@ -2,7 +2,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  Pressable,
   ActivityIndicator,
   useWindowDimensions,
 } from 'react-native'
@@ -15,8 +14,6 @@ import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import { useDispatch, useSelector } from 'react-redux'
 import TransactionFailed from '../Animators/TransactionFailed'
-import useLocalNotification from '../../Notifications/Local'
-import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
 import { fetchBalance } from '../../features/balances/balancesSlice'
 import { fetchTransactions } from '../../features/transactions/transactionsSlice'
 import SuccessScreen from './SuccessScreen'

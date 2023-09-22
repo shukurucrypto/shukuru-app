@@ -4,9 +4,13 @@ import { useNavigation } from '@react-navigation/native'
 import BackHeader from '../../components/Headers/BackHeader'
 import AppText from '../../components/AppText'
 import ListSelector from '../../components/AssetSelector'
+import { useSelector } from 'react-redux'
+import SupportedCountry from '../../components/Modals/SupportedCountry'
 
 const SelectWithdrawAssetScreen = () => {
   // const options = ['Celo Dollar (cUSD)', 'Binance Dollar (BUSD)']
+
+  const [isModalVisible, setModalVisible] = useState(false)
 
   const options = [
     { id: 1, name: 'Celo Dollar (cUSD)', network: 'celo' },
@@ -14,6 +18,8 @@ const SelectWithdrawAssetScreen = () => {
   ]
 
   const [selected, setSelected] = useState(null)
+
+  const { profile } = useSelector((state) => state.profile)
 
   const handleOptionSelect = (selectedOption) => {
     setSelected(selectedOption)
@@ -31,12 +37,17 @@ const SelectWithdrawAssetScreen = () => {
 
       <View className="p-5">
         <Pressable
-          onPress={() =>
+          onPress={() => {
+            if (profile.country !== 'UGX') {
+              setModalVisible(true)
+              return
+            }
+
             navigation.navigate('TerminalScreen', {
               assetName: selected?.name.includes('cUSD') ? 'cUSD' : 'BUSD',
               asset: selected,
             })
-          }
+          }}
           disabled={!selected}
           className={`items-center self-center py-3 rounded-full  w-full ${
             selected ? 'bg-primary' : 'bg-neutral-200'
@@ -51,6 +62,11 @@ const SelectWithdrawAssetScreen = () => {
           </Text>
         </Pressable>
       </View>
+
+      <SupportedCountry
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+      />
     </SafeAreaView>
   )
 }

@@ -15,6 +15,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import mtn from '../../assets/logos/mtn.jpeg'
 import airtel from '../../assets/logos/airtel.jpeg'
 import ConfirmPhoneDialog from '../../components/Modals/ConfirmPhoneDialog'
+import { useSelector } from 'react-redux'
 
 const EnterPhoneScreen = () => {
   const [mobileNetwork, setMobileNetwork] = useState('MTN')
@@ -96,18 +97,26 @@ const EnterPhoneScreen = () => {
           />
         </View> */}
 
-        {/*  */}
-        <View className="flex flex-col mt-8 ">
-          <AppText classProps="text-base">Enter phone number</AppText>
-          <TextInput
-            placeholder="+256XXXXXXXX"
-            keyboardType="phone-pad"
-            value={phone}
-            onChangeText={(e) => setPhone(e)}
-            returnKeyType="done"
-            onSubmitEditing={() => setModalVisible(true)}
-            className="p-3 my-2 text-black border rounded-md h-14 border-neutral-300"
-          />
+        <View className="flex flex-col flex-1 py-5 ">
+          <View className="border-[0.8px] border-neutral-200 p-3 rounded-md w-full h-36">
+            <View className="flex flex-col flex-1 py-2">
+              <AppText classProps=" text-sm mb-2">Recipient Number: </AppText>
+
+              <View className="flex flex-row items-center flex-1">
+                <Text className="text-3xl text-center">🇺🇬</Text>
+                <Text className="mx-3 text-black">+256</Text>
+
+                <TextInput
+                  keyboardType="phone-pad"
+                  value={phone}
+                  onChangeText={(e) => setPhone(e)}
+                  returnKeyType="done"
+                  onSubmitEditing={() => setModalVisible(true)}
+                  className="flex flex-1 h-10 px-3 text-black rounded-md bg-neutral-100"
+                />
+              </View>
+            </View>
+          </View>
         </View>
       </View>
 
@@ -132,7 +141,7 @@ const EnterPhoneScreen = () => {
       <ConfirmPhoneDialog
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
-        phoneNumber={phone}
+        phoneNumber={'256' + phone}
         handleSubmit={handleSubmit}
       />
     </SafeAreaView>
