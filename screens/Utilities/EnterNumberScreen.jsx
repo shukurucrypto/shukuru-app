@@ -13,10 +13,13 @@ import React, { useState } from 'react'
 import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import ConfirmPhoneDialog from '../../components/Modals/ConfirmPhoneDialog'
 
 const EnterNumberScreen = () => {
   const [phone, setPhone] = useState('')
   const [error, setError] = useState(null)
+
+  const [isModalVisible, setModalVisible] = useState(false)
 
   const navigation = useNavigation()
   const router = useRoute()
@@ -25,6 +28,8 @@ const EnterNumberScreen = () => {
 
   const handleSubmit = async () => {
     try {
+      setModalVisible(false)
+
       if (!phone || phone.length < 9) {
         setError('Enter a valid phone number')
         return
@@ -130,6 +135,14 @@ const EnterNumberScreen = () => {
                     keyboardType="phone-pad"
                     value={phone}
                     onChangeText={(e) => setPhone(e)}
+                    returnKeyType="done"
+                    onSubmitEditing={() => {
+                      if (phone.length < 9) {
+                        return
+                      }
+
+                      setModalVisible(true)
+                    }}
                     className="flex flex-1 h-10 px-3 text-black rounded-md bg-neutral-100"
                   />
                 </View>
@@ -139,7 +152,13 @@ const EnterNumberScreen = () => {
 
           <View>
             <Pressable
-              onPress={handleSubmit}
+              onPress={() => {
+                if (phone.length < 9) {
+                  return
+                }
+
+                setModalVisible(true)
+              }}
               disabled={!phone || error || phone.length < 9}
               className={`items-center w-full p-4 my-4 rounded-full ${
                 !phone || error || phone.length < 9
@@ -159,6 +178,12 @@ const EnterNumberScreen = () => {
             </Pressable>
           </View>
         </View>
+        <ConfirmPhoneDialog
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+          phoneNumber={'256' + phone}
+          handleSubmit={handleSubmit}
+        />
       </View>
     </ScrollView>
   )
