@@ -104,7 +104,7 @@ const TransactionCards = ({ item }) => {
       case 'External':
         return <Text className="text-lg text-orange-500">External Tx</Text>
 
-      case 'utitity':
+      case 'utility':
         return <AppText classProps="text-lg">Bought utility</AppText>
 
       default:

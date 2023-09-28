@@ -32,6 +32,10 @@ const EnterPhoneScreen = () => {
   const { data } = router.params
 
   const handleSubmit = () => {
+    if (phone.length < 9) {
+      return
+    }
+
     setModalVisible(false)
 
     navigation.navigate('ReviewScreen', {
@@ -111,7 +115,13 @@ const EnterPhoneScreen = () => {
                   value={phone}
                   onChangeText={(e) => setPhone(e)}
                   returnKeyType="done"
-                  onSubmitEditing={() => setModalVisible(true)}
+                  onSubmitEditing={() => {
+                    if (phone.length < 9) {
+                      return
+                    }
+
+                    setModalVisible(true)
+                  }}
                   className="flex flex-1 h-10 px-3 text-black rounded-md bg-neutral-100"
                 />
               </View>

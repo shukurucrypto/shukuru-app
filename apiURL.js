@@ -1,10 +1,10 @@
 // NGROK
-export const API_URL = 'https://shukuru-api-test.up.railway.app/app'
-export const SOCKET_SERVER = 'https://shukuru-api-test.up.railway.app/'
+// export const API_URL = 'https://6dce-41-75-170-88.ngrok-free.app/app'
+// export const SOCKET_SERVER = 'https://6dce-41-75-170-88.ngrok-free.app'
 
 // TEST API
-// export const API_URL = 'https://shukuru-test-api.up.railway.app/app'
-// export const SOCKET_SERVER = 'https://shukuru-test-api.up.railway.app'
+export const API_URL = 'https://shukuru-api-test.up.railway.app/app'
+export const SOCKET_SERVER = 'https://shukuru-api-test.up.railway.app/'
 
 // PRODUCTION
 // export const API_URL = 'https://shukuru.up.railway.app/app'

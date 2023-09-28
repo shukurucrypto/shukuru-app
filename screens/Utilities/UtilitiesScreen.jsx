@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 const UtilitiesScreen = () => {
   const navigation = useNavigation()
   // const coin = ['BITCOIN', 'CUSD', 'BUSD']
-  const coin = ['BITCOIN', 'CUSD']
+  const coin = ['BITCOIN', 'CUSD', 'BUSD']
   const [selectedCoin, setSelectedCoin] = useState('CUSD')
 
   const { balances } = useSelector((state) => state.balances)

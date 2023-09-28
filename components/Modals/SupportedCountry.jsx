@@ -11,7 +11,7 @@ function SupportedCountry({ isModalVisible, setModalVisible }) {
           ⚠️ Region Not Supported
         </AppText>
         <AppText classProps="text-base font-meduim mb-2">
-          Crypto to MOMO withdraws are only supported in Uganda for now.
+          Crypto to MOMO withdraws are soon coming to your region.
         </AppText>
 
         <View className="flex flex-row items-center justify-end w-full mt-8">

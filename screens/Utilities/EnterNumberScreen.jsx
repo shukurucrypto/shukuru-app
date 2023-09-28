@@ -21,11 +21,6 @@ const EnterNumberScreen = () => {
   const navigation = useNavigation()
   const router = useRoute()
 
-  const { user } = useSelector((state) => state.user)
-  const { profile } = useSelector((state) => state.profile)
-
-  const dispatch = useDispatch()
-
   const { payload } = router.params
 
   const handleSubmit = async () => {

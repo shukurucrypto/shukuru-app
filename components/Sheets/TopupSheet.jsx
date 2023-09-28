@@ -54,7 +54,7 @@ const TopupSheet = ({ topupActionSheet }) => {
 
         {/* Sheet header */}
         <View className="flex flex-row items-center justify-between w-full mb-3">
-          <AppText classProps="text-2xl font-bold">Topup Options</AppText>
+          <AppText classProps="text-2xl font-bold">Pay Bills</AppText>
         </View>
         <ScrollView
           className="flex flex-1"
@@ -112,9 +112,8 @@ const TopupSheet = ({ topupActionSheet }) => {
             </AppText>
           </Pressable>
 
-          {/* Body */}
           <View className="flex flex-col items-center flex-1 ">
-            <View className="flex flex-row items-center w-full h-16 ">
+            {/* <View className="flex flex-row items-center w-full h-16 ">
               <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9">
                 <MaterialCommunityIcons
                   name="lightning-bolt"
@@ -125,22 +124,21 @@ const TopupSheet = ({ topupActionSheet }) => {
               <Text className="mx-4 text-xl font-medium text-neutral-300">
                 BTC Lightning
               </Text>
-            </View>
+            </View> */}
 
             {/* cUSD */}
-            <View className="flex flex-row items-center w-full h-16 ">
-              <View className="flex items-center justify-center rounded-full bg-neutral-200 w-9 h-9" />
-              {/* <Image
+            {/* <View className="flex flex-row items-center w-full h-16 ">
+              <Image
                 source={require('../../assets/tokens/cusd.png')}
                 style={{ width: 40, height: 40 }}
-              /> */}
+              />
               <Text className="mx-4 text-lg font-medium text-neutral-200">
                 cUSD (Celo Dollar)
               </Text>
-            </View>
+            </View> */}
 
             {/* BUSD  */}
-            <Pressable
+            {/* <Pressable
               // onPress={() => {
               //   receiveActionSheet.current?.hide()
               //   navigation.navigate('ReceiveTerminal', { token: 'BUSD' })
@@ -149,15 +147,15 @@ const TopupSheet = ({ topupActionSheet }) => {
               className="flex flex-row items-center w-full h-16 "
             >
               <View className="flex items-center justify-center rounded-full bg-neutral-100 w-9 h-9">
-                {/* <Image
+                <Image
                   source={require('../../assets/tokens/busd.png')}
                   style={{ width: 25, height: 25 }}
-                /> */}
+                />
               </View>
               <Text className="mx-4 text-xl font-medium text-neutral-100">
                 BUSD (Binance USD)
               </Text>
-            </Pressable>
+            </Pressable> */}
 
             {/* USDT */}
             {/* <View className="flex flex-row items-center w-full h-16 ">
