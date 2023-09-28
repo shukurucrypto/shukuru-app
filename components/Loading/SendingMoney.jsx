@@ -11,6 +11,10 @@ const SendingMoney = () => {
           source={require('../../assets/animations/blocks.json')}
           autoPlay
           loop
+          style={{
+            width: 400,
+            height: 400,
+          }}
         />
 
         <Text className="text-sm text-black">Processing....</Text>
