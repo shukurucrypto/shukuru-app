@@ -9,6 +9,10 @@ const SearchLoading = () => {
         source={require('../../assets/animations/blocks.json')}
         autoPlay
         loop
+        style={{
+          width: 300,
+          height: 300,
+        }}
       />
     </View>
   )

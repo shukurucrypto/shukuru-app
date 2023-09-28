@@ -15,6 +15,10 @@ const TransactionDone = ({ refresh, token }) => {
             source={require('../../assets/animations/done.json')}
             autoPlay
             loop
+            style={{
+              width: 300,
+              height: 300,
+            }}
           />
         </View>
 

@@ -11,6 +11,10 @@ const TransactionFailed = ({ asset }) => {
       <View className="flex flex-col items-center justify-center flex-1 ">
         <Lottie
           source={require('../../assets/animations/failed.json')}
+          style={{
+            width: 300,
+            height: 300,
+          }}
           autoPlay
           loop
         />
