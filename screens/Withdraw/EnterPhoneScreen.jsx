@@ -38,9 +38,11 @@ const EnterPhoneScreen = () => {
 
     setModalVisible(false)
 
+    const phoneNumber = '256' + phone // Make phone more dynamic....
+
     navigation.navigate('ReviewScreen', {
       data,
-      phone,
+      phone: phoneNumber,
       mobileNetwork,
     })
   }
