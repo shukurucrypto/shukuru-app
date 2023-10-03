@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { useSelector } from 'react-redux'
 
 const ListSelector = ({ options, onSelect }) => {
+  const { balances, loading, error } = useSelector((state) => state.balances)
+
   const [selectedOption, setSelectedOption] = useState(null)
 
   const handleOptionSelect = (option) => {
@@ -9,9 +12,21 @@ const ListSelector = ({ options, onSelect }) => {
     onSelect(option)
   }
 
+  // Filter the options based on user balance
+  const filteredOptions = options.filter((option) => {
+    // Check the currency type and balance key
+
+    if (option.name.includes('cUSD')) {
+      return balances.cusd > 0
+    } else if (option.name.includes('BUSD')) {
+      return balances.busd > 0
+    }
+    return true // Show other currencies by default (you can adjust this as needed)
+  })
+
   return (
     <View style={styles.container}>
-      {options.map((option, index) => (
+      {filteredOptions.map((option, index) => (
         <TouchableOpacity
           key={option.id}
           style={[
@@ -20,6 +35,19 @@ const ListSelector = ({ options, onSelect }) => {
           ]}
           onPress={() => handleOptionSelect(option)}
         >
+          {option.name.includes('cUSD') ? (
+            <Image
+              source={require('../assets/tokens/cusd.png')}
+              style={{ width: 25, height: 25, marginRight: 8 }}
+            />
+          ) : (
+            <View className="flex items-center justify-center w-6 h-6 mr-2 bg-black rounded-full">
+              <Image
+                source={require('../assets/tokens/busd.png')}
+                style={{ width: 18, height: 18 }}
+              />
+            </View>
+          )}
           <Text style={styles.optionText}>{option.name}</Text>
         </TouchableOpacity>
       ))}
@@ -36,9 +64,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   option: {
-    padding: 14,
-    borderBottomWidth: 1,
-    borderColor: '#f2f2f2',
+    paddingVertical: 14,
+
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   selectedOption: {
     backgroundColor: '#f2f0f0',
@@ -50,11 +79,3 @@ const styles = StyleSheet.create({
 })
 
 export default ListSelector
-
-// Usage example
-// const App = () => {
-//   return (
-//   );
-// };
-
-// export default App;

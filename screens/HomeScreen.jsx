@@ -133,7 +133,7 @@ const HomeScreen = () => {
                 </>
 
                 {/* Balance */}
-                <View className="flex flex-col w-full px-5 py-3">
+                <View className="flex flex-col w-full px-5 pt-6">
                   {/* top */}
                   <View className="flex flex-row items-center justify-between w-full">
                     <Text className="text-base font-medium text-neutral-700">
@@ -167,7 +167,9 @@ const HomeScreen = () => {
                       ) : (
                         !balancesState.error &&
                         balancesState.balances && (
-                          <>
+                          <Pressable
+                            onPress={() => setShowBalances(!showBalances)}
+                          >
                             <AppText
                               numberOfLines={1}
                               classProps="my-1 text-3xl font-bold"
@@ -213,7 +215,7 @@ const HomeScreen = () => {
                                 </ScrollView>
                               )}
                             </View>
-                          </>
+                          </Pressable>
                         )
                       )}
                     </View>
