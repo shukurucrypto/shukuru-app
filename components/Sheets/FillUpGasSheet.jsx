@@ -1,19 +1,18 @@
+import React, { useState } from 'react'
 import {
-  View,
-  Text,
-  Pressable,
-  useWindowDimensions,
   ActivityIndicator,
+  Pressable,
+  Text,
+  View,
+  useWindowDimensions,
 } from 'react-native'
-import Feather from 'react-native-vector-icons/Feather'
-import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
+import Feather from 'react-native-vector-icons/Feather'
 
-import AppText from '../AppText'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { useNavigation } from '@react-navigation/native'
-import axios from 'axios'
-import { API_URL } from '../../apiURL'
-import useLocalNotification from '../../Notifications/Local'
+import AppText from '../AppText'
+import { useSelector } from 'react-redux'
 
 const FillUpGasSheet = ({
   filltopUpGasSheet,
@@ -26,47 +25,19 @@ const FillUpGasSheet = ({
   const navigation = useNavigation()
   const height = useWindowDimensions().height
 
+  const { profile, error } = useSelector((state) => state.profile)
+
   const [loading, setLoading] = useState(false)
 
-  const [success, setSuccess] = useState(false)
+  const [copiedInvoice, setCopiedInvoice] = useState(false)
 
-  const onDisplayNotification = useLocalNotification()
+  const copyToClipboard = () => {
+    setCopiedInvoice(true)
+    Clipboard.setString(profile.address)
 
-  const handleSend = async () => {
-    setLoading(true)
-    try {
-      const data = {
-        asset: selected,
-        userId: userId,
-      }
-
-      const res = await axios.post(`${API_URL}/gas/request`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      if (res.data.success) {
-        const notifcationData = {
-          title: 'Gas request sent',
-          body: `We'll send you some ${selected} gas shortly`,
-        }
-
-        await onDisplayNotification(notifcationData)
-
-        setLoading(false)
-        setSuccess(true)
-      } else {
-        setLoading(false)
-      }
-
-      closeSheet()
-    } catch (error) {
-      console.log(error.message)
-      setLoading(false)
-      setSuccess(false)
-    }
-    setSuccess(false)
+    setTimeout(() => {
+      setCopiedInvoice(false)
+    }, 4000)
   }
 
   const navigate = () => {
@@ -98,7 +69,7 @@ const FillUpGasSheet = ({
         {/* Sheet header */}
         <View className="flex flex-row items-center justify-between w-full mb-3">
           <AppText classProps="text-xl font-bold">
-            How do you want to fill up {selected} gas?
+            How do you want to fill up {selected}?
           </AppText>
         </View>
 
@@ -107,29 +78,34 @@ const FillUpGasSheet = ({
             onPress={navigate}
             className="flex flex-row items-center justify-between p-2 py-3 rounded-md bg-neutral-100"
           >
-            <Text className="text-lg text-black">Let me top up myself</Text>
+            <Text className="text-lg text-black">Top up from account</Text>
             <Feather name="arrow-right" size={22} color="black" />
           </Pressable>
 
           <Pressable
-            onPress={handleSend}
+            onPress={copyToClipboard}
             className="flex flex-row items-center justify-between p-2 py-3 rounded-md bg-neutral-100"
           >
-            <Text className="text-lg text-black">Top up for me</Text>
-            {loading ? (
-              <ActivityIndicator size={22} color="black" />
+            {copiedInvoice ? (
+              <View className="flex flex-row items-center justify-between flex-1">
+                <Text className="text-lg text-blue-500">Address Copied!</Text>
+                <Feather name="copy" size={22} color="#3b82f6" />
+              </View>
             ) : (
-              <Feather name="arrow-right" size={22} color="black" />
+              <View className="flex flex-row items-center justify-between flex-1">
+                <Text className="text-lg text-black">Copy my address</Text>
+                <Feather name="copy" size={22} color="black" />
+              </View>
             )}
           </Pressable>
 
-          {success && (
+          {/* {success && (
             <View className="absolute left-0 w-full p-2 bg-green-300 rounded-md bottom-6">
               <Text className="font-bold text-center text-green-700">
                 Request sent!
               </Text>
             </View>
-          )}
+          )} */}
         </View>
       </>
     </ActionSheet>
