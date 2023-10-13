@@ -1,20 +1,19 @@
+import { useNavigation } from '@react-navigation/native'
+import React, { useRef, useState } from 'react'
 import {
-  View,
-  Text,
+  Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
-  Pressable,
-  Image,
+  Text,
+  View,
 } from 'react-native'
-import React, { useRef, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import AppText from '../components/AppText'
-import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserGas } from '../features/gas/gasSlice'
+import AppText from '../components/AppText'
 import FillUpGasSheet from '../components/Sheets/FillUpGasSheet'
+import { fetchUserGas } from '../features/gas/gasSlice'
 
 const TopUpGasScreen = () => {
   const { gas } = useSelector((state) => state.gasState)
@@ -28,37 +27,6 @@ const TopUpGasScreen = () => {
   const topUpGasSheet = useRef(null)
 
   const dispatch = useDispatch()
-
-  const renderTab = (price) => {
-    switch (price) {
-      case price.celo <= 0:
-        return (
-          <Text className="text-base font-bold text-white">
-            You're low on cUSD
-          </Text>
-        )
-
-      case price.bnb <= 0:
-        return (
-          <Text className="text-base font-bold text-white">
-            You're low on BUSD
-          </Text>
-        )
-
-      case price.bnb <= 0 && price.celo <= 0:
-        return (
-          <Text className="text-base font-bold text-white">
-            You're low on BUSD, cUSD
-          </Text>
-        )
-      default:
-        return (
-          <Text className="text-base font-bold text-white">
-            Boost your tx speed
-          </Text>
-        )
-    }
-  }
 
   const refresh = async () => {
     fetchUserGas(dispatch, user.userId, token)
@@ -81,14 +49,15 @@ const TopUpGasScreen = () => {
             </Pressable>
 
             <View className="flex items-center justify-center flex-1 ">
-              <AppText classProps="text-lg font-bold">Gas Analysis</AppText>
+              <AppText classProps="text-lg font-bold">My Assets</AppText>
             </View>
 
             <View className="flex flex-1" />
           </View>
           <View className="flex flex-row items-center justify-between w-full p-2 px-4 bg-green-600">
-            {renderTab(gas)}
-
+            <Text className="text-base font-bold text-white">
+              Boost your portfolio
+            </Text>
             <Pressable
               onPress={() => {
                 topUpGasSheet.current?.show()
@@ -123,7 +92,7 @@ const TopUpGasScreen = () => {
                 CELO
                 {/* <Text className="text-xs">(gas)</Text> */}
               </AppText>
-              <Text>cUSD</Text>
+              <Text className="text-xs">CELO Chain</Text>
             </View>
 
             <View className="flex flex-col">
@@ -131,7 +100,7 @@ const TopUpGasScreen = () => {
                 {gas.celo <= 0 ? '0.0' : gas.celo?.toFixed(6)}
               </AppText>
               {gas.celo <= 0 ? (
-                <Text className="text-xs font-bold text-red-600">LOW</Text>
+                <Text className="text-xs font-bold text-red-600">ADD</Text>
               ) : (
                 <Text className="text-xs font-bold text-green-600">
                   REFILL?
@@ -160,7 +129,7 @@ const TopUpGasScreen = () => {
                 BNB
                 {/* <Text className="text-xs">(gas)</Text> */}
               </AppText>
-              <Text>BUSD</Text>
+              <Text className="text-xs">BNB Chain</Text>
             </View>
 
             <View className="flex flex-col">
@@ -168,7 +137,7 @@ const TopUpGasScreen = () => {
                 {Number(gas.bnb) <= 0 ? '0.0' : Number(gas.bnb).toFixed(6)}
               </AppText>
               {gas.bnb <= 0 ? (
-                <Text className="text-xs font-bold text-red-600">LOW</Text>
+                <Text className="text-xs font-bold text-red-600">ADD</Text>
               ) : (
                 <Text className="text-xs font-bold text-green-600">
                   REFILL?

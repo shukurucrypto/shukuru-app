@@ -167,8 +167,8 @@ const HomeScreen = () => {
                       ) : (
                         !balancesState.error &&
                         balancesState.balances && (
-                          <Pressable
-                            onPress={() => setShowBalances(!showBalances)}
+                          <View
+                          // onPress={() => setShowBalances(!showBalances)}
                           >
                             <AppText
                               numberOfLines={1}
@@ -201,21 +201,21 @@ const HomeScreen = () => {
                                     )}
                                   </Text>
                                   <Text className="mx-8 font-light text-black">
-                                    BUSD{' '}
-                                    {balancesState?.balances?.busd?.toFixed(2)}
-                                  </Text>
-                                  <Text className="mr-8 font-light text-black">
                                     cUSD{' '}
                                     {balancesState.balances?.cusd?.toFixed(2)}
                                   </Text>
-                                  <Text className="font-light text-black">
+                                  <Text className="font-light text-black ">
+                                    BUSD{' '}
+                                    {balancesState?.balances?.busd?.toFixed(2)}
+                                  </Text>
+                                  {/* <Text className="font-light text-black">
                                     USDT{' '}
                                     {balancesState.balances?.usdt?.toFixed(2)}
-                                  </Text>
+                                  </Text> */}
                                 </ScrollView>
                               )}
                             </View>
-                          </Pressable>
+                          </View>
                         )
                       )}
                     </View>

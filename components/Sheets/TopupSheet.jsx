@@ -105,11 +105,12 @@ const TopupSheet = ({ topupActionSheet }) => {
             className="flex flex-row items-center w-full h-16 "
           >
             <View className="flex items-center justify-center w-10 h-10 overflow-hidden bg-purple-600 rounded-full">
-              <FontAwesome5 name="gas-pump" size={18} color="#fff" />
+              <FontAwesome5 name="money-bill-alt" size={18} color="#fff" />
             </View>
-            <AppText classProps="mx-4 text-xl font-medium ">
-              Network Fees (Gas)
-            </AppText>
+
+            <View className="flex mx-4">
+              <AppText classProps="text-xl font-medium ">My Assets</AppText>
+            </View>
           </Pressable>
 
           <View className="flex flex-col items-center flex-1 ">

@@ -227,7 +227,27 @@ const ConfirmTransactionScreen = () => {
             <View className="flex-row items-center justify-between w-full p-5 border-b-[0.8px] border-neutral-300">
               <AppText classProps="text-lg">Network Fee</AppText>
 
-              {gas ? (
+              {/* <Pressable
+                onPress={() => navigation.navigate('TopUpGasScreen')}
+                className="flex flex-col"
+              >
+                <Text className="text-base text-red-500">
+                  You're low on gas
+                </Text>
+
+                <View className="flex flex-row items-center mt-1 ">
+                  <Text className="mr-1 text-xs font-medium text-green-500 ">
+                    Fill up?
+                  </Text>
+                  <MaterialIcons name="open-in-new" color="#22c55e" size={15} />
+                </View>
+              </Pressable> */}
+
+              <AppText classProps="text-base font-bold">
+                {profile.country} {Number(gas).toFixed(2)}
+              </AppText>
+
+              {/* {gas ? (
                 <AppText classProps="text-base font-bold">
                   {profile.country} {Number(gas).toFixed(2)}
                 </AppText>
@@ -251,10 +271,18 @@ const ConfirmTransactionScreen = () => {
                     />
                   </View>
                 </Pressable>
-              )}
+              )} */}
             </View>
 
-            {gas && (
+            <View className="flex-row items-center justify-between w-full p-5 ">
+              <AppText classProps="text-lg">Total</AppText>
+
+              <AppText classProps="text-base font-bold">
+                {profile.country} {Number(total).toFixed(2)}
+              </AppText>
+            </View>
+
+            {/* {gas && (
               <View className="flex-row items-center justify-between w-full p-5 ">
                 <AppText classProps="text-lg">Total</AppText>
 
@@ -262,12 +290,37 @@ const ConfirmTransactionScreen = () => {
                   {profile.country} {Number(total).toFixed(2)}
                 </AppText>
               </View>
-            )}
+            )} */}
           </View>
         </View>
 
         <View className="flex items-center justify-end flex-1 p-5">
-          {gas ? (
+          <SlideToConfirm
+            unconfimredTipText={'Slide to confirm'}
+            unconfirmedTipTextStyle={{
+              color: 'white',
+              fontSize: 20,
+            }}
+            confirmedTipText={'Confirmed  ✅'}
+            confirmedTipTextStyle={{
+              color: 'white',
+              fontSize: 22,
+            }}
+            state={sliderState}
+            onSlideConfirmed={handleSubmit}
+            sliderStyle={{
+              justifyContent: 'center',
+              backgroundColor: '#FBC609',
+              width: width - 30,
+              height: 55,
+              borderRadius: 8,
+              padding: 5,
+              overflow: 'hidden',
+            }}
+            ballPadding={8}
+          />
+
+          {/* {gas ? (
             <SlideToConfirm
               unconfimredTipText={'Slide to confirm'}
               unconfirmedTipTextStyle={{
@@ -299,7 +352,7 @@ const ConfirmTransactionScreen = () => {
             >
               <AppText classProps="text-lg font-bold">Back</AppText>
             </Pressable>
-          )}
+          )} */}
         </View>
       </View>
     </SafeAreaView>
