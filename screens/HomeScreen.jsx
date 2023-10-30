@@ -91,6 +91,12 @@ const HomeScreen = () => {
     fetchUserGas(dispatch, user.userId, tokenState.token)
   }
 
+  // return (
+  //   <View>
+  //     <Text>HETY {balancesState.balances.total.toFixed(2)}</Text>
+  //   </View>
+  // )
+
   return (
     <AppContainer refresh={refreshEveryThing}>
       <View className="flex flex-col flex-1">
