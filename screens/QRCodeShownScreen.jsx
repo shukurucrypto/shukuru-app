@@ -1,19 +1,21 @@
-import { View, Text, TouchableOpacity, Pressable } from 'react-native'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Lottie from 'lottie-react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import axios from 'axios'
-import QRCODE from '../components/QRCode'
-import AppText from '../components/AppText'
-import { useSelector } from 'react-redux'
-import { API_URL, SOCKET_SERVER } from '../apiURL'
+import Lottie from 'lottie-react-native'
+import React, { useEffect, useState } from 'react'
+import { Pressable, Text, TouchableOpacity, View } from 'react-native'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useDispatch, useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
+import useSendOneSignal from '../Notifications/useSendOneSignal'
+import { API_URL, SOCKET_SERVER } from '../apiURL'
+import AppText from '../components/AppText'
+import SendingMoney from '../components/Loading/SendingMoney'
+import QRCODE from '../components/QRCode'
+import { fetchedBalances } from '../features/balances/balancesSlice'
+import useGetRequest from '../helpers/useGetRequest'
 import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
-import SendingMoney from '../components/Loading/SendingMoney'
-import useSendOneSignal from '../Notifications/useSendOneSignal'
-import Clipboard from '@react-native-clipboard/clipboard'
 
 const socket = io(SOCKET_SERVER)
 
@@ -43,6 +45,8 @@ const QRCodeShownScreen = () => {
 
   const { data, amount, request, refresh } = route.params
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     // client-side
     socket.on('connect', () => {
@@ -56,6 +60,8 @@ const QRCodeShownScreen = () => {
     // }
   }, [])
 
+  const { request: getBTCBalanceRequest } = useGetRequest()
+
   useEffect(() => {
     if (updateCount <= 60) {
       getBTCBalance()
@@ -64,16 +70,18 @@ const QRCodeShownScreen = () => {
 
   const getBTCBalance = async () => {
     try {
-      const res = await axios.get(`${API_URL}/wallet/btc/${user.userId}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const res = await getBTCBalanceRequest(`/wallet/${user.userId}`)
 
-      if (res.data.success) {
-        if (res.data.data > balancesState.balances.lightning) {
+      if (res.success) {
+        if (
+          Number(res.data.lightning).toFixed() >
+          Number(balancesState.balances.lightning).toFixed()
+        ) {
           setDone(true)
           setUpdateCount(2000)
+          // Update the Balances State
+          // fetchBalance(dispatch, user.userId, tokenState.token, tokenState.bolt)
+          dispatch(fetchedBalances(res.data))
 
           // Create Tx here...
           createExBTCTX()
@@ -105,6 +113,7 @@ const QRCodeShownScreen = () => {
         amount: amount,
         hash: request,
       }
+
       const res = await axios.post(
         `${API_URL}/invoice/active/create`,
         invoiceData

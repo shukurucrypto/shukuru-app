@@ -93,10 +93,17 @@ function App() {
     dispatch(fetchingToken())
     try {
       const value = await AsyncStorage.getItem('@token')
+      const bolt = await AsyncStorage.getItem('@bolt')
+
       if (value !== null) {
+        const tokens = {
+          token: value,
+          bolt: bolt,
+        }
+
         // value previously stored
         // setToken(value)
-        dispatch(fetchedToken(value))
+        dispatch(fetchedToken(tokens))
         // setAppReady(true)
       } else {
         // setAppReady(false)

@@ -1,27 +1,34 @@
-import { View, Text, Pressable, FlatList, ScrollView } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import React, { useEffect, useRef, useState } from 'react'
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
+import { SOCKET_SERVER } from '../apiURL'
 import AppContainer from '../components/AppContainer'
+import AppText from '../components/AppText'
 import Banner from '../components/Banner'
 import TransactionCards from '../components/Cards/TransactionCards'
+import ClaimReward from '../components/Reward/ClaimReward'
 import RecieveSheet from '../components/Sheets/RecieveSheet'
 import SendActionSheet from '../components/Sheets/SendActionSheet'
 import TopupSheet from '../components/Sheets/TopupSheet'
-import AppText from '../components/AppText'
-import { useDispatch, useSelector } from 'react-redux'
-import { SOCKET_SERVER } from '../apiURL'
-import { fetchBalance } from '../features/balances/balancesSlice'
-import { io } from 'socket.io-client'
-import useLocalNotification from '../Notifications/Local'
-import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { fetchAds } from '../features/advert/advertSlice'
-import { fetchCheckreward } from '../features/rewards/rewardsSlice'
-import ClaimReward from '../components/Reward/ClaimReward'
-import { useNavigation } from '@react-navigation/native'
+import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchUserGas } from '../features/gas/gasSlice'
+import { fetchCheckreward } from '../features/rewards/rewardsSlice'
+import { fetchTransactions } from '../features/transactions/transactionsSlice'
+import useRefresh from '../hooks/useRefresh'
 
 const socket = io(SOCKET_SERVER)
 
@@ -42,14 +49,18 @@ const HomeScreen = () => {
 
   const transactionsState = useSelector((state) => state.transactions)
 
+  const { refresh } = useRefresh()
+
   const [showBalances, setShowBalances] = useState(false)
 
   const [hideBanner, setHidebanner] = useState(false)
 
   const dispatch = useDispatch()
 
+  const width = useWindowDimensions().width
+
   useEffect(() => {
-    fetchBalance(dispatch, user.userId)
+    fetchBalance(dispatch, user.userId, tokenState.token, tokenState.bolt)
     fetchTransactions(dispatch, user.userId)
 
     fetchAds(dispatch)
@@ -61,12 +72,33 @@ const HomeScreen = () => {
     // fetchBTCTransactions()
   }, [])
 
+  const scrollViewRef = useRef()
+
+  const onScroll = (event) => {
+    // Calculate the width of each item in your banner (you may need to adjust this based on your layout)
+    const itemWidth = width
+
+    // Calculate the current index based on the scroll position
+    const currentIndex = Math.floor(
+      event.nativeEvent.contentOffset.x / itemWidth
+    )
+
+    // Calculate the new scroll position to snap to the full width
+    const newScrollX = currentIndex * itemWidth
+
+    // Scroll to the new position with animation
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ x: newScrollX, animated: true })
+    }
+  }
+
   const receiveActionSheet = useRef(null)
   const sendActionSheet = useRef(null)
   const topupActionSheet = useRef(null)
   const keyExtractor = (item, idx) => {
     return item?.recordID?.toString() || idx.toString()
   }
+
   const renderItem = ({ item, index }) => {
     return (
       <View className="px-5">
@@ -75,30 +107,8 @@ const HomeScreen = () => {
     )
   }
 
-  const onRefresh = () => {
-    fetchCheckreward(dispatch, user.token)
-    fetchBalance(dispatch, user.userId)
-    fetchTransactions(dispatch, user.userId)
-    // fetchBTCTransactions()
-    fetchUserGas(dispatch, user.userId, tokenState.token)
-  }
-
-  const refreshEveryThing = () => {
-    fetchCheckreward(dispatch, user.token)
-    fetchBalance(dispatch, user.userId)
-    fetchTransactions(dispatch, user.userId)
-    // fetchBTCTransactions()
-    fetchUserGas(dispatch, user.userId, tokenState.token)
-  }
-
-  // return (
-  //   <View>
-  //     <Text>HETY {balancesState.balances.total.toFixed(2)}</Text>
-  //   </View>
-  // )
-
   return (
-    <AppContainer refresh={refreshEveryThing}>
+    <AppContainer refresh={refresh}>
       <View className="flex flex-col flex-1">
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -120,6 +130,11 @@ const HomeScreen = () => {
                       horizontal
                       showsHorizontalScrollIndicator={false}
                       className="flex flex-row h-48 my-3 bg-neutral-50"
+                      snapToAlignment="center"
+                      snapToInterval={width}
+                      pagingEnabled={true}
+                      onMomentumScrollEnd={onScroll}
+                      ref={scrollViewRef}
                     >
                       {!rewardState.loading && !rewardState.error && (
                         <ClaimReward
@@ -268,11 +283,6 @@ const HomeScreen = () => {
                       </Pressable>
                     )}
                   </View>
-
-                  {/* Transaction cards */}
-                  {/* <TransactionCards /> */}
-                  {/* <TransactionCards recieved type="BTC" /> */}
-                  {/* <TransactionCards recieved /> */}
                 </View>
 
                 {/* Buttons */}
@@ -283,7 +293,7 @@ const HomeScreen = () => {
           // data={transactionsState?.transactions}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          onRefresh={onRefresh}
+          onRefresh={refresh}
           refreshing={balancesState.loading}
           className="flex flex-1"
         />
@@ -334,17 +344,14 @@ const HomeScreen = () => {
 
         <RecieveSheet
           receiveActionSheet={receiveActionSheet}
-          refresh={refreshEveryThing}
+          refresh={refresh}
         />
         <SendActionSheet
           sendActionSheet={sendActionSheet}
-          refresh={refreshEveryThing}
+          refresh={refresh}
           balances={balancesState}
         />
-        <TopupSheet
-          topupActionSheet={topupActionSheet}
-          refresh={refreshEveryThing}
-        />
+        <TopupSheet topupActionSheet={topupActionSheet} refresh={refresh} />
       </View>
     </AppContainer>
   )

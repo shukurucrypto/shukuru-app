@@ -11,22 +11,22 @@ const AppContainer = ({ children, refresh }) => {
 
   const { appStateVisible } = useRenderLock()
 
-  useEffect(() => {
-    if (appStateVisible === 'active') {
-      AsyncStorage.getItem('@pinCode')
-        .then((storedPinCode) => {
-          if (storedPinCode) {
-            // setPinCode(storedPinCode);
-            navigation.navigate('LockScreen')
-          } else {
-            navigation.navigate('CreatePinScreen')
-          }
-        })
-        .catch((error) => {
-          console.log('Error retrieving PIN code from AsyncStorage:', error)
-        })
-    }
-  }, [appStateVisible])
+  // useEffect(() => {
+  //   if (appStateVisible === 'active') {
+  //     AsyncStorage.getItem('@pinCode')
+  //       .then((storedPinCode) => {
+  //         if (storedPinCode) {
+  //           // setPinCode(storedPinCode);
+  //           navigation.navigate('LockScreen')
+  //         } else {
+  //           navigation.navigate('CreatePinScreen')
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log('Error retrieving PIN code from AsyncStorage:', error)
+  //       })
+  //   }
+  // }, [appStateVisible])
 
   return (
     <SafeAreaView className="flex flex-col flex-1 ">

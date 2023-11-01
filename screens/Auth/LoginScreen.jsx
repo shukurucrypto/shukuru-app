@@ -63,7 +63,7 @@ const LoginScreen = () => {
       const res = await axios.post(`${API_URL}/auth/login`, data)
 
       if (res.data.success) {
-        storeToken(res.data.data)
+        storeToken(res.data.data.token, res.data.data.bolt)
         dispatch(fetchedUser(res.data.data))
       } else {
         // console.log(res.data.response)
@@ -79,10 +79,13 @@ const LoginScreen = () => {
     }
   }
 
-  const storeToken = async (value) => {
+  const storeToken = async (value, bolt) => {
     try {
-      const jsonValue = JSON.stringify(value.token)
+      const jsonValue = JSON.stringify(value)
+      const boltToken = JSON.stringify(bolt)
+
       await AsyncStorage.setItem('@token', jsonValue)
+      await AsyncStorage.setItem('@bolt', boltToken)
     } catch (e) {
       // saving error
       console.log(e)

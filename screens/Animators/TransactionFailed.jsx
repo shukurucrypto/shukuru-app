@@ -4,7 +4,7 @@ import Lottie from 'lottie-react-native'
 import AppText from '../../components/AppText'
 import { useNavigation } from '@react-navigation/native'
 
-const TransactionFailed = ({ asset }) => {
+const TransactionFailed = ({ asset, msg }) => {
   const navigation = useNavigation()
   return (
     <View className="flex flex-col flex-1 p-5 bg-primary">
@@ -19,6 +19,8 @@ const TransactionFailed = ({ asset }) => {
           loop
         />
       </View>
+
+      {msg && <Text className="mb-2 text-sm text-red-600">❌ {msg}</Text>}
 
       <View className="flex flex-col pb-2">
         {asset && (
