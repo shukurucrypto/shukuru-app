@@ -24,6 +24,7 @@ import {
 import { API_URL } from '../../apiURL'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import LoginAnimator from '../Animators/LoginAnimator'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -40,8 +41,6 @@ const LoginScreen = () => {
   const [error, setError] = useState(null)
   const navigation = useNavigation()
 
-  const [showPassword, setShowPassword] = useState(false)
-
   const dispatch = useDispatch()
 
   const usernameRef = useRef(null)
@@ -51,10 +50,11 @@ const LoginScreen = () => {
 
   const handleSubmit = async (values) => {
     setError(null)
-    setLoading(true)
 
     dispatch(fetchingUser())
     try {
+      setLoading(true)
+
       const data = {
         username: values.username.trim(),
         password: values.password,
@@ -70,7 +70,7 @@ const LoginScreen = () => {
         setError(res.data.response)
         dispatch(failedFetchUser(res.data.response))
       }
-      setLoading(false)
+      // setLoading(false)
     } catch (error) {
       dispatch(failedFetchUser('OOPs! Something went wrong'))
       console.log(error.message)
@@ -97,6 +97,8 @@ const LoginScreen = () => {
       nextInputRef.current.focus()
     }
   }
+
+  if (loading) return <LoginAnimator />
 
   return (
     <ScrollView className="flex flex-1">
@@ -204,12 +206,20 @@ const LoginScreen = () => {
                   <Pressable
                     onPress={handleSubmit}
                     disabled={loading}
-                    className="flex items-center p-5 mt-3 rounded-full bg-primary"
+                    className={`flex items-center p-5 mt-3 rounded-full ${
+                      loading ? 'bg-neutral-100' : ' bg-primary'
+                    }`}
                   >
                     {loading ? (
                       <ActivityIndicator size={22} color="#fff" />
                     ) : (
-                      <AppText classProps="text-xl font-bold">Sign In</AppText>
+                      <Text
+                        className={`text-xl font-bold ${
+                          loading ? 'text-neutral-200' : 'text-black'
+                        }`}
+                      >
+                        Sign In
+                      </Text>
                     )}
                   </Pressable>
 

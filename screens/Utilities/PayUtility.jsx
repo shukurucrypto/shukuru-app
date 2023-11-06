@@ -1,18 +1,14 @@
-import { View, Text, SafeAreaView, Pressable, Image } from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import React, { useState } from 'react'
-import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { API_URL } from '../../apiURL'
+import React, { useState } from 'react'
+import { Image, Pressable, SafeAreaView, Text, View } from 'react-native'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import AppText from '../../components/AppText'
 import SendingMoney from '../../components/Loading/SendingMoney'
+import useAPIPostRequest from '../../helpers/apiRequests'
+import useRefresh from '../../hooks/useRefresh'
 import TransactionDone from '../Animators/TransactionDone'
 import TransactionFailed from '../Animators/TransactionFailed'
-import { fetchBalance } from '../../features/balances/balancesSlice'
-import { fetchTransactions } from '../../features/transactions/transactionsSlice'
-import { fetchCheckreward } from '../../features/rewards/rewardsSlice'
 
 const PayUtilityScreen = () => {
   const navigation = useNavigation()
@@ -23,12 +19,10 @@ const PayUtilityScreen = () => {
   const [done, setDone] = useState(false)
   const [failed, setFailed] = useState(false)
 
-  const { user } = useSelector((state) => state.user)
-  const { profile } = useSelector((state) => state.profile)
-
-  const dispatch = useDispatch()
+  const { request } = useAPIPostRequest()
 
   const { payload, phone } = router.params
+  const { refresh } = useRefresh()
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -43,13 +37,9 @@ const PayUtilityScreen = () => {
         phone: phone,
       }
 
-      const res = await axios.post(`${API_URL}/utility/pay`, data, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const res = await request(data, '/utility/pay')
 
-      if (res.data.success) {
+      if (res.success) {
         setDone(true)
         setLoading(false)
       } else {
@@ -110,15 +100,9 @@ const PayUtilityScreen = () => {
     }
   }
 
-  const refreshData = () => {
-    fetchBalance(dispatch, user?.userId)
-    fetchTransactions(dispatch, user?.userId)
-    fetchCheckreward(dispatch, user.token)
-  }
-
   if (loading) return <SendingMoney />
 
-  if (done) return <TransactionDone refresh={refreshData} />
+  if (done) return <TransactionDone refresh={refresh} />
 
   if (failed) return <TransactionFailed />
 

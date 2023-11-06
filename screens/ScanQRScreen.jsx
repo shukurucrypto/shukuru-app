@@ -31,7 +31,6 @@ const ScanQRScreen = () => {
       case invoice.startsWith('LNBC'):
         navigation.navigate('ReadInvoiceScreen', {
           data: invoice,
-          refresh: refresh,
         })
         break
       case invoice.startsWith('ethereum') && invoice.includes('?value='):

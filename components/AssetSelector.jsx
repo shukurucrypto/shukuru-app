@@ -38,10 +38,10 @@ const ListSelector = ({ options, onSelect }) => {
           {option.name.includes('cUSD') ? (
             <Image
               source={require('../assets/tokens/cusd.png')}
-              style={{ width: 25, height: 25, marginRight: 8 }}
+              style={{ width: 28, height: 28, marginRight: 8 }}
             />
           ) : (
-            <View className="flex items-center justify-center w-6 h-6 mr-2 bg-black rounded-full">
+            <View className="flex items-center justify-center mr-2 bg-black rounded-full w-7 h-7">
               <Image
                 source={require('../assets/tokens/busd.png')}
                 style={{ width: 18, height: 18 }}
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent: 'center',
-    marginVertical: 18,
+    marginVertical: 10,
     borderRadius: 10,
   },
   option: {
-    paddingVertical: 14,
+    paddingVertical: 13,
 
     flexDirection: 'row',
     alignItems: 'center',

@@ -19,6 +19,7 @@ import TransactionDone from '../Animators/TransactionDone'
 import { io } from 'socket.io-client'
 import TransactionFailed from '../Animators/TransactionFailed'
 import useSendOneSignal from '../../Notifications/useSendOneSignal'
+import useAPIPostRequest from '../../helpers/apiRequests'
 
 const socket = io(SOCKET_SERVER)
 
@@ -40,9 +41,11 @@ const SendTerminalScreen = () => {
 
   const sendOnesignal = useSendOneSignal()
 
+  const { request } = useAPIPostRequest()
+
   const route = useRoute()
 
-  const { token, contactNumber, userId, refresh } = route.params
+  const { token, contactNumber, user, refresh } = route.params
 
   const handleSubmit = async () => {
     // return
@@ -53,7 +56,7 @@ const SendTerminalScreen = () => {
 
       const data = {
         from: userState.user.userId,
-        to: userId,
+        to: user._id,
         amount: number,
         memo: 'hello world ',
       }
@@ -80,23 +83,26 @@ const SendTerminalScreen = () => {
         })
       }
 
-      const result = await axios.post(PAY_URL, data, {
-        headers: {
-          Authorization: `Bearer ${userState.user.token}`,
-        },
-      })
+      const boltReqParam = {
+        from: userState.user.userId,
+        to: user.name,
+        amount: number,
+        invoice: '',
+      }
 
-      if (result.data.success) {
+      const result = await request(boltReqParam, '/send')
+
+      if (result.success) {
         // socket.emit('sendTxNotification', {
         //   recipientId: userId,
         //   message: 'New transaction here...',
         // })
 
         socket.emit('sendTxNotification', {
-          recipientId: userId,
+          recipientId: user._id,
           message: {
             title: 'You received a new payment',
-            subtitle: `@${result.data.data.name}`,
+            // subtitle: `@${result.tx.name}`,
             // body: `Paid in ${token} Congrats! 🎉`,
             body: `Recieved via app. Congrats! 🎉`,
           },
@@ -110,9 +116,9 @@ const SendTerminalScreen = () => {
         })
 
         sendOnesignal(
-          `You received a new ${result.data.tx.asset} payment`,
+          `You received a new ${result.tx.asset} payment`,
           'Recieved via app. Congrats! 🎉',
-          [result.data.tx.receiver]
+          [result.tx.receiver]
         )
 
         setLoading(false)

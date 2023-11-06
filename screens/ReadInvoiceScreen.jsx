@@ -19,6 +19,7 @@ import TransactionFailed from './Animators/TransactionFailed'
 import { io } from 'socket.io-client'
 import SendingMoney from '../components/Loading/SendingMoney'
 import useAPIPostRequest from '../helpers/apiRequests'
+import useRefresh from '../hooks/useRefresh'
 const socket = io(SOCKET_SERVER)
 
 const ReadInvoiceScreen = () => {
@@ -38,7 +39,9 @@ const ReadInvoiceScreen = () => {
 
   const [updateCount, setUpdateCount] = useState(0)
 
-  const { data, refresh } = router.params
+  const { data } = router.params
+
+  const { refresh } = useRefresh()
 
   const { request } = useAPIPostRequest()
 
@@ -144,7 +147,7 @@ const ReadInvoiceScreen = () => {
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-1 p-5">
         <View className="flex flex-row items-center justify-between">
-          <AppText classProps="text-2xl font-bold">Payment</AppText>
+          <AppText classProps="text-2xl font-bold">Invoice details</AppText>
 
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
             <AntDesign name="close" size={25} color="black" />
@@ -173,15 +176,18 @@ const ReadInvoiceScreen = () => {
                     sats
                   </AppText>
                 </View>
-                <AppText classProps="text-lg font-light text-center">
-                  {invoiceState.memo}
-                </AppText>
-                <AppText classProps="text-lg font-light text-center">
-                  Created {invoiceState.date}
-                </AppText>
-                <AppText classProps="text-lg font-light text-center">
-                  Expires in {invoiceState.expiry} (secs)
-                </AppText>
+
+                <View className="gap-4">
+                  <AppText classProps="text-lg font-light text-center mt-3">
+                    {invoiceState.memo}
+                  </AppText>
+                  <AppText classProps="text-sm font-light text-center my-3">
+                    Created {invoiceState.date}
+                  </AppText>
+                  <AppText classProps="text-sm font-light text-center">
+                    Expires in {invoiceState.expiry} (secs)
+                  </AppText>
+                </View>
               </View>
 
               {error && (

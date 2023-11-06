@@ -6,11 +6,14 @@ import AppText from '../../components/AppText'
 import ListSelector from '../../components/AssetSelector'
 import { useSelector } from 'react-redux'
 import SupportedCountry from '../../components/Modals/SupportedCountry'
+import EmptyAnimation from '../Animators/EmptyAnimation'
 
 const SelectWithdrawAssetScreen = () => {
   // const options = ['Celo Dollar (cUSD)', 'Binance Dollar (BUSD)']
 
   const [isModalVisible, setModalVisible] = useState(false)
+
+  const { balances, loading, error } = useSelector((state) => state.balances)
 
   const options = [
     { id: 1, name: 'Celo Dollar (cUSD)', network: 'celo' },
@@ -29,44 +32,57 @@ const SelectWithdrawAssetScreen = () => {
   return (
     <SafeAreaView className="flex flex-1">
       <BackHeader title="Withdraw Funds" subTitle="By" />
-      <View className="flex flex-col flex-1 p-5">
-        <AppText classProps="text-lg font-medium">Select an asset</AppText>
 
-        <ListSelector options={options} onSelect={handleOptionSelect} />
-      </View>
+      {balances.cusd <= 0 && balances.busd <= 0 ? (
+        <View className="flex items-center justify-center flex-1 p-5">
+          <EmptyAnimation msg="Your account it empty. Load up some $CELO or $BUSD to withdraw." />
 
-      <View className="p-5">
-        <Pressable
-          onPress={() => {
-            if (profile.country !== 'UGX') {
-              setModalVisible(true)
-              return
-            }
+          {/* <Pressable>
+            <Text>Go Home</Text>
+          </Pressable> */}
+        </View>
+      ) : (
+        <>
+          <View className="flex flex-col flex-1 p-5">
+            <AppText classProps="text-lg font-medium">Select an asset</AppText>
 
-            navigation.navigate('TerminalScreen', {
-              assetName: selected?.name.includes('cUSD') ? 'cUSD' : 'BUSD',
-              asset: selected,
-            })
-          }}
-          disabled={!selected}
-          className={`items-center self-center py-3 rounded-full  w-full ${
-            selected ? 'bg-primary' : 'bg-neutral-200'
-          } `}
-        >
-          <Text
-            className={`text-base font-bold ${
-              !selected ? 'text-white' : 'text-black'
-            }`}
-          >
-            Next
-          </Text>
-        </Pressable>
-      </View>
+            <ListSelector options={options} onSelect={handleOptionSelect} />
+          </View>
 
-      <SupportedCountry
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-      />
+          <View className="p-5">
+            <Pressable
+              onPress={() => {
+                if (profile.country !== 'UGX') {
+                  setModalVisible(true)
+                  return
+                }
+
+                navigation.navigate('TerminalScreen', {
+                  assetName: selected?.name.includes('cUSD') ? 'cUSD' : 'BUSD',
+                  asset: selected,
+                })
+              }}
+              disabled={!selected}
+              className={`items-center self-center py-3 rounded-full  w-full ${
+                selected ? 'bg-primary' : 'bg-neutral-200'
+              } `}
+            >
+              <Text
+                className={`text-base font-bold ${
+                  !selected ? 'text-white' : 'text-black'
+                }`}
+              >
+                Next
+              </Text>
+            </Pressable>
+          </View>
+
+          <SupportedCountry
+            isModalVisible={isModalVisible}
+            setModalVisible={setModalVisible}
+          />
+        </>
+      )}
     </SafeAreaView>
   )
 }
