@@ -15,13 +15,17 @@ const BackHeader = ({ title, subTitle, cancel }) => {
         <AntDesign name="left" size={30} color="black" />
       </Pressable>
 
-      <View className="flex items-center justify-center flex-1 w-full ">
-        <AppText classProps="text-base font-bold">{title}</AppText>
-        <View className="flex flex-row items-center">
-          <Text className="text-xs text-black">{subTitle}</Text>
-          <Image source={image} style={{ width: 60, height: 20 }} />
+      {title && (
+        <View className="flex items-center justify-center flex-1 w-full ">
+          <AppText classProps="text-base font-bold">{title}</AppText>
+          <View className="flex flex-row items-center">
+            <Text className="text-xs text-black">{subTitle}</Text>
+            {title && (
+              <Image source={image} style={{ width: 60, height: 20 }} />
+            )}
+          </View>
         </View>
-      </View>
+      )}
 
       <View className="flex items-end justify-center flex-1">
         {cancel && (

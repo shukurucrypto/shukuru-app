@@ -30,6 +30,9 @@ import WithdrawScreen from '../screens/Withdraw/WithdrawScreen'
 import ReviewScreen from '../screens/Withdraw/ReviewScreen'
 import SuccessScreen from '../screens/Withdraw/SuccessScreen'
 import EnterNumberScreen from '../screens/Utilities/EnterNumberScreen'
+import ChangePasswordScreen from '../screens/Auth/ChangePassword'
+import EnterOTPScreen from '../screens/Auth/EnterOTPScreen'
+import NewPasswordScreen from '../screens/Auth/NewPasswordScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -68,6 +71,9 @@ function MainStackNavigator() {
       <Stack.Screen name="EnterPhoneScreen" component={EnterPhoneScreen} />
       <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+      <Stack.Screen name="EnterOTP" component={EnterOTPScreen} />
+      <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
       <Stack.Screen
         name="SelectWithdrawAssetScreen"
         component={SelectWithdrawAssetScreen}

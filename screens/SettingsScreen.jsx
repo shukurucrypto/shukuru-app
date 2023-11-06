@@ -107,6 +107,13 @@ const SettingsScreen = () => {
             <AppText classProps="text-base py-5">Recovery Phrase</AppText>
           </View>
 
+          <Pressable
+            onPress={() => navigation.navigate('ChangePassword')}
+            className="flex flex-row border-b-[0.8px] border-neutral-400 items-center justify-between w-full"
+          >
+            <AppText classProps="text-base py-5">Change Password</AppText>
+          </Pressable>
+
           {/*  */}
           <View className="flex flex-row border-b-[0.8px] border-neutral-400 items-center justify-between w-full">
             <AppText classProps="text-base py-5">
