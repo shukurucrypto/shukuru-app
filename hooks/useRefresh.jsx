@@ -16,6 +16,13 @@ const useRefresh = () => {
     fetchUserGas(dispatch, user.userId, token)
   }
 
+  // fetchBalance(dispatch, user.userId, tokenState.token, tokenState.bolt)
+  // fetchTransactions(dispatch, user.userId)
+
+  // fetchCheckreward(dispatch, user.token)
+
+  // fetchUserGas(dispatch, user.userId, tokenState.token)
+
   return { refresh }
 }
 

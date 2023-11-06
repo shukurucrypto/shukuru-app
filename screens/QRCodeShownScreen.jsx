@@ -16,6 +16,7 @@ import { fetchedBalances } from '../features/balances/balancesSlice'
 import useGetRequest from '../helpers/useGetRequest'
 import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
+import useRefresh from '../hooks/useRefresh'
 
 const socket = io(SOCKET_SERVER)
 
@@ -43,7 +44,9 @@ const QRCodeShownScreen = () => {
 
   const route = useRoute()
 
-  const { data, amount, request, refresh } = route.params
+  const { data, amount, request } = route.params
+
+  const { refresh } = useRefresh()
 
   const dispatch = useDispatch()
 
@@ -170,7 +173,7 @@ const QRCodeShownScreen = () => {
   return (
     <View className="flex flex-col flex-1">
       <View className="flex flex-row items-center justify-between p-5">
-        <AppText classProps="text-2xl font-bold">Invoice</AppText>
+        <AppText classProps="text-2xl font-bold">Invoice details</AppText>
 
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <AntDesign name="close" size={25} color="black" />
