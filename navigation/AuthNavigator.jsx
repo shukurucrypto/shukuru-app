@@ -1,14 +1,13 @@
-import * as React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../screens/HomeScreen'
-import ReceiveTerminalScreen from '../screens/Terminals/RecieveTerminalScreen'
-import SendTerminalScreen from '../screens/Terminals/SendTerminalScreen'
-import StartScreen from '../screens/Auth/StartScreen'
-import SignupScreen from '../screens/Auth/SignupScreen'
+import * as React from 'react'
 import CreateProfileScreen from '../screens/Auth/CreateProfileScreen'
+import EnterResetEmailScreen from '../screens/Auth/ResetPassword/EnterResetEmail'
 import LoginScreen from '../screens/Auth/LoginScreen'
-import SelectCountyScreen from '../screens/SelectCounty'
+import SignupScreen from '../screens/Auth/SignupScreen'
+import StartScreen from '../screens/Auth/StartScreen'
 import AuthSelectCountry from '../screens/AuthSelectCountry'
+import ResetOTPScreen from '../screens/Auth/ResetPassword/ResetOTPScreen'
+import EnterResetPassword from '../screens/Auth/ResetPassword/EnterResetPassword'
 
 const Stack = createNativeStackNavigator()
 
@@ -33,6 +32,9 @@ function AuthNavigator() {
         name="AuthSelectCountryScreen"
         component={AuthSelectCountry}
       />
+      <Stack.Screen name="EnterResetEmail" component={EnterResetEmailScreen} />
+      <Stack.Screen name="ResetOTP" component={ResetOTPScreen} />
+      <Stack.Screen name="EnterResetPassword" component={EnterResetPassword} />
     </Stack.Navigator>
   )
 }

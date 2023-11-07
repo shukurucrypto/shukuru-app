@@ -49,7 +49,7 @@ const SelectWithdrawAssetScreen = () => {
             })
           }}
           disabled={!selected}
-          className={`items-center self-center py-3 rounded-full  w-full ${
+          className={`items-center self-center py-3 rounded-md  w-full ${
             selected ? 'bg-primary' : 'bg-neutral-200'
           } `}
         >

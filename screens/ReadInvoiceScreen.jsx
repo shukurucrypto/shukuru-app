@@ -194,7 +194,7 @@ const ReadInvoiceScreen = () => {
               <Pressable
                 onPress={handlePay}
                 disabled={loadSubmit}
-                className="flex items-center justify-center w-full p-4 rounded-full bg-primary"
+                className="flex items-center justify-center w-full p-4 rounded-md bg-primary"
               >
                 {loadSubmit ? (
                   <ActivityIndicator size={22} color="#fff" />

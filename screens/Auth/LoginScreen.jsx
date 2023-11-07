@@ -1,29 +1,29 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Pressable,
-  Image,
-  ActivityIndicator,
-} from 'react-native'
-import Entypo from 'react-native-vector-icons/Entypo'
-import React, { useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
+import React, { useRef, useState } from 'react'
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
+import Entypo from 'react-native-vector-icons/Entypo'
 import * as Yup from 'yup'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import { useDispatch } from 'react-redux'
+import { API_URL } from '../../apiURL'
 import AppText from '../../components/AppText'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   failedFetchUser,
   fetchedUser,
   fetchingUser,
 } from '../../features/user/userSlice'
-import { API_URL } from '../../apiURL'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import axios from 'axios'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -89,6 +89,8 @@ const LoginScreen = () => {
     }
   }
 
+  const goToEnterEmail = () => navigation.navigate('EnterResetEmail')
+
   const handleNext = (nextInputRef) => {
     if (nextInputRef && nextInputRef.current) {
       nextInputRef.current.focus()
@@ -104,7 +106,7 @@ const LoginScreen = () => {
             className="flex flex-row items-center flex-1"
           >
             <SimpleLineIcons name="arrow-left" size={20} color="black" />
-            <AppText classProps="text-xl font-bold mx-3">Back</AppText>
+            <AppText classProps="text-base font-bold mx-3">Back</AppText>
           </Pressable>
         </View>
 
@@ -131,8 +133,8 @@ const LoginScreen = () => {
                   <Image
                     source={require('../../assets/logos/logo.png')}
                     style={{
-                      width: 100,
-                      height: 100,
+                      width: 80,
+                      height: 80,
                     }}
                   />
                 </View>
@@ -143,12 +145,12 @@ const LoginScreen = () => {
                 <View className="flex flex-col flex-1 mt-5">
                   {/* Username */}
                   <View className="flex flex-col py-3">
-                    <AppText classProps="text-lg font-bold">Username</AppText>
+                    <AppText classProps="text-sm font-bold">Username</AppText>
 
                     <TextInput
                       ref={usernameRef}
                       placeholder="Enter your username"
-                      className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 text-black border-neutral-300 w-full"
+                      className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                       autoCapitalize="none"
                       disabled={loading}
                       onChangeText={handleChange('username')}
@@ -165,15 +167,16 @@ const LoginScreen = () => {
 
                   {/* Password */}
                   <View className="flex flex-col py-3">
-                    <AppText classProps="text-lg font-bold">Password</AppText>
+                    <AppText classProps="text-sm font-bold">Password</AppText>
 
                     <TextInput
                       ref={passwordRef}
-                      placeholder="Enter Password"
+                      placeholder="Enter your password"
                       secureTextEntry={show}
                       // autoCapitalize={false}
                       autoCapitalize="none"
-                      className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
+                      // className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
+                      className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                       disabled={loading}
                       onChangeText={handleChange('password')}
                       onBlur={handleBlur('password')}
@@ -188,7 +191,7 @@ const LoginScreen = () => {
                     >
                       <Entypo
                         name={!show ? `eye` : `eye-with-line`}
-                        size={22}
+                        size={16}
                         color="black"
                       />
                     </Pressable>
@@ -201,18 +204,22 @@ const LoginScreen = () => {
                   <Pressable
                     onPress={handleSubmit}
                     disabled={loading}
-                    className="flex items-center p-5 mt-3 rounded-full bg-primary"
+                    className="flex items-center p-4 my-5 rounded-md bg-primary"
                   >
                     {loading ? (
                       <ActivityIndicator size={22} color="#fff" />
                     ) : (
-                      <AppText classProps="text-xl font-bold">Sign In</AppText>
+                      <AppText classProps="text-base font-bold">
+                        Sign In
+                      </AppText>
                     )}
                   </Pressable>
 
-                  <Text className="mt-5 text-xl font-bold text-center text-primary">
-                    Forgot Password?
-                  </Text>
+                  <Pressable onPress={goToEnterEmail}>
+                    <Text className="text-base font-bold text-center text-primary">
+                      Forgot password?
+                    </Text>
+                  </Pressable>
                 </View>
               </View>
             </>

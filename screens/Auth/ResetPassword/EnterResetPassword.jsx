@@ -1,26 +1,17 @@
+import axios from 'axios'
+import { Formik } from 'formik'
 import React, { useState } from 'react'
 import {
-  View,
+  ActivityIndicator,
+  Pressable,
   Text,
   TextInput,
-  Pressable,
-  ActivityIndicator,
+  View,
 } from 'react-native'
-import BackHeader from '../../components/Headers/BackHeader'
-import AppText from '../../components/AppText'
-import axios from 'axios'
-import { API_URL } from '../../apiURL'
-import { Formik } from 'formik'
 import * as yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { removeToken } from '../../features/token/tokenSlice'
-import {
-  failedFetchUser,
-  fetchingUser,
-  removeUser,
-} from '../../features/user/userSlice'
-import { removeProfile } from '../../features/profile/profileSlice'
+import { API_URL } from '../../../apiURL'
+import AppText from '../../../components/AppText'
+import BackHeader from '../../../components/Headers/BackHeader'
 
 const validationSchema = yup.object().shape({
   password: yup
@@ -33,15 +24,11 @@ const validationSchema = yup.object().shape({
     .required('Confirm Password is required'),
 })
 
-const NewPasswordScreen = ({ route, navigation }) => {
+const EnterResetPassword = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const { token } = useSelector((state) => state.tokenState)
-
-  const dispatch = useDispatch()
-
-  const { code } = route.params
+  const { code, email } = route.params
 
   const handleSubmit = async (values) => {
     setLoading(true)
@@ -50,17 +37,13 @@ const NewPasswordScreen = ({ route, navigation }) => {
       const data = {
         code,
         password: values.password,
+        email,
       }
-      const res = await axios.post(`${API_URL}/reset/password`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const res = await axios.post(`${API_URL}/reset/raw/password`, data)
 
       if (res.data.success) {
         setLoading(false)
-        // navigation.navigate('Home')
-        logoutUser()
+        navigation.navigate('LoginScreen')
       } else {
         setError('Password reset failed. Please try again.')
         setLoading(false)
@@ -68,18 +51,6 @@ const NewPasswordScreen = ({ route, navigation }) => {
     } catch (error) {
       setError('Password reset failed. Please try again.')
       setLoading(false)
-    }
-  }
-
-  const logoutUser = async () => {
-    try {
-      await AsyncStorage.clear()
-      dispatch(removeToken())
-      dispatch(removeUser())
-      dispatch(removeProfile())
-      dispatch(fetchingUser())
-    } catch (error) {
-      dispatch(failedFetchUser())
     }
   }
 
@@ -111,6 +82,8 @@ const NewPasswordScreen = ({ route, navigation }) => {
                   secureTextEntry={true}
                   className="p-4 my-2 rounded-md bg-neutral-100"
                   value={values.password}
+                  autoCapitalize="none"
+                  autoComplete="off"
                   onChangeText={handleChange('password')}
                 />
                 {errors.password && touched.password && (
@@ -127,6 +100,8 @@ const NewPasswordScreen = ({ route, navigation }) => {
                   secureTextEntry={true}
                   className="p-4 my-2 rounded-md bg-neutral-100"
                   value={values.confirmPassword}
+                  autoCapitalize="none"
+                  autoComplete="off"
                   onChangeText={handleChange('confirmPassword')}
                 />
                 {errors.confirmPassword && touched.confirmPassword && (
@@ -145,7 +120,7 @@ const NewPasswordScreen = ({ route, navigation }) => {
               <Pressable
                 // disabled={!isValid || !dirty || loading}
                 onPress={handleSubmit}
-                className={`items-center p-4 my-4 rounded-md ${
+                className={`items-center p-4 my-5 rounded-md ${
                   loading ? 'bg-neutral-100' : 'bg-primary'
                 }`}
               >
@@ -153,7 +128,7 @@ const NewPasswordScreen = ({ route, navigation }) => {
                   <ActivityIndicator color="#FBC609" />
                 ) : (
                   <Text
-                    className={`font-bold text-sm ${
+                    className={`font-bold ${
                       error ? 'text-red-600' : 'text-black'
                     }`}
                   >
@@ -169,4 +144,4 @@ const NewPasswordScreen = ({ route, navigation }) => {
   )
 }
 
-export default NewPasswordScreen
+export default EnterResetPassword

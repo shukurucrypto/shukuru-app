@@ -7,24 +7,22 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native'
-import BackHeader from '../../components/Headers/BackHeader'
-import AppText from '../../components/AppText'
+import BackHeader from '../../../components/Headers/BackHeader'
+import AppText from '../../../components/AppText'
 import axios from 'axios'
-import { API_URL } from '../../apiURL'
-import { useSelector } from 'react-redux'
+import { API_URL } from '../../../apiURL'
 import { useNavigation } from '@react-navigation/native'
 
-const ChangePasswordScreen = () => {
+const EnterResetEmailScreen = () => {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
-
-  const { token } = useSelector((state) => state.tokenState)
 
   const navigation = useNavigation()
 
   const handleSubmit = async () => {
     setLoading(true)
+    setError('')
     try {
       if (!email) {
         return
@@ -34,21 +32,19 @@ const ChangePasswordScreen = () => {
         email,
       }
 
-      const res = await axios.post(`${API_URL}/send/otp`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const res = await axios.post(`${API_URL}/send/raw/otp`, data)
 
       if (res.data.success) {
         setEmail('')
         setLoading(false)
-        navigation.navigate('EnterOTP')
+        navigation.navigate('ResetOTP', { email })
         return
+      } else {
+        setError(res.data.response)
       }
     } catch (error) {
       setLoading(false)
-      setError('Something went very wrong')
+      setError('Bad Request. Check your email')
     }
   }
 
@@ -68,15 +64,19 @@ const ChangePasswordScreen = () => {
 
           <TextInput
             placeholder="example@gmail.com"
-            className="p-4 my-2 rounded-md bg-neutral-100 "
+            className="p-4 my-2 rounded-md bg-neutral-100"
             keyboardType="email-address"
-            autoCapitalize="none"
             value={email}
             onChangeText={(e) => setEmail(e)}
             onSubmitEditing={handleSubmit}
+            autoCapitalize="none"
             returnKeyType="done"
           />
         </View>
+
+        {error && (
+          <Text className="text-xs text-center text-red-500">{error}</Text>
+        )}
 
         <Pressable
           disabled={loading || email.length <= 3}
@@ -89,7 +89,7 @@ const ChangePasswordScreen = () => {
             <ActivityIndicator color="#FBC609" />
           ) : (
             <Text
-              className={`font-bold text-sm ${
+              className={`font-bold ${
                 email.length <= 3 ? 'text-neutral-300' : 'text-black'
               } `}
             >
@@ -102,4 +102,4 @@ const ChangePasswordScreen = () => {
   )
 }
 
-export default ChangePasswordScreen
+export default EnterResetEmailScreen

@@ -30,9 +30,7 @@ const StartScreen = () => {
           onPress={() => navigation.navigate('SignupScreen')}
           className="flex items-center p-4 my-4 rounded-full bg-primary"
         >
-          <AppText classProps="text-lg font-bold ">
-            Open Shukuru Account
-          </AppText>
+          <AppText classProps="text-lg font-bold ">Register</AppText>
         </Pressable>
 
         {/* Already */}
@@ -40,7 +38,7 @@ const StartScreen = () => {
           onPress={() => navigation.navigate('LoginScreen')}
           className="flex flex-row items-center justify-center"
         >
-          <AppText classProps="text-base font-light">
+          <AppText classProps="text-sm font-light">
             Already a Shukuru user?
           </AppText>
           <Text className="mx-3 text-lg font-bold text-primary">Sign In</Text>

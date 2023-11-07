@@ -160,7 +160,7 @@ const EnterNumberScreen = () => {
                 setModalVisible(true)
               }}
               disabled={!phone || error || phone.length < 9}
-              className={`items-center w-full p-4 my-4 rounded-full ${
+              className={`items-center w-full p-4 my-4 rounded-md ${
                 !phone || error || phone.length < 9
                   ? 'bg-neutral-200'
                   : 'bg-primary'

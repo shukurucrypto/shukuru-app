@@ -246,12 +246,12 @@ const ReceiveTerminalScreen = () => {
           <Pressable
             disabled={isLoading || balancesState.loading}
             onPress={handleSubmit}
-            className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+            className="flex items-center justify-center w-full p-4 rounded-md bg-primary "
           >
             {isLoading || convertLoading ? (
               <ActivityIndicator size={22} color="#fff" />
             ) : (
-              <AppText classProps="text-xl font-bold">Show QR Code</AppText>
+              <AppText classProps="text-lg font-bold">Show QR Code</AppText>
             )}
           </Pressable>
         )}

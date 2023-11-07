@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
   },
   option: {
     paddingVertical: 14,
-
+    paddingHorizontal: 12,
+    borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },

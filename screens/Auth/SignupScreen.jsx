@@ -55,14 +55,14 @@ const SignupScreen = () => {
             className="flex flex-row items-center flex-1"
           >
             <SimpleLineIcons name="arrow-left" size={20} color="black" />
-            <AppText classProps="text-xl font-bold mx-3">Back</AppText>
+            <AppText classProps="text-base font-bold mx-3">Back</AppText>
           </Pressable>
         </View>
 
         {/* Header */}
         <View className="flex flex-col py-3 mb-8">
-          <AppText classProps="text-2xl font-bold">Create your account</AppText>
-          <AppText classProps="text-base">
+          <AppText classProps="text-lg font-bold">Create your account</AppText>
+          <AppText classProps="text-sm">
             Select an account type and secure it with a User and password
           </AppText>
         </View>
@@ -88,7 +88,7 @@ const SignupScreen = () => {
             <>
               {/* Forms */}
               <View className="flex flex-col">
-                <AppText classProps="text-lg font-bold">Account type</AppText>
+                <AppText classProps="text-sm font-bold">Account type</AppText>
                 <SelectDropdown
                   data={accType}
                   onSelect={(selectedItem, index) => {
@@ -115,7 +115,7 @@ const SignupScreen = () => {
 
               {/* Username */}
               <View className="flex flex-col py-3">
-                <AppText classProps="text-lg font-bold">Username</AppText>
+                <AppText classProps="text-sm font-bold">Username</AppText>
 
                 <TextInput
                   ref={usernameRef}
@@ -124,7 +124,7 @@ const SignupScreen = () => {
                   autoCapitalize="none"
                   onBlur={handleBlur('username')}
                   value={values.username}
-                  className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 text-black"
+                  className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                   returnKeyType="next"
                   onSubmitEditing={() => handleNext(passwordRef)}
                 />
@@ -136,7 +136,7 @@ const SignupScreen = () => {
 
               {/* Password */}
               <View className="flex flex-col py-3">
-                <AppText classProps="text-lg font-bold">Password</AppText>
+                <AppText classProps="text-sm font-bold">Password</AppText>
 
                 <TextInput
                   ref={passwordRef}
@@ -146,7 +146,7 @@ const SignupScreen = () => {
                   autoCapitalize="none"
                   onBlur={handleBlur('password')}
                   value={values.password}
-                  className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative text-black"
+                  className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                   returnKeyType="next"
                   onSubmitEditing={() => handleNext(confirmPasswordRef)}
                 />
@@ -155,7 +155,7 @@ const SignupScreen = () => {
                   onPress={() => setShow(!show)}
                   className="absolute right-4 bottom-8"
                 >
-                  <Entypo name={show ? `eye` : `eye-with-line`} size={22} />
+                  <Entypo name={show ? `eye` : `eye-with-line`} size={16} />
                 </Pressable>
 
                 {touched.password && errors.password && (
@@ -165,7 +165,7 @@ const SignupScreen = () => {
 
               {/* Confirm Password */}
               <View className="flex flex-col py-3">
-                <AppText classProps="text-lg font-bold">
+                <AppText classProps="text-sm font-bold">
                   Confirm Password
                 </AppText>
 
@@ -177,7 +177,7 @@ const SignupScreen = () => {
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
-                  className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
+                  className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                   returnKeyType="next"
                   onSubmitEditing={handleSubmit}
                 />
@@ -188,9 +188,9 @@ const SignupScreen = () => {
 
               <Pressable
                 onPress={handleSubmit}
-                className="flex items-center p-5 my-5 rounded-full bg-primary"
+                className="flex items-center p-4 my-5 rounded-md bg-primary"
               >
-                <AppText classProps="text-xl font-bold">Continue</AppText>
+                <AppText classProps="text-lg font-bold">Continue</AppText>
               </Pressable>
             </>
           )}

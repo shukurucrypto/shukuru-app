@@ -1,20 +1,19 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Pressable,
-  SafeAreaView,
   ActivityIndicator,
   Image,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import AppText from '../../components/AppText'
 
@@ -224,7 +223,7 @@ const TerminalScreen = () => {
               disabled={loading}
               onPress={handleSubmit}
               // onPress={() => refresh()}
-              className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+              className="flex items-center justify-center w-full p-4 rounded-md bg-primary "
             >
               {loading ? (
                 <ActivityIndicator color="#fff" />

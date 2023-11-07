@@ -1,21 +1,20 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TextInput,
-  Pressable,
-  Image,
-} from 'react-native'
-import React, { useState } from 'react'
-import AppText from '../../components/AppText'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import BackHeader from '../../components/Headers/BackHeader'
+import React, { useState } from 'react'
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
+import AppText from '../../components/AppText'
+import BackHeader from '../../components/Headers/BackHeader'
 
-import mtn from '../../assets/logos/mtn.jpeg'
 import airtel from '../../assets/logos/airtel.jpeg'
+import mtn from '../../assets/logos/mtn.jpeg'
 import ConfirmPhoneDialog from '../../components/Modals/ConfirmPhoneDialog'
-import { useSelector } from 'react-redux'
 
 const EnterPhoneScreen = () => {
   const [mobileNetwork, setMobileNetwork] = useState('MTN')
@@ -137,7 +136,7 @@ const EnterPhoneScreen = () => {
         <Pressable
           onPress={() => setModalVisible(true)}
           disabled={!phone}
-          className={`items-center self-center  py-3 rounded-full w-full ${
+          className={`items-center self-center  py-3 rounded-md w-full ${
             phone ? 'bg-primary' : 'bg-neutral-200'
           } `}
         >

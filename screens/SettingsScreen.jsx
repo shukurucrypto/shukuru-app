@@ -1,18 +1,16 @@
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
 import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
   Pressable,
-  TouchableHighlight,
+  ScrollView,
   Switch,
+  Text,
+  TouchableHighlight,
+  View,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import React, { useEffect, useState } from 'react'
-import AppText from '../components/AppText'
-import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
+import AppText from '../components/AppText'
 import ResetAccModal from '../components/Modals/ResetAccModal'
 
 const SettingsScreen = () => {
@@ -34,6 +32,10 @@ const SettingsScreen = () => {
     currency: profileState.profile.country,
     code: '+256',
   })
+
+  const handleGoToChangePassword = () => {
+    navigation.navigate('EnterPin', { NextScreen: 'ChangePassword' })
+  }
 
   if (!profileState.loading && !profileState.error)
     return (
@@ -108,7 +110,8 @@ const SettingsScreen = () => {
           </View>
 
           <Pressable
-            onPress={() => navigation.navigate('ChangePassword')}
+            // onPress={() => navigation.navigate('ChangePassword')}
+            onPress={handleGoToChangePassword}
             className="flex flex-row border-b-[0.8px] border-neutral-400 items-center justify-between w-full"
           >
             <AppText classProps="text-base py-5">Change Password</AppText>

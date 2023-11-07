@@ -134,21 +134,23 @@ const CreateProfileScreen = () => {
           <View className="flex flex-col justify-between flex-1">
             {/* Header */}
             <View className="flex flex-col py-3 mb-8">
-              <AppText classProps="text-2xl font-bold">
+              <AppText classProps="text-lg font-bold">
                 Connect your phone
               </AppText>
-              <AppText classProps="text-base">
+              <AppText classProps="text-sm">
                 You can connect your email or phone to access Shukuru USSD
                 services
               </AppText>
             </View>
 
-            {error && <Text className="text-center text-red-600">{error}</Text>}
+            {error && (
+              <Text className="text-sm text-center text-red-600">{error}</Text>
+            )}
 
             <View className="flex flex-col flex-1">
               {/* Username */}
               <View className="flex flex-col py-3 mb-5">
-                <AppText classProps="text-lg font-bold">Phone</AppText>
+                <AppText classProps="text-sm font-bold">Phone</AppText>
 
                 <View className="flex flex-row items-center flex-1">
                   <Pressable
@@ -159,14 +161,14 @@ const CreateProfileScreen = () => {
                     }
                     className="flex items-center justify-center h-16 px-3 mt-3 "
                   >
-                    <AppText classProps="text-lg font-bold">
+                    <AppText classProps="text-sm font-bold">
                       {country.code}
                     </AppText>
                   </Pressable>
                   <TextInput
                     ref={phoneRef}
                     placeholder="xxxxxx"
-                    className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 w-full text-black"
+                    className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                     disabled={loading}
                     autoCapitalize="none"
                     value={phone}
@@ -179,8 +181,8 @@ const CreateProfileScreen = () => {
 
               {/* Email */}
               <View className="flex flex-col flex-1 py-3">
-                <AppText classProps="text-lg font-bold">
-                  Email (Optional)
+                <AppText classProps="text-sm font-bold">
+                  Email (Recommended)
                 </AppText>
 
                 <TextInput
@@ -189,30 +191,32 @@ const CreateProfileScreen = () => {
                   keyboardType="email-address"
                   disabled={loading}
                   autoCapitalize="none"
-                  className="border-[0.8px] mt-3 h-16 text-base rounded-lg p-4 border-neutral-300 relative text-black"
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
+                  className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
+                  value={phone}
+                  onChangeText={(text) => setPhone(text)}
                   onSubmitEditing={handleSubmit}
                   returnKeyType="done"
                 />
               </View>
             </View>
 
-            <AppText classProps="mt-5 font-light">
-              By tapping "Agree" you agree to the{' '}
-              <Text className="font-bold text-primary">Terms of service</Text>,
-              and <Text className="font-bold text-primary">Privacy Notice</Text>
+            <AppText classProps="my-5 font-light">
+              We strongly recommend to enter your email. In case of any incident
+              you can be able to
+              <Text className="font-bold text-primary"> Recover </Text>, or{' '}
+              <Text className="font-bold text-primary">Reset </Text>
+              your password.
             </AppText>
 
             <Pressable
               onPress={handleSubmit}
               disabled={loading}
-              className="flex items-center p-5 mt-8 rounded-full bg-primary"
+              className="flex items-center p-4 my-5 rounded-md bg-primary"
             >
               {loading ? (
                 <ActivityIndicator size={18} color="#fff" />
               ) : (
-                <AppText classProps="text-xl font-bold">Agree</AppText>
+                <AppText classProps="text-lg font-bold">Agree</AppText>
               )}
             </Pressable>
           </View>

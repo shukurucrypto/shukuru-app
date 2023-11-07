@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import {
   StatusBar,
@@ -10,13 +10,16 @@ import {
 } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 
-const LockScreen = () => {
+const EnterPinScreen = () => {
   const [pinCode, setPinCode] = useState('')
   const [error, setError] = useState('')
 
   const [storedPin, setStoredPin] = useState(null)
 
   const navigation = useNavigation()
+  const router = useRoute()
+
+  const { NextScreen } = router.params
 
   useEffect(() => {
     AsyncStorage.getItem('@pinCode')
@@ -50,7 +53,7 @@ const LockScreen = () => {
   const handlePinCodeSubmit = () => {
     // Perform your PIN code verification logic here
     if (pinCode === storedPin) {
-      navigation.navigate('Home')
+      navigation.navigate(NextScreen)
     } else {
       // Incorrect PIN code, display an error message
       setError('Incorrect PIN code. Please try again.')
@@ -267,4 +270,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default LockScreen
+export default EnterPinScreen

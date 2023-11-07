@@ -4,7 +4,6 @@ import AppHeader from './AppHeader'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import useRenderLock from '../hooks/useRenderLock'
-import { useSelector } from 'react-redux'
 
 const AppContainer = ({ children, refresh }) => {
   const navigation = useNavigation()

@@ -6,21 +6,21 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native'
-import BackHeader from '../../components/Headers/BackHeader'
-import AppText from '../../components/AppText'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
-import { API_URL } from '../../apiURL'
 import axios from 'axios'
+import { API_URL } from '../../../apiURL'
+import BackHeader from '../../../components/Headers/BackHeader'
+import AppText from '../../../components/AppText'
 
-const EnterOTPScreen = () => {
+const ResetOTPScreen = () => {
   const [loading, setLoading] = useState(false)
   const [otp, setOTP] = useState('')
   const [error, setError] = useState('')
 
-  const { token } = useSelector((state) => state.tokenState)
-
   const navigation = useNavigation()
+  const router = useRoute()
+  const { email } = router.params
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -33,19 +33,16 @@ const EnterOTPScreen = () => {
       }
 
       const data = {
+        email,
         code: otp,
       }
 
-      const res = await axios.post(`${API_URL}/verify/otp`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const res = await axios.post(`${API_URL}/verify/raw/otp`, data)
 
       if (res.data.success) {
         setOTP('')
         setLoading(false)
-        navigation.navigate('NewPassword', { code: otp })
+        navigation.navigate('EnterResetPassword', { code: otp, email: email })
         return
       } else {
         setLoading(false)
@@ -58,7 +55,7 @@ const EnterOTPScreen = () => {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      setError('Bad Request. Check your code.')
+      setError('Something went wrong')
     }
   }
 
@@ -75,10 +72,10 @@ const EnterOTPScreen = () => {
             placeholder="Enter OTP"
             className="p-4 my-2 rounded-md bg-neutral-100"
             keyboardType="default"
-            autoCapitalize="none"
-            autoComplete="off"
             value={otp}
             onChangeText={(e) => setOTP(e)}
+            autoCapitalize="none"
+            autoComplete="off"
             onSubmitEditing={handleSubmit}
             returnKeyType="done"
           />
@@ -97,7 +94,7 @@ const EnterOTPScreen = () => {
             <ActivityIndicator color="#FBC609" />
           ) : (
             <Text
-              className={`font-bold text-sm ${
+              className={`font-bold ${
                 otp.length !== 6 ? 'text-neutral-300' : 'text-black'
               } `}
             >
@@ -110,4 +107,4 @@ const EnterOTPScreen = () => {
   )
 }
 
-export default EnterOTPScreen
+export default ResetOTPScreen

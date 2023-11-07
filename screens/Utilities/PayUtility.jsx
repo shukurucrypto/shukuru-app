@@ -207,7 +207,7 @@ const PayUtilityScreen = () => {
           <View>
             <Pressable
               onPress={handleSubmit}
-              className="items-center w-full p-4 mb-4 rounded-full bg-primary"
+              className="items-center w-full p-4 mb-4 rounded-md bg-primary"
             >
               <Text className="font-bold text-black">CONFIRM</Text>
             </Pressable>

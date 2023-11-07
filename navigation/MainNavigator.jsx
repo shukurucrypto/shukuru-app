@@ -33,6 +33,8 @@ import EnterNumberScreen from '../screens/Utilities/EnterNumberScreen'
 import ChangePasswordScreen from '../screens/Auth/ChangePassword'
 import EnterOTPScreen from '../screens/Auth/EnterOTPScreen'
 import NewPasswordScreen from '../screens/Auth/NewPasswordScreen'
+import EnterPinScreen from '../screens/Lock/EnterPinScreen'
+import EnterResetEmailScreen from '../screens/Auth/ResetPassword/EnterResetEmail'
 
 const Stack = createNativeStackNavigator()
 
@@ -74,6 +76,7 @@ function MainStackNavigator() {
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
       <Stack.Screen name="EnterOTP" component={EnterOTPScreen} />
       <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
+      <Stack.Screen name="EnterPin" component={EnterPinScreen} />
       <Stack.Screen
         name="SelectWithdrawAssetScreen"
         component={SelectWithdrawAssetScreen}

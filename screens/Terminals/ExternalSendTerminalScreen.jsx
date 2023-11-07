@@ -1,27 +1,23 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
+  ActivityIndicator,
+  Image,
   Pressable,
   SafeAreaView,
-  Image,
-  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import Feather from 'react-native-vector-icons/Feather'
-import SendingMoney from '../../components/Loading/SendingMoney'
-import { useSelector } from 'react-redux'
-import axios from 'axios'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Feather from 'react-native-vector-icons/Feather'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import { useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
 import { API_URL, SOCKET_SERVER } from '../../apiURL'
 import AppText from '../../components/AppText'
-import TransactionDone from '../Animators/TransactionDone'
-import { io } from 'socket.io-client'
-import TransactionFailed from '../Animators/TransactionFailed'
-import useSendOneSignal from '../../Notifications/useSendOneSignal'
 
 const socket = io(SOCKET_SERVER)
 
@@ -243,7 +239,7 @@ const ExternalSendTerminalScreen = () => {
 
         <View className="w-full px-6 my-4">
           {number === '0.00' ? (
-            <View className="flex items-center justify-center w-full p-4 rounded-full bg-neutral-200 ">
+            <View className="flex items-center justify-center w-full p-4 rounded-md bg-neutral-200 ">
               <Text className="text-xl font-bold text-white">Send</Text>
             </View>
           ) : (
@@ -251,7 +247,7 @@ const ExternalSendTerminalScreen = () => {
               disabled={loading}
               onPress={handleSubmit}
               // onPress={() => refresh()}
-              className="flex items-center justify-center w-full p-4 rounded-full bg-primary "
+              className="flex items-center justify-center w-full p-4 rounded-md bg-primary "
             >
               {loading ? (
                 <ActivityIndicator color="#fff" />
