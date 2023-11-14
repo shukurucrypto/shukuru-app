@@ -106,6 +106,7 @@ const ReadInvoiceScreen = () => {
         setFailed(true)
         setLoadSubmit(false)
       }
+      setLoadSubmit(false)
     } catch (error) {
       console.log(error)
       setLoadSubmit(false)
