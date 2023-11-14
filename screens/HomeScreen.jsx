@@ -29,6 +29,7 @@ import { fetchUserGas } from '../features/gas/gasSlice'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import useRefresh from '../hooks/useRefresh'
+import useGetRequest from '../helpers/useGetRequest'
 
 const socket = io(SOCKET_SERVER)
 
@@ -40,6 +41,8 @@ const HomeScreen = () => {
   const advertState = useSelector((state) => state.advertState)
 
   const tokenState = useSelector((state) => state.tokenState)
+
+  const { request } = useGetRequest()
 
   const navigation = useNavigation()
 
@@ -68,6 +71,8 @@ const HomeScreen = () => {
     fetchCheckreward(dispatch, user.token)
 
     fetchUserGas(dispatch, user.userId, tokenState.token)
+
+    request(`/invoice/legacies`)
 
     // fetchBTCTransactions()
   }, [])
