@@ -90,6 +90,7 @@ const ReadInvoiceScreen = () => {
         from: user.userId,
         invoice: data,
         amount: invoiceState.amount,
+        r_hash: invoiceState.hash,
       }
 
       const res = await request(invoiceData, '/invoice/pay')

@@ -93,6 +93,7 @@ const ReceiveTerminalScreen = () => {
       if (result.success) {
         navigation.navigate('QRCodeShownScreen', {
           data: result.data,
+          rHash: result.r_hash,
           amount: number,
           request: result.data.request,
           refresh: refresh,

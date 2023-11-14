@@ -17,6 +17,7 @@ import useGetRequest from '../helpers/useGetRequest'
 import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
 import useRefresh from '../hooks/useRefresh'
+import useAPIPostRequest from '../helpers/apiRequests'
 
 const socket = io(SOCKET_SERVER)
 
@@ -44,7 +45,7 @@ const QRCodeShownScreen = () => {
 
   const route = useRoute()
 
-  const { data, amount, request } = route.params
+  const { data, amount, request, rHash } = route.params
 
   const { refresh } = useRefresh()
 
@@ -63,23 +64,24 @@ const QRCodeShownScreen = () => {
     // }
   }, [])
 
-  const { request: getBTCBalanceRequest } = useGetRequest()
+  // const { request: getBTCBalanceRequest } = useGetRequest()
+  const { request: getInvoiceStatus } = useAPIPostRequest()
 
   useEffect(() => {
-    if (updateCount <= 60) {
+    if (updateCount <= 1000) {
       getBTCBalance()
     }
   }, [updateCount])
 
   const getBTCBalance = async () => {
     try {
-      const res = await getBTCBalanceRequest(`/wallet/${user.userId}`)
+      const reqData = {
+        r_hash: rHash,
+      }
+      const res = await getInvoiceStatus(reqData, `/invoice/status/`)
 
       if (res.success) {
-        if (
-          Number(res.data.lightning).toFixed() >
-          Number(balancesState.balances.lightning).toFixed()
-        ) {
+        if (res.data.settled) {
           setDone(true)
           setUpdateCount(2000)
           // Update the Balances State
@@ -208,6 +210,7 @@ const QRCodeShownScreen = () => {
       <View className="flex flex-row w-full px-5 py-5">
         <Pressable
           onPress={copyToClipboard}
+          // onPress={getBTCBalance}
           className="flex items-center justify-center flex-1 p-4 ml-2 bg-white border-2 rounded-full border-primary"
         >
           <Text className="text-xl font-bold text-primary">
