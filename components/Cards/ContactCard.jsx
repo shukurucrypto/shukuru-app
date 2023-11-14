@@ -1,12 +1,21 @@
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native'
 
 const ContactCard = ({ contact, navigateToTerminal }) => {
   // if (!contact?.phoneNumber) return null
 
   if (contact)
     return (
-      <Pressable onPress={navigateToTerminal} style={styles.contactCon}>
+      <Pressable
+        onPress={navigateToTerminal}
+        className="flex flex-row items-center h-16 "
+      >
         <View style={styles.imgCon}>
           <View style={styles.placeholder}>
             {/* <Text style={styles.txt}>{contact?.givenName[0]}</Text> */}

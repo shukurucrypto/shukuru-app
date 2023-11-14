@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { io } from 'socket.io-client'
 import { SOCKET_SERVER } from './apiURL'
 import useLocalNotification from './Notifications/Local'
-import { fetchBalance } from './features/balances/balancesSlice'
-import { fetchTransactions } from './features/transactions/transactionsSlice'
 import SplashScreen from './components/SplashScreen'
 import {
   failedFetchToken,
@@ -18,6 +16,7 @@ import {
   fetchingToken,
 } from './features/token/tokenSlice'
 import OneSignal from 'react-native-onesignal'
+import useRefresh from './hooks/useRefresh'
 
 const socket = io(SOCKET_SERVER)
 
@@ -32,6 +31,8 @@ function App() {
   )
 
   const [appReady, setAppReady] = useState(false)
+
+  const { refresh } = useRefresh()
 
   const dispatch = useDispatch()
 
@@ -56,8 +57,7 @@ function App() {
       // Listen for the 'privateMessage' event
       socket.on('txNotification', ({ senderId, message }) => {
         onDisplayNotification(message)
-        fetchBalance(dispatch, user?.userId)
-        fetchTransactions(dispatch, user?.userId)
+        refresh()
       })
 
       return () => {

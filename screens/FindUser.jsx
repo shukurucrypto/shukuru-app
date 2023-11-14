@@ -129,84 +129,61 @@ const FindUser = () => {
           <AppText classProps="text-xs font-extralight">{token}</AppText>
         </View>
 
-        <View className="flex items-end flex-1 ">
+        <View className="flex items-end flex-1">
           {/* <Ionicons name="qr-code" size={25} color="black" /> */}
         </View>
       </View>
 
-      <FlatList
-        ListHeaderComponent={
-          <>
-            {/* Form */}
-            <View className="flex flex-row items-center justify-center w-full h-12 my-4">
-              {/* <AppText classProps="text-base ">To</AppText> */}
+      {/* Form */}
+      <View className="flex flex-row items-center justify-center w-full h-12 my-4">
+        <View className="flex flex-1">
+          <TextInput
+            placeholder="Name, phone, invoice or address"
+            value={text}
+            onChangeText={(e) => setText(e)}
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="off"
+            onSubmitEditing={navigateToTerminal}
+            onBlur={() => setSearchedContact(null)}
+            returnKeyType="done"
+            className="relative w-full h-full px-4 text-base text-black border rounded-lg border-neutral-300"
+          />
+        </View>
 
-              <View className="flex flex-1">
-                <TextInput
-                  placeholder="Name, phone, invoice or address"
-                  value={text}
-                  onChangeText={(e) => setText(e)}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  autoComplete="off"
-                  onBlur={() => setSearchedContact(null)}
-                  // You can remove onSubmitEditing since we're updating the results while typing
-                  returnKeyType="done"
-                  className="relative w-full h-full px-4 text-base text-black border rounded-lg border-neutral-300"
-                />
-              </View>
+        <View className="flex items-center justify-center">
+          <Pressable
+            onPress={handleSearch}
+            disabled={loading}
+            className={`flex items-center justify-center w-10 h-full ml-2 rounded-md bg-primary`}
+          >
+            {loading ? (
+              <ActivityIndicator size={12} color="black" />
+            ) : (
+              <AntDesign name="search1" size={20} color="black" />
+            )}
+          </Pressable>
+        </View>
+      </View>
 
-              <View className="flex items-center justify-center">
-                <Pressable
-                  onPress={handleSearch}
-                  disabled={loading}
-                  className={`flex items-center justify-center w-10 h-full ml-2 rounded-md bg-primary`}
-                >
-                  {loading ? (
-                    <ActivityIndicator size={12} color="black" />
-                  ) : (
-                    <AntDesign name="search1" size={20} color="black" />
-                  )}
-                </Pressable>
-              </View>
-            </View>
+      <View className="w-full h-8">
+        {text && !loading && showSearch ? (
+          <Pressable onPress={handleSearch} className="">
+            <Text className="font-bold text-neutral-600">
+              Show results for <Text className="text-blue-500 ">"{text}"</Text>
+            </Text>
+          </Pressable>
+        ) : (
+          <Text className="text-sm font-light text-neutral-600">
+            You can also paste your lightning invoice here
+          </Text>
+        )}
+      </View>
 
-            <View className="w-full h-8">
-              {text && !loading && showSearch ? (
-                <Pressable onPress={handleSearch} className="">
-                  <Text className="font-bold text-neutral-600">
-                    Show results for{' '}
-                    <Text className="text-blue-500 ">"{text}"</Text>
-                  </Text>
-                </Pressable>
-              ) : (
-                <Text className="text-sm font-light text-neutral-600">
-                  You can also paste your lightning invoice here
-                </Text>
-              )}
-            </View>
+      {/* Render Contact Card */}
+      {renderContactCard()}
 
-            {/* {advertState.innersAds && <AdCard item={advertState.innersAds} />} */}
-
-            <View className="mt-4">
-              {renderContactCard()}
-
-              {searchErr && (
-                <View className="flex items-center self-center justify-center w-1/2 py-5">
-                  <Text className="text-center text-neutral-700">
-                    {searchErr}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </>
-        }
-        // data={searchedContact ? searchedContact : contacts}
-        data={searchedContact}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        className="flex flex-1"
-      />
+      {/* Additional content goes here if needed */}
     </View>
   )
 }
