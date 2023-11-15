@@ -19,6 +19,7 @@ import {
   fetchedUser,
   fetchingUser,
 } from '../../features/user/userSlice'
+import LoginAnimator from '../Animators/LoginAnimator'
 
 const CreateProfileScreen = () => {
   const [loading, setLoading] = useState(false)
@@ -112,16 +113,6 @@ const CreateProfileScreen = () => {
     return phoneNumber
   }
 
-  // const storeToken = async (value) => {
-  //   try {
-  //     const jsonValue = JSON.stringify(value)
-  //     await AsyncStorage.setItem('@token', jsonValue)
-  //   } catch (e) {
-  //     // saving error
-  //     console.log(e)
-  //   }
-  // }
-
   const storeToken = async (value, bolt) => {
     try {
       const jsonValue = JSON.stringify(value)
@@ -140,6 +131,7 @@ const CreateProfileScreen = () => {
       nextInputRef.current.focus()
     }
   }
+  if (loading) return <LoginAnimator />
 
   return (
     <SafeAreaView className="flex flex-1">
