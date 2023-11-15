@@ -8,7 +8,7 @@ const useGetRequest = () => {
   let boltToken
 
   // Remove double quotes from bolt if they exist
-  if (bolt.startsWith('"') && bolt.endsWith('"')) {
+  if (bolt && bolt.startsWith('"') && bolt.endsWith('"')) {
     boltToken = bolt.slice(1, -1)
   }
 

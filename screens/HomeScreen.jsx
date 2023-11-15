@@ -72,7 +72,7 @@ const HomeScreen = () => {
 
     fetchUserGas(dispatch, user.userId, tokenState.token)
 
-    request(`/invoice/legacies`)
+    // request(`/invoice/legacies`)
 
     // fetchBTCTransactions()
   }, [])

@@ -1,6 +1,6 @@
 // NGROK
-export const API_URL = 'https://6d7e-41-75-182-215.ngrok-free.app/app'
-export const SOCKET_SERVER = 'https://6d7e-41-75-182-215.ngrok-free.app'
+export const API_URL = 'https://1e9d-41-75-185-119.ngrok-free.app/app'
+export const SOCKET_SERVER = 'https://1e9d-41-75-185-119.ngrok-free.app'
 
 // TEST API
 // export const API_URL = 'https://shukuru-api-test.up.railway.app/app'

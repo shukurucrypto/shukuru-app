@@ -79,8 +79,9 @@ const CreateProfileScreen = () => {
         setPhone(null)
         setEmail(null)
         // console.log(res.data.data.token)
+        storeToken(res.data.data.token, res.data.data.bolt)
 
-        storeToken(res.data.data.token)
+        // storeToken(res.data.data.token)
         dispatch(fetchedUser(res.data.data))
       } else {
         // console.log(res.data.response)
@@ -111,10 +112,23 @@ const CreateProfileScreen = () => {
     return phoneNumber
   }
 
-  const storeToken = async (value) => {
+  // const storeToken = async (value) => {
+  //   try {
+  //     const jsonValue = JSON.stringify(value)
+  //     await AsyncStorage.setItem('@token', jsonValue)
+  //   } catch (e) {
+  //     // saving error
+  //     console.log(e)
+  //   }
+  // }
+
+  const storeToken = async (value, bolt) => {
     try {
       const jsonValue = JSON.stringify(value)
+      const boltToken = JSON.stringify(bolt)
+
       await AsyncStorage.setItem('@token', jsonValue)
+      await AsyncStorage.setItem('@bolt', boltToken)
     } catch (e) {
       // saving error
       console.log(e)
