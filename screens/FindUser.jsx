@@ -45,6 +45,12 @@ const FindUser = () => {
       setShowSearch(true)
     }
 
+    if (text.startsWith('0x') && text.length == 42 && token != 'BTC-LT') {
+      navigation.navigate('ExternalSendTerminal', {
+        to: text,
+      })
+    }
+
     if (
       (text.length > 11 && text.startsWith('lntb')) ||
       text.startsWith('lnbc') ||
