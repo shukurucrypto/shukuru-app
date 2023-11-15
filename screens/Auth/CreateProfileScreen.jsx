@@ -192,8 +192,8 @@ const CreateProfileScreen = () => {
                   disabled={loading}
                   autoCapitalize="none"
                   className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
-                  value={phone}
-                  onChangeText={(text) => setPhone(text)}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
                   onSubmitEditing={handleSubmit}
                   returnKeyType="done"
                 />
