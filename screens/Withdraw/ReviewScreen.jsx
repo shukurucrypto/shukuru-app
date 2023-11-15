@@ -18,6 +18,7 @@ import { fetchBalance } from '../../features/balances/balancesSlice'
 import { fetchTransactions } from '../../features/transactions/transactionsSlice'
 import SuccessScreen from './SuccessScreen'
 import SendingMoney from '../../components/Loading/SendingMoney'
+import useRefresh from '../../hooks/useRefresh'
 
 const ReviewScreen = () => {
   const [loading, setLoading] = useState(false)
@@ -38,9 +39,7 @@ const ReviewScreen = () => {
 
   const router = useRoute()
 
-  const navigation = useNavigation()
-
-  const dispatch = useDispatch()
+  const { refresh } = useRefresh()
 
   const { data, phone, mobileNetwork } = router.params
 
@@ -127,19 +126,12 @@ const ReviewScreen = () => {
     }
   }
 
-  const goThere = () => navigation.navigate('SuccessScreen')
-
   if (loading)
     return (
       <View className="flex items-center justify-center flex-1">
         <ActivityIndicator size={22} color="#FBC609" />
       </View>
     )
-
-  const refresh = () => {
-    fetchBalance(dispatch, user.userId)
-    fetchTransactions(dispatch, user.userId)
-  }
 
   if (submitting) return <SendingMoney />
 

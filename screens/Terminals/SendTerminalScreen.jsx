@@ -52,13 +52,12 @@ const SendTerminalScreen = () => {
     if (number == '0.0') return
     setLoading(true)
     try {
-      let PAY_URL
-
       const data = {
         from: userState.user.userId,
         to: user._id,
         amount: number,
         memo: 'hello world ',
+        receiver: user,
       }
 
       if (token === 'cUSD') {
@@ -68,7 +67,6 @@ const SendTerminalScreen = () => {
           data,
           token,
           contactNumber,
-          userId,
         })
       } else if (token === 'BTC-LT') {
         PAY_URL = `${API_URL}/send`
@@ -79,7 +77,6 @@ const SendTerminalScreen = () => {
           data,
           token,
           contactNumber,
-          userId,
         })
       }
 
@@ -93,26 +90,12 @@ const SendTerminalScreen = () => {
       const result = await request(boltReqParam, '/send')
 
       if (result.success) {
-        // socket.emit('sendTxNotification', {
-        //   recipientId: userId,
-        //   message: 'New transaction here...',
-        // })
-
         socket.emit('sendTxNotification', {
           recipientId: user._id,
           message: {
             title: 'You received a new payment',
-            // subtitle: `@${result.tx.name}`,
-            // body: `Paid in ${token} Congrats! 🎉`,
             body: `Recieved via app. Congrats! 🎉`,
           },
-          // message: {
-          //   title: 'You received a new payment',
-          //   subtitle: '@kabaya',
-          //   body: `${user.country} ${Number} ${
-          //     token === 'BTC-LT' ? ' Lightning BTC' : ' Celo dollar'
-          //   }`,
-          // },
         })
 
         sendOnesignal(

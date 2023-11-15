@@ -24,6 +24,7 @@ import TransactionFailed from './Animators/TransactionFailed'
 import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { io } from 'socket.io-client'
+import useRefresh from '../hooks/useRefresh'
 
 const socket = io(SOCKET_SERVER)
 
@@ -56,7 +57,7 @@ const EVMConfirmTXScreen = () => {
 
   const router = useRoute()
 
-  const dispatch = useDispatch()
+  const { refresh } = useRefresh()
 
   const { data, token, contactNumber, userId } = router.params
 
@@ -192,12 +193,6 @@ const EVMConfirmTXScreen = () => {
       console.log(error.message)
       setSubmitLoading(false)
     }
-  }
-
-  const refresh = () => {
-    fetchBalance(dispatch, userState.user.userId)
-    fetchTransactions(dispatch, userState.user.userId)
-    // fetchBTCTransactions()
   }
 
   if (loading)
