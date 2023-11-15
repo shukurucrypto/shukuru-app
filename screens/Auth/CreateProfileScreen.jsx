@@ -89,7 +89,7 @@ const CreateProfileScreen = () => {
         setError(res.data.response)
         dispatch(failedFetchUser(res.data.response))
       }
-      setLoading(false)
+      // setLoading(false)
     } catch (error) {
       dispatch(failedFetchUser('OOPs! Something went wrong'))
       console.log(error.message)
