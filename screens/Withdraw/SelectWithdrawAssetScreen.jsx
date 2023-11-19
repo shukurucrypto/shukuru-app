@@ -35,7 +35,7 @@ const SelectWithdrawAssetScreen = () => {
 
       {balances.cusd <= 0 && balances.busd <= 0 ? (
         <View className="flex items-center justify-center flex-1 p-5">
-          <EmptyAnimation msg="Your account it empty. Load up some $CELO or $BUSD to withdraw." />
+          <EmptyAnimation msg="Your account it empty. Load up some Sats or $cUSD  to withdraw." />
 
           {/* <Pressable>
             <Text>Go Home</Text>
