@@ -24,6 +24,10 @@ import {
   fetchedUser,
   fetchingUser,
 } from '../../features/user/userSlice'
+import { API_URL } from '../../apiURL'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import LoginAnimator from '../Animators/LoginAnimator'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -40,8 +44,6 @@ const LoginScreen = () => {
   const [error, setError] = useState(null)
   const navigation = useNavigation()
 
-  const [showPassword, setShowPassword] = useState(false)
-
   const dispatch = useDispatch()
 
   const usernameRef = useRef(null)
@@ -51,10 +53,11 @@ const LoginScreen = () => {
 
   const handleSubmit = async (values) => {
     setError(null)
-    setLoading(true)
 
     dispatch(fetchingUser())
     try {
+      setLoading(true)
+
       const data = {
         username: values.username.trim(),
         password: values.password,
@@ -63,14 +66,14 @@ const LoginScreen = () => {
       const res = await axios.post(`${API_URL}/auth/login`, data)
 
       if (res.data.success) {
-        storeToken(res.data.data)
+        storeToken(res.data.data.token, res.data.data.bolt)
         dispatch(fetchedUser(res.data.data))
       } else {
         // console.log(res.data.response)
         setError(res.data.response)
         dispatch(failedFetchUser(res.data.response))
       }
-      setLoading(false)
+      // setLoading(false)
     } catch (error) {
       dispatch(failedFetchUser('OOPs! Something went wrong'))
       console.log(error.message)
@@ -79,10 +82,13 @@ const LoginScreen = () => {
     }
   }
 
-  const storeToken = async (value) => {
+  const storeToken = async (value, bolt) => {
     try {
-      const jsonValue = JSON.stringify(value.token)
+      const jsonValue = JSON.stringify(value)
+      const boltToken = JSON.stringify(bolt)
+
       await AsyncStorage.setItem('@token', jsonValue)
+      await AsyncStorage.setItem('@bolt', boltToken)
     } catch (e) {
       // saving error
       console.log(e)
@@ -96,6 +102,8 @@ const LoginScreen = () => {
       nextInputRef.current.focus()
     }
   }
+
+  if (loading) return <LoginAnimator />
 
   return (
     <ScrollView className="flex flex-1">
@@ -204,14 +212,20 @@ const LoginScreen = () => {
                   <Pressable
                     onPress={handleSubmit}
                     disabled={loading}
-                    className="flex items-center p-4 my-5 rounded-md bg-primary"
+                    className={`flex items-center p-5 mt-3 rounded-full ${
+                      loading ? 'bg-neutral-100' : ' bg-primary'
+                    }`}
                   >
                     {loading ? (
                       <ActivityIndicator size={22} color="#fff" />
                     ) : (
-                      <AppText classProps="text-base font-bold">
+                      <Text
+                        className={`text-xl font-bold ${
+                          loading ? 'text-neutral-200' : 'text-black'
+                        }`}
+                      >
                         Sign In
-                      </AppText>
+                      </Text>
                     )}
                   </Pressable>
 

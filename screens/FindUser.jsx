@@ -1,28 +1,23 @@
+import { useNavigation, useRoute } from '@react-navigation/native'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import {
-  View,
-  Text,
-  Pressable,
-  TextInput,
-  FlatList,
   ActivityIndicator,
-  Keyboard,
+  FlatList,
+  Pressable,
+  Text,
+  TextInput,
+  View,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import React, { useEffect, useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import ContactCard from '../components/Cards/ContactCard'
-import AppText from '../components/AppText'
-import axios from 'axios'
 import { API_URL } from '../apiURL'
-import { useSelector } from 'react-redux'
-import AdCard from './AdCard'
+import AppText from '../components/AppText'
+import ContactCard from '../components/Cards/ContactCard'
 
 const FindUser = () => {
   const navigation = useNavigation()
 
   const route = useRoute()
-
-  const advertState = useSelector((state) => state.advertState)
 
   const [loading, setLoading] = useState(false)
   const [searchedContact, setSearchedContact] = useState(null)
@@ -35,8 +30,42 @@ const FindUser = () => {
 
   const { token, refresh } = route.params
 
+  useEffect(() => {
+    if (text.length > 0) {
+      handleSearch()
+      setShowSearch(true)
+    } else {
+      setShowSearch(false)
+    }
+  }, [text])
+
+  useEffect(() => {
+    if (text.length > 3 && token != 'BTC-LT') {
+      // handleSearch()
+      setShowSearch(true)
+    }
+
+    if (text.startsWith('0x') && text.length == 42 && token != 'BTC-LT') {
+      navigation.navigate('ExternalSendTerminal', {
+        to: text,
+      })
+    }
+
+    if (
+      (text.length > 11 && text.startsWith('lntb')) ||
+      text.startsWith('lnbc') ||
+      text.startsWith('lightning') ||
+      text.startsWith('LNBC')
+    ) {
+      navigation.navigate('ReadInvoiceScreen', {
+        data: text,
+        refresh: () => {},
+      })
+    }
+  }, [text])
+
   const handleSearch = async () => {
-    Keyboard.dismiss()
+    // Keyboard.dismiss()
     setLoading(true)
     try {
       const result = await axios.get(`${API_URL}/profile/name/${text}`)
@@ -45,6 +74,7 @@ const FindUser = () => {
         setSearchedContact(result.data.data)
       } else {
         setSearchErr(`No user with @${text} found. Try again`)
+        setSearchedContact(null)
       }
 
       setLoading(false)
@@ -54,39 +84,31 @@ const FindUser = () => {
     }
   }
 
-  useEffect(() => {
-    if (text.length > 3) {
-      // handleSearch()
-      setShowSearch(true)
-    }
-  }, [text])
-
-  // useEffect(() => {
-  //   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
-  //     title: 'Contacts',
-  //     message: 'This app would like to view your contacts.',
-  //     buttonPositive: 'Please accept bare mortal',
-  //   }).then(
-  //     Contacts.getAll()
-  //       .then((contacts) => {
-  //         // work with contacts
-  //         setContacts(contacts)
-  //       })
-  //       .catch((e) => {
-  //         console.log(e)
-  //       })
-  //   )
-  // }, [])
-
   const navigateToTerminal = () => {
-    // .
-
     navigation.navigate('SendTerminal', {
       token: token,
       contactNumber: searchedContact.phoneNumber,
-      userId: searchedContact._id,
+      user: searchedContact,
       refresh: refresh,
     })
+  }
+
+  const renderContactCard = () => {
+    if (searchedContact) {
+      return (
+        <ContactCard
+          contact={searchedContact}
+          navigateToTerminal={navigateToTerminal}
+        />
+      )
+    } else if (searchErr) {
+      return (
+        <View className="flex items-center self-center justify-center w-1/2 py-5">
+          <Text className="text-center text-neutral-700">{searchErr}</Text>
+        </View>
+      )
+    }
+    return null
   }
 
   const keyExtractor = (item, idx) => {
@@ -113,83 +135,61 @@ const FindUser = () => {
           <AppText classProps="text-xs font-extralight">{token}</AppText>
         </View>
 
-        <View className="flex items-end flex-1 ">
+        <View className="flex items-end flex-1">
           {/* <Ionicons name="qr-code" size={25} color="black" /> */}
         </View>
       </View>
 
-      <FlatList
-        ListHeaderComponent={
-          <>
-            {/* Form */}
-            <View className="flex flex-row items-center justify-center w-full h-12 my-5">
-              {/* <AppText classProps="text-base ">To</AppText> */}
+      {/* Form */}
+      <View className="flex flex-row items-center justify-center w-full h-12 my-4">
+        <View className="flex flex-1">
+          <TextInput
+            placeholder="Name, phone, invoice or address"
+            value={text}
+            onChangeText={(e) => setText(e)}
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="off"
+            onSubmitEditing={navigateToTerminal}
+            onBlur={() => setSearchedContact(null)}
+            returnKeyType="done"
+            className="relative w-full h-full px-4 text-base text-black border rounded-lg border-neutral-300"
+          />
+        </View>
 
-              <View className="flex flex-1">
-                <TextInput
-                  placeholder="Search using a username"
-                  value={text}
-                  onChangeText={(e) => setText(e)}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  autoComplete="off"
-                  onBlur={() => setSearchedContact({})}
-                  onSubmitEditing={handleSearch}
-                  returnKeyType="done"
-                  className="w-full border-[0.8px] rounded-lg text-base px-4 h-full border-neutral-300 relative text-black"
-                />
-              </View>
-
-              <View className="flex items-center justify-center">
-                {showSearch && (
-                  <Pressable
-                    onPress={handleSearch}
-                    disabled={loading}
-                    className="flex items-center justify-center w-10 h-full ml-2 rounded-md bg-primary"
-                  >
-                    {loading ? (
-                      <ActivityIndicator size={12} color="black" />
-                    ) : (
-                      <AntDesign name="search1" size={20} color="black" />
-                    )}
-                  </Pressable>
-                )}
-              </View>
-            </View>
-
-            {text && !loading && showSearch && (
-              <Pressable onPress={handleSearch} className="mb-5">
-                <AppText classProps="font-bold">
-                  Show results for "{text}"
-                </AppText>
-              </Pressable>
+        <View className="flex items-center justify-center">
+          <Pressable
+            onPress={handleSearch}
+            disabled={loading}
+            className={`flex items-center justify-center w-10 h-full ml-2 rounded-md bg-primary`}
+          >
+            {loading ? (
+              <ActivityIndicator size={12} color="black" />
+            ) : (
+              <AntDesign name="search1" size={20} color="black" />
             )}
+          </Pressable>
+        </View>
+      </View>
 
-            {advertState.innersAds && <AdCard item={advertState.innersAds} />}
-            <View className="mt-4">
-              {searchedContact && (
-                <ContactCard
-                  contact={searchedContact}
-                  navigateToTerminal={navigateToTerminal}
-                />
-              )}
+      <View className="w-full h-8">
+        {text && !loading && showSearch ? (
+          <Pressable onPress={handleSearch} className="">
+            <Text className="font-bold text-neutral-600">
+              Show results for <Text className="text-blue-500 ">"{text}"</Text>
+            </Text>
+          </Pressable>
+        ) : (
+          <Text className="text-sm font-light text-neutral-600">
+            You can also paste your lightning invoice here
+          </Text>
+        )}
+      </View>
 
-              {searchErr && (
-                <View className="flex items-center self-center justify-center w-1/2 py-5">
-                  <Text className="text-center text-neutral-700">
-                    {searchErr}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </>
-        }
-        // data={searchedContact ? searchedContact : contacts}
-        data={searchedContact}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        className="flex flex-1"
-      />
+      {/* Render Contact Card */}
+      {renderContactCard()}
+
+      {/* Additional content goes here if needed */}
     </View>
   )
 }

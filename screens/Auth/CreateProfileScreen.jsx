@@ -19,6 +19,7 @@ import {
   fetchedUser,
   fetchingUser,
 } from '../../features/user/userSlice'
+import LoginAnimator from '../Animators/LoginAnimator'
 
 const CreateProfileScreen = () => {
   const [loading, setLoading] = useState(false)
@@ -79,15 +80,16 @@ const CreateProfileScreen = () => {
         setPhone(null)
         setEmail(null)
         // console.log(res.data.data.token)
+        storeToken(res.data.data.token, res.data.data.bolt)
 
-        storeToken(res.data.data.token)
+        // storeToken(res.data.data.token)
         dispatch(fetchedUser(res.data.data))
       } else {
         // console.log(res.data.response)
         setError(res.data.response)
         dispatch(failedFetchUser(res.data.response))
       }
-      setLoading(false)
+      // setLoading(false)
     } catch (error) {
       dispatch(failedFetchUser('OOPs! Something went wrong'))
       console.log(error.message)
@@ -111,10 +113,13 @@ const CreateProfileScreen = () => {
     return phoneNumber
   }
 
-  const storeToken = async (value) => {
+  const storeToken = async (value, bolt) => {
     try {
       const jsonValue = JSON.stringify(value)
+      const boltToken = JSON.stringify(bolt)
+
       await AsyncStorage.setItem('@token', jsonValue)
+      await AsyncStorage.setItem('@bolt', boltToken)
     } catch (e) {
       // saving error
       console.log(e)
@@ -126,6 +131,7 @@ const CreateProfileScreen = () => {
       nextInputRef.current.focus()
     }
   }
+  if (loading) return <LoginAnimator />
 
   return (
     <SafeAreaView className="flex flex-1">

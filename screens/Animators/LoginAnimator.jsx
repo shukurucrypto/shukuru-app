@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import TypeWriter from 'react-native-typewriter'
 import { famousQuotes } from '../../data'
 
-const SendingMoney = () => {
+const LoginAnimator = () => {
   const [showAuthor, setShowAuthor] = useState(false)
   const [activeQuoteIndex, setActiveQuoteIndex] = useState(0)
 
@@ -39,8 +39,6 @@ const SendingMoney = () => {
               height: 300,
             }}
           />
-
-          <Text className="mt-4 text-xs text-black">Processing...</Text>
         </View>
         <View className="flex justify-end flex-1 p-4">
           <TypeWriter
@@ -65,4 +63,4 @@ const SendingMoney = () => {
   )
 }
 
-export default SendingMoney
+export default LoginAnimator

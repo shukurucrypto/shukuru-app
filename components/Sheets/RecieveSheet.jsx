@@ -131,7 +131,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
                   source={require('../../assets/tokens/chain.png')}
                   style={{ width: 18, height: 18 }}
                 /> */}
-                <Text className="mx-1 text-xs text-neutral-200">BNB Chain</Text>
+                {/* <Text className="mx-1 text-xs text-neutral-200">BNB Chain</Text> */}
               </View>
             </View>
           </Pressable>

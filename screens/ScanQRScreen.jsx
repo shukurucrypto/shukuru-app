@@ -1,18 +1,15 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native'
 import React, { useState } from 'react'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
-import QRCodeScanner from 'react-native-qrcode-scanner'
-import { RNCamera } from 'react-native-camera'
 import { useNavigation, useRoute } from '@react-navigation/native'
-
-import AppText from '../components/AppText'
+import { RNCamera } from 'react-native-camera'
+import QRCodeScanner from 'react-native-qrcode-scanner'
 
 const ScanQRScreen = () => {
   const [error, setError] = useState('')
@@ -28,12 +25,12 @@ const ScanQRScreen = () => {
   }
   const render = (invoice) => {
     switch (true) {
+      case invoice.startsWith('lntb'):
       case invoice.startsWith('lnbc'):
       case invoice.startsWith('lightning'):
       case invoice.startsWith('LNBC'):
         navigation.navigate('ReadInvoiceScreen', {
           data: invoice,
-          refresh: refresh,
         })
         break
       case invoice.startsWith('ethereum') && invoice.includes('?value='):

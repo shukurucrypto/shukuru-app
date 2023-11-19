@@ -205,9 +205,7 @@ const ExternalSendTerminalScreen = () => {
             Please verify the network that your are sending to avoid loss of
             funds. Shukuru uses{' '}
             <Text className="font-bold text-primary">Celo Network</Text> for{' '}
-            <Text className="font-bold text-primary">cUSD</Text> and{' '}
-            <Text className="font-bold text-primary">BNB Smart Chain</Text> for{' '}
-            <Text className="font-bold text-primary">BUSD</Text>
+            <Text className="font-bold text-primary">cUSD</Text>
           </Text>
         </View>
 

@@ -10,6 +10,7 @@ import { fetchCheckreward } from '../features/rewards/rewardsSlice'
 import AppText from '../components/AppText'
 import { useNavigation } from '@react-navigation/native'
 import ClearTransactions from '../components/Modals/ClearTransactions'
+import useRefresh from '../hooks/useRefresh'
 
 const TransactionsScreen = () => {
   const { loading, user, error } = useSelector((state) => state.user)
@@ -17,6 +18,8 @@ const TransactionsScreen = () => {
   const balancesState = useSelector((state) => state.balances)
 
   const navigation = useNavigation()
+
+  const { refresh } = useRefresh()
 
   const transactionsState = useSelector((state) => state.transactions)
 
@@ -43,11 +46,6 @@ const TransactionsScreen = () => {
     )
   }
 
-  const onRefresh = () => {
-    fetchCheckreward(dispatch, user.token)
-    fetchTransactions(dispatch, user.userId)
-  }
-
   const goBack = () => navigation.goBack()
 
   return (
@@ -55,7 +53,7 @@ const TransactionsScreen = () => {
       <ClearTransactions
         isModalVisible={isModalVisible}
         setModalVisible={setIsModalVisible}
-        refresh={onRefresh}
+        refresh={refresh}
         goBack={goBack}
       />
       <View className="flex flex-row items-center justify-between w-full h-20 px-5">
@@ -87,7 +85,7 @@ const TransactionsScreen = () => {
         // data={transactionsState?.transactions}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        onRefresh={onRefresh}
+        onRefresh={refresh}
         refreshing={balancesState.loading}
         className="flex flex-1"
       />

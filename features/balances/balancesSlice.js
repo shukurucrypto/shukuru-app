@@ -8,10 +8,21 @@ const initalState = {
   error: '',
 }
 
-export const fetchBalance = async (dispatch, userId) => {
+export const fetchBalance = async (dispatch, userId, token, bolt) => {
   dispatch(fetchingBalances())
+
+  // Remove double quotes from bolt if they exist
+  if (bolt.startsWith('"') && bolt.endsWith('"')) {
+    bolt = bolt.slice(1, -1)
+  }
+
   try {
-    const result = await axios.get(`${API_URL}/wallet/${userId}`)
+    const result = await axios.get(`${API_URL}/wallet/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        bolt: bolt,
+      },
+    })
 
     if (result.data.success) {
       dispatch(fetchedBalances(result.data.data))

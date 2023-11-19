@@ -19,6 +19,7 @@ import TransactionDone from '../Animators/TransactionDone'
 import { io } from 'socket.io-client'
 import TransactionFailed from '../Animators/TransactionFailed'
 import useSendOneSignal from '../../Notifications/useSendOneSignal'
+import useAPIPostRequest from '../../helpers/apiRequests'
 
 const socket = io(SOCKET_SERVER)
 
@@ -40,22 +41,23 @@ const SendTerminalScreen = () => {
 
   const sendOnesignal = useSendOneSignal()
 
+  const { request } = useAPIPostRequest()
+
   const route = useRoute()
 
-  const { token, contactNumber, userId, refresh } = route.params
+  const { token, contactNumber, user, refresh } = route.params
 
   const handleSubmit = async () => {
     // return
     if (number == '0.0') return
     setLoading(true)
     try {
-      let PAY_URL
-
       const data = {
         from: userState.user.userId,
-        to: userId,
+        to: user._id,
         amount: number,
         memo: 'hello world ',
+        receiver: user,
       }
 
       if (token === 'cUSD') {
@@ -65,7 +67,6 @@ const SendTerminalScreen = () => {
           data,
           token,
           contactNumber,
-          userId,
         })
       } else if (token === 'BTC-LT') {
         PAY_URL = `${API_URL}/send`
@@ -76,43 +77,31 @@ const SendTerminalScreen = () => {
           data,
           token,
           contactNumber,
-          userId,
         })
       }
 
-      const result = await axios.post(PAY_URL, data, {
-        headers: {
-          Authorization: `Bearer ${userState.user.token}`,
-        },
-      })
+      const boltReqParam = {
+        from: userState.user.userId,
+        to: user.name,
+        amount: number,
+        invoice: '',
+      }
 
-      if (result.data.success) {
-        // socket.emit('sendTxNotification', {
-        //   recipientId: userId,
-        //   message: 'New transaction here...',
-        // })
+      const result = await request(boltReqParam, '/send')
 
+      if (result.success) {
         socket.emit('sendTxNotification', {
-          recipientId: userId,
+          recipientId: user._id,
           message: {
             title: 'You received a new payment',
-            subtitle: `@${result.data.data.name}`,
-            // body: `Paid in ${token} Congrats! 🎉`,
             body: `Recieved via app. Congrats! 🎉`,
           },
-          // message: {
-          //   title: 'You received a new payment',
-          //   subtitle: '@kabaya',
-          //   body: `${user.country} ${Number} ${
-          //     token === 'BTC-LT' ? ' Lightning BTC' : ' Celo dollar'
-          //   }`,
-          // },
         })
 
         sendOnesignal(
-          `You received a new ${result.data.tx.asset} payment`,
+          `You received a new ${result.tx.asset} payment`,
           'Recieved via app. Congrats! 🎉',
-          [result.data.tx.receiver]
+          [result.tx.receiver]
         )
 
         setLoading(false)

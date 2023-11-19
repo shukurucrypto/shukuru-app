@@ -18,6 +18,8 @@ import TransactionDone from './Animators/TransactionDone'
 import TransactionFailed from './Animators/TransactionFailed'
 import { io } from 'socket.io-client'
 import SendingMoney from '../components/Loading/SendingMoney'
+import useAPIPostRequest from '../helpers/apiRequests'
+import useRefresh from '../hooks/useRefresh'
 const socket = io(SOCKET_SERVER)
 
 const ReadInvoiceScreen = () => {
@@ -33,19 +35,15 @@ const ReadInvoiceScreen = () => {
   const [invoiceState, setInvoiceState] = useState({})
   const [done, setDone] = useState(false)
   const [failed, setFailed] = useState(false)
+  const [error, setErr] = useState('')
 
   const [updateCount, setUpdateCount] = useState(0)
 
-  const { data, refresh } = router.params
+  const { data } = router.params
 
-  // useEffect(() => {
-  //   console.log('====================================')
-  //   console.log('CALLED')
-  //   console.log('====================================')
-  //   if (updateCount <= 60) {
-  //     getBTCBalance()
-  //   }
-  // }, [updateCount])
+  const { refresh } = useRefresh()
+
+  const { request } = useAPIPostRequest()
 
   useEffect(() => {
     // client-side
@@ -69,11 +67,13 @@ const ReadInvoiceScreen = () => {
         userId: user.userId,
         invoice: data,
       }
-      const res = await axios.post(`${API_URL}/invoice/decode`, invoiceData)
+      // const res = await axios.post(`${API_URL}/invoice/decode`, invoiceData)
 
-      if (res.data.success) {
-        setInvoiceState(res.data.data)
-        socket.emit('join', { payhash: res.data.data.hash })
+      const res = await request(invoiceData, '/invoice/decode')
+
+      if (res.data) {
+        setInvoiceState(res.data)
+        socket.emit('join', { payhash: res.data.hash })
       }
 
       setLoading(false)
@@ -90,25 +90,25 @@ const ReadInvoiceScreen = () => {
         from: user.userId,
         invoice: data,
         amount: invoiceState.amount,
+        r_hash: invoiceState.hash,
       }
 
-      const res = await axios.post(`${API_URL}/invoice/pay`, invoiceData, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const res = await request(invoiceData, '/invoice/pay')
 
-      if (res.data.success) {
+      if (res.success) {
         socket.emit('status', { payhash: invoiceState.hash, paid: true })
-        setDone(true)
-      } else {
-        setFailed(true)
-        socket.emit('status', { payhash: invoiceState.hash, paid: false })
-      }
 
+        setDone(true)
+        setFailed(false)
+        setLoadSubmit(false)
+      } else {
+        setErr(res.error.response)
+        setFailed(true)
+        setLoadSubmit(false)
+      }
       setLoadSubmit(false)
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
       setLoadSubmit(false)
     }
   }
@@ -143,13 +143,13 @@ const ReadInvoiceScreen = () => {
 
   if (done) return <TransactionDone refresh={refresh} />
 
-  if (failed) return <TransactionFailed />
+  if (failed) return <TransactionFailed msg={error} />
 
   return (
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-1 p-5">
         <View className="flex flex-row items-center justify-between">
-          <AppText classProps="text-2xl font-bold">Payment</AppText>
+          <AppText classProps="text-2xl font-bold">Invoice details</AppText>
 
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
             <AntDesign name="close" size={25} color="black" />
@@ -178,23 +178,34 @@ const ReadInvoiceScreen = () => {
                     sats
                   </AppText>
                 </View>
-                <AppText classProps="text-lg font-light text-center">
-                  {invoiceState.memo}
-                </AppText>
-                <AppText classProps="text-lg font-light text-center">
-                  Created {invoiceState.date}
-                </AppText>
-                <AppText classProps="text-lg font-light text-center">
-                  Expires in {invoiceState.expiry} (secs)
-                </AppText>
+
+                <View className="gap-4">
+                  <AppText classProps="text-lg font-light text-center mt-3">
+                    {invoiceState.memo}
+                  </AppText>
+                  <AppText classProps="text-sm font-light text-center my-3">
+                    Created {invoiceState.date}
+                  </AppText>
+                  <AppText classProps="text-sm font-light text-center">
+                    Expires in {invoiceState.expiry} (secs)
+                  </AppText>
+                </View>
               </View>
+
+              {error && (
+                <Text className="p-1 px-3 text-xs rounded-md text-primary bg-neutral-700">
+                  {error}
+                </Text>
+              )}
             </View>
 
             <View className="flex w-full px-5 py-5">
               <Pressable
                 onPress={handlePay}
-                disabled={loadSubmit}
-                className="flex items-center justify-center w-full p-4 rounded-md bg-primary"
+                disabled={loadSubmit || !invoiceState}
+                className={`flex items-center justify-center w-full p-4 rounded-full ${
+                  loadSubmit || !invoiceState ? 'bg-neutral-200' : ' bg-primary'
+                }`}
               >
                 {loadSubmit ? (
                   <ActivityIndicator size={22} color="#fff" />

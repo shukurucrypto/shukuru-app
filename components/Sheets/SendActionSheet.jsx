@@ -138,7 +138,7 @@ const SendActionSheet = ({ sendActionSheet, refresh, balances }) => {
                   source={require('../../assets/tokens/chain.png')}
                   style={{ width: 18, height: 18 }}
                 /> */}
-                <Text className="mx-1 text-xs text-neutral-300">BNB Chain</Text>
+                {/* <Text className="mx-1 text-xs text-neutral-300">BNB Chain</Text> */}
               </View>
             </View>
           </Pressable>

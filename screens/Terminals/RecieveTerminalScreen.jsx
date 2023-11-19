@@ -18,6 +18,7 @@ import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import { fetchBalance } from '../../features/balances/balancesSlice'
 import { fetchTransactions } from '../../features/transactions/transactionsSlice'
+import useAPIPostRequest from '../../helpers/apiRequests'
 
 const ReceiveTerminalScreen = () => {
   const [number, setNumber] = useState('0.00')
@@ -29,9 +30,6 @@ const ReceiveTerminalScreen = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const balancesState = useSelector((state) => state.balances)
-
-  const [convertedAmount, setConvertedAmount] = useState(null)
   const [convertLoading, setConvertLoading] = useState(false)
 
   const [err, setErr] = useState('')
@@ -40,6 +38,8 @@ const ReceiveTerminalScreen = () => {
 
   const navigation = useNavigation()
   const router = useRoute()
+
+  const { request } = useAPIPostRequest()
 
   const { token, refresh, msg } = router.params
 
@@ -85,22 +85,20 @@ const ReceiveTerminalScreen = () => {
       const data = {
         userId: user.userId,
         amount: number,
-        memo: '',
+        memo: 'Invoice created by ' + user.userId,
       }
 
-      const result = await axios.post(`${API_URL}/invoice/create`, data, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const result = await request(data, '/invoice/create')
 
-      if (result.data.success) {
+      if (result.success) {
         navigation.navigate('QRCodeShownScreen', {
-          data: result.data.data,
+          data: result.data,
+          rHash: result.r_hash,
           amount: number,
           request: result.data.request,
           refresh: refresh,
         })
+        return
       }
 
       setIsLoading(false)
@@ -244,7 +242,7 @@ const ReceiveTerminalScreen = () => {
           </View>
         ) : (
           <Pressable
-            disabled={isLoading || balancesState.loading}
+            // disabled={isLoading || balancesState.loading}
             onPress={handleSubmit}
             className="flex items-center justify-center w-full p-4 rounded-md bg-primary "
           >

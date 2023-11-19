@@ -24,6 +24,8 @@ import { fetchBalance } from '../features/balances/balancesSlice'
 import { fetchTransactions } from '../features/transactions/transactionsSlice'
 import { io } from 'socket.io-client'
 import { fetchCheckreward } from '../features/rewards/rewardsSlice'
+import useRefresh from '../hooks/useRefresh'
+import useSendPush from '../Notifications/useSendPush'
 
 const socket = io(SOCKET_SERVER)
 
@@ -50,11 +52,13 @@ const ConfirmTransactionScreen = () => {
 
   const navigation = useNavigation()
 
+  const { refresh } = useRefresh()
+
+  const { sendPush } = useSendPush()
+
   const router = useRoute()
 
-  const dispatch = useDispatch()
-
-  const { data, token, contactNumber, userId } = router.params
+  const { data, token, contactNumber } = router.params
 
   const [sliderState, setSliderState] = useState(false)
 
@@ -106,21 +110,29 @@ const ConfirmTransactionScreen = () => {
       })
 
       if (result.data.success) {
-        socket.emit('sendTxNotification', {
-          recipientId: userId,
-          message: {
-            title: 'You received a new payment',
-            subtitle: `@${result.data.data.name}`,
-            // body: `Paid in ${token} Congrats! 🎉`,
-            body: `Recieved via app. Congrats! 🎉`,
-          },
-        })
+        const pushMsg = {
+          user: data.receiver.name,
+          msg: `You have received a new ${token} payment . Congrats! 🎉`,
+          name: 'INFO',
+        }
 
-        useSendOneSignal(
-          `You received a new ${result.data.tx.asset} payment`,
-          'Recieved via app. Congrats! 🎉',
-          [result.data.tx.receiver]
-        )
+        await sendPush(pushMsg)
+
+        // socket.emit('sendTxNotification', {
+        //   recipientId: data.receiver.to,
+        //   message: {
+        //     title: 'You received a new payment',
+        //     subtitle: `@${result.data.data.name}`,
+        //     // body: `Paid in ${token} Congrats! 🎉`,
+        //     body: `Recieved via app. Congrats! 🎉`,
+        //   },
+        // })
+
+        // useSendOneSignal(
+        //   `You received a new ${result.data.tx.asset} payment`,
+        //   'Recieved via app. Congrats! 🎉',
+        //   [result.data.tx.receiver]
+        // )
 
         setSubmitLoading(false)
         setDone(true)
@@ -131,13 +143,6 @@ const ConfirmTransactionScreen = () => {
     } catch (error) {
       setSubmitLoading(false)
     }
-  }
-
-  const refresh = () => {
-    fetchBalance(dispatch, userState.user.userId)
-    fetchTransactions(dispatch, userState.user.userId)
-    fetchCheckreward(dispatch, userState.user.token)
-    // fetchBTCTransactions()
   }
 
   if (loading)

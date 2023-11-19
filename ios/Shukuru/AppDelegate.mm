@@ -15,9 +15,15 @@
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+
 {
+
+  // NSString *customPort = @"8085";
+
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+  // return [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:%@/index.bundle?platform=ios&dev=true", customPort]];
+
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
