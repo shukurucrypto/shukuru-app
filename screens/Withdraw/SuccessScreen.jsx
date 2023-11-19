@@ -33,7 +33,7 @@ const SuccessScreen = () => {
         <Pressable
           onPress={() => navigation.navigate('Home')}
           // onPress={() => {}}
-          className="p-4 mt-4 rounded-full bg-neutral-100 px-7"
+          className="p-4 mt-4 rounded-md bg-neutral-100 px-7"
         >
           <AppText classProps="font-bold text-base">Continue</AppText>
         </Pressable>

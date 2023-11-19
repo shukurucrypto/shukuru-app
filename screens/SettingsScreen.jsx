@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Pressable,
   ScrollView,
@@ -12,6 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useSelector } from 'react-redux'
 import AppText from '../components/AppText'
 import ResetAccModal from '../components/Modals/ResetAccModal'
+import UnlockSheet from '../components/Sheets/Lock/UnlockSheet'
 
 const SettingsScreen = () => {
   const profileState = useSelector((state) => state.profile)
@@ -34,7 +35,7 @@ const SettingsScreen = () => {
   })
 
   const handleGoToChangePassword = () => {
-    navigation.navigate('EnterPin', { NextScreen: 'ChangePassword' })
+    navigation.navigate('ChangePassword')
   }
 
   if (!profileState.loading && !profileState.error)

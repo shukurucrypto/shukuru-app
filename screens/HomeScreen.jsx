@@ -119,7 +119,7 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View className="flex flex-col items-center justify-center flex-1 p-12">
-              <Text className="text-base font-light text-neutral-400">
+              <Text className="text-sm font-light text-neutral-300">
                 No transactions yet
               </Text>
             </View>
@@ -230,14 +230,6 @@ const HomeScreen = () => {
                                     cUSD{' '}
                                     {balancesState.balances?.cusd?.toFixed(2)}
                                   </Text>
-                                  <Text className="font-light text-black ">
-                                    BUSD{' '}
-                                    {balancesState?.balances?.busd?.toFixed(2)}
-                                  </Text>
-                                  {/* <Text className="font-light text-black">
-                                    USDT{' '}
-                                    {balancesState.balances?.usdt?.toFixed(2)}
-                                  </Text> */}
                                 </ScrollView>
                               )}
                             </View>
@@ -303,12 +295,14 @@ const HomeScreen = () => {
           className="flex flex-1"
           ListFooterComponent={
             <View>
-              <Pressable
-                onPress={() => navigation.navigate('TransactionsScreen')}
-                className="flex items-center justify-center w-full py-4"
-              >
-                <Text className="font-bold text-primary">View more</Text>
-              </Pressable>
+              {transactionsState?.transactions.length > 10 && (
+                <Pressable
+                  onPress={() => navigation.navigate('TransactionsScreen')}
+                  className="flex items-center justify-center w-full py-4"
+                >
+                  <Text className="font-bold text-primary">View more</Text>
+                </Pressable>
+              )}
             </View>
           }
         />

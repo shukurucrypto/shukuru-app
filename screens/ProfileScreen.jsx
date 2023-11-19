@@ -10,7 +10,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppText from '../components/AppText'
 import QRCODE from '../components/QRCode'
@@ -24,6 +24,9 @@ import {
 import { removeProfile } from '../features/profile/profileSlice'
 import { removeToken } from '../features/token/tokenSlice'
 import Clipboard from '@react-native-clipboard/clipboard'
+import { usePinCode } from '../hooks/usePinCode'
+import UnlockSheet from '../components/Sheets/Lock/UnlockSheet'
+import CreatePinSheet from '../components/Sheets/Lock/CreatePinSheet'
 
 const ProfileScreen = () => {
   const dispatch = useDispatch()
@@ -33,6 +36,8 @@ const ProfileScreen = () => {
   const [copiedInvoice, setCopiedInvoice] = useState(false)
 
   const navigation = useNavigation()
+
+  // const { actionSheetRef, createPinActionSheetRef } = usePinCode()
 
   const logoutUser = async () => {
     try {
@@ -140,6 +145,8 @@ const ProfileScreen = () => {
           </View>
         </>
       )}
+      {/* <UnlockSheet actionSheetRef={actionSheetRef} />
+      <CreatePinSheet createPinActionSheetRef={createPinActionSheetRef} /> */}
     </View>
   )
 }

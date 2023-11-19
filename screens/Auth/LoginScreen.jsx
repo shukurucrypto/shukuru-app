@@ -208,7 +208,7 @@ const LoginScreen = () => {
                   <Pressable
                     onPress={handleSubmit}
                     disabled={loading}
-                    className={`flex items-center p-5 mt-3 rounded-full ${
+                    className={`flex items-center p-5 mt-3 rounded-md ${
                       loading ? 'bg-neutral-100' : ' bg-primary'
                     }`}
                   >

@@ -203,7 +203,7 @@ const ReadInvoiceScreen = () => {
               <Pressable
                 onPress={handlePay}
                 disabled={loadSubmit || !invoiceState}
-                className={`flex items-center justify-center w-full p-4 rounded-full ${
+                className={`flex items-center justify-center w-full p-4 rounded-md ${
                   loadSubmit || !invoiceState ? 'bg-neutral-200' : ' bg-primary'
                 }`}
               >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import axios from 'axios'
 import { API_URL } from '../../apiURL'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import UnlockSheet from '../../components/Sheets/Lock/UnlockSheet'
 
 const ChangePasswordScreen = () => {
   const [loading, setLoading] = useState(false)
@@ -22,6 +23,12 @@ const ChangePasswordScreen = () => {
   const { token } = useSelector((state) => state.tokenState)
 
   const navigation = useNavigation()
+
+  const actionSheetRef = useRef(null)
+
+  useEffect(() => {
+    actionSheetRef?.current.show()
+  }, [])
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -98,6 +105,7 @@ const ChangePasswordScreen = () => {
           )}
         </Pressable>
       </View>
+      <UnlockSheet actionSheetRef={actionSheetRef} />
     </SafeAreaView>
   )
 }

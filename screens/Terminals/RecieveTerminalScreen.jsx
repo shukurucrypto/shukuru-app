@@ -237,7 +237,7 @@ const ReceiveTerminalScreen = () => {
 
       <View className="w-full px-6 my-4">
         {number === '0.00' ? (
-          <View className="flex items-center justify-center w-full p-4 rounded-full bg-neutral-200 ">
+          <View className="flex items-center justify-center w-full p-4 rounded-md bg-neutral-200 ">
             <Text className="text-xl font-bold text-white">Send</Text>
           </View>
         ) : (

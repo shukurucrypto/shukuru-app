@@ -1,37 +1,21 @@
-import { SafeAreaView, StatusBar, AppState } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
+import { SafeAreaView, StatusBar } from 'react-native'
+import { usePinCode } from '../hooks/usePinCode'
 import AppHeader from './AppHeader'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useNavigation } from '@react-navigation/native'
-import useRenderLock from '../hooks/useRenderLock'
+import CreatePinSheet from './Sheets/Lock/CreatePinSheet'
+import UnlockSheet from './Sheets/Lock/UnlockSheet'
 
 const AppContainer = ({ children, refresh }) => {
-  const navigation = useNavigation()
-
-  const { appStateVisible } = useRenderLock()
-
-  // useEffect(() => {
-  //   if (appStateVisible === 'active') {
-  //     AsyncStorage.getItem('@pinCode')
-  //       .then((storedPinCode) => {
-  //         if (storedPinCode) {
-  //           // setPinCode(storedPinCode);
-  //           navigation.navigate('LockScreen')
-  //         } else {
-  //           navigation.navigate('CreatePinScreen')
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log('Error retrieving PIN code from AsyncStorage:', error)
-  //       })
-  //   }
-  // }, [appStateVisible])
+  const { actionSheetRef, createPinActionSheetRef } = usePinCode()
 
   return (
     <SafeAreaView className="flex flex-col flex-1 ">
       <StatusBar backgroundColor="#171717" />
       <AppHeader refresh={refresh} />
       {children}
+
+      <UnlockSheet actionSheetRef={actionSheetRef} />
+      <CreatePinSheet createPinActionSheetRef={createPinActionSheetRef} />
     </SafeAreaView>
   )
 }

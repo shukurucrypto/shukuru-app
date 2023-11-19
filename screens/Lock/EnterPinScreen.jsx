@@ -53,7 +53,11 @@ const EnterPinScreen = () => {
   const handlePinCodeSubmit = () => {
     // Perform your PIN code verification logic here
     if (pinCode === storedPin) {
-      navigation.navigate(NextScreen)
+      if (NextScreen) {
+        navigation.navigate(NextScreen)
+      } else {
+        navigation.navigate('Home')
+      }
     } else {
       // Incorrect PIN code, display an error message
       setError('Incorrect PIN code. Please try again.')

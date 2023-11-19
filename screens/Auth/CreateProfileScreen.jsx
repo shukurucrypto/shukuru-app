@@ -136,7 +136,11 @@ const CreateProfileScreen = () => {
   return (
     <SafeAreaView className="flex flex-1">
       <View className="flex flex-col flex-1 p-5">
-        <ScrollView className="flex flex-1">
+        <ScrollView
+          className="flex flex-1"
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
           <View className="flex flex-col justify-between flex-1">
             {/* Header */}
             <View className="flex flex-col py-3 mb-8">
@@ -177,6 +181,7 @@ const CreateProfileScreen = () => {
                     className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                     disabled={loading}
                     autoCapitalize="none"
+                    keyboardType="phone-pad"
                     value={phone}
                     onChangeText={(text) => setPhone(text)}
                     returnKeyType="next"

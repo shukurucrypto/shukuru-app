@@ -115,7 +115,7 @@ const ClaimRewardsScreen = () => {
                       setDone(false)
                     }}
                     // onPress={handleClaimReward}
-                    className="items-center justify-center w-full p-4 my-3 rounded-full bg-primary"
+                    className="items-center justify-center w-full p-4 my-3 rounded-md bg-primary"
                   >
                     <AppText classProps="text-lg font-bold">Success</AppText>
                   </Pressable>
@@ -124,7 +124,7 @@ const ClaimRewardsScreen = () => {
                     disabled={loading}
                     onPress={handleClaimReward}
                     // onPress={() => setDone(true)}
-                    className="items-center justify-center w-full p-4 my-3 rounded-full bg-primary"
+                    className="items-center justify-center w-full p-4 my-3 rounded-md bg-primary"
                   >
                     {loading ? (
                       <ActivityIndicator size={24} color="black" />
@@ -137,7 +137,7 @@ const ClaimRewardsScreen = () => {
                 )}
               </>
             ) : (
-              <View className="items-center justify-center w-full p-4 my-3 rounded-full bg-neutral-100">
+              <View className="items-center justify-center w-full p-4 my-3 rounded-md bg-neutral-100">
                 <AppText classProps="text-lg font-bold">Claimed</AppText>
               </View>
             )}
