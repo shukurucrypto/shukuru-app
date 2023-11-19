@@ -216,7 +216,7 @@ const UtilitiesScreen = () => {
               className="flex flex-row items-center justify-between w-full h-20 px-4 mb-3 bg-neutral-100"
             >
               <View className="flex flex-col">
-                <Text className="">Daily</Text>
+                <Text className="text-neutral-400">Daily</Text>
                 <AppText classProps="text-base font-bold">
                   {item.amount} {item.weight}
                 </AppText>

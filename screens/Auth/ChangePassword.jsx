@@ -75,6 +75,7 @@ const ChangePasswordScreen = () => {
 
           <TextInput
             placeholder="example@gmail.com"
+            placeholderTextColor="#d6d6d4"
             className="p-4 my-2 rounded-md bg-neutral-100 "
             keyboardType="email-address"
             autoCapitalize="none"

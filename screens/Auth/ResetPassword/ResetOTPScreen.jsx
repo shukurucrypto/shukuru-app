@@ -70,6 +70,7 @@ const ResetOTPScreen = () => {
           </Text>
           <TextInput
             placeholder="Enter OTP"
+            placeholderTextColor="#d6d6d4"
             className="p-4 my-2 rounded-md bg-neutral-100"
             keyboardType="default"
             value={otp}

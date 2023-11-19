@@ -108,6 +108,7 @@ const NewPasswordScreen = ({ route, navigation }) => {
                 <Text className="mt-4 font-light text-black">New Password</Text>
                 <TextInput
                   placeholder="New Password"
+                  placeholderTextColor="#d6d6d4"
                   secureTextEntry={true}
                   className="p-4 my-2 rounded-md bg-neutral-100"
                   value={values.password}
@@ -124,6 +125,7 @@ const NewPasswordScreen = ({ route, navigation }) => {
                 <Text className="font-light text-black ">Confirm Password</Text>
                 <TextInput
                   placeholder="Confirm Password"
+                  placeholderTextColor="#d6d6d4"
                   secureTextEntry={true}
                   className="p-4 my-2 rounded-md bg-neutral-100"
                   value={values.confirmPassword}

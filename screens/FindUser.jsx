@@ -145,6 +145,7 @@ const FindUser = () => {
         <View className="flex flex-1">
           <TextInput
             placeholder="Name, phone, invoice or address"
+            placeholderTextColor="#d6d6d4"
             value={text}
             onChangeText={(e) => setText(e)}
             autoCapitalize="none"

@@ -74,6 +74,7 @@ const EnterOTPScreen = () => {
           <TextInput
             placeholder="Enter OTP"
             className="p-4 my-2 rounded-md bg-neutral-100"
+            placeholderTextColor="#d6d6d4"
             keyboardType="default"
             autoCapitalize="none"
             autoComplete="off"

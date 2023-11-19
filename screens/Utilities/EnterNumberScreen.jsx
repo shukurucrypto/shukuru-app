@@ -133,6 +133,8 @@ const EnterNumberScreen = () => {
 
                   <TextInput
                     keyboardType="phone-pad"
+                    placeholder="7XXXXXXXX"
+                    placeholderTextColor="#d6d6d4"
                     value={phone}
                     onChangeText={(e) => setPhone(e)}
                     returnKeyType="done"

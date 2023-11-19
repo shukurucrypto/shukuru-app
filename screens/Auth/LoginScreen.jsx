@@ -154,6 +154,7 @@ const LoginScreen = () => {
                     <TextInput
                       ref={usernameRef}
                       placeholder="Enter your username"
+                      placeholderTextColor="#d6d6d4"
                       className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                       autoCapitalize="none"
                       disabled={loading}
@@ -173,32 +174,35 @@ const LoginScreen = () => {
                   <View className="flex flex-col py-3">
                     <AppText classProps="text-sm font-bold">Password</AppText>
 
-                    <TextInput
-                      ref={passwordRef}
-                      placeholder="Enter your password"
-                      secureTextEntry={show}
-                      // autoCapitalize={false}
-                      autoCapitalize="none"
-                      // className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
-                      className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
-                      disabled={loading}
-                      onChangeText={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      value={values.password}
-                      onSubmitEditing={handleSubmit}
-                      returnKeyType="done"
-                    />
-
-                    <Pressable
-                      onPress={() => setShow(!show)}
-                      className="absolute right-4 bottom-8"
-                    >
-                      <Entypo
-                        name={!show ? `eye` : `eye-with-line`}
-                        size={16}
-                        color="black"
+                    <View className="relative flex flex-row items-center w-full">
+                      <TextInput
+                        ref={passwordRef}
+                        placeholder="Enter your password"
+                        placeholderTextColor="#d6d6d4"
+                        secureTextEntry={show}
+                        // autoCapitalize={false}
+                        autoCapitalize="none"
+                        // className="border-[0.8px] mt-3 h-16 text-base text-black rounded-lg p-4 border-neutral-300 relative"
+                        className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
+                        disabled={loading}
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        value={values.password}
+                        onSubmitEditing={handleSubmit}
+                        returnKeyType="done"
                       />
-                    </Pressable>
+
+                      <Pressable
+                        onPress={() => setShow(!show)}
+                        className="absolute right-0 flex items-center justify-center h-full p-4 pt-8"
+                      >
+                        <Entypo
+                          name={!show ? `eye` : `eye-with-line`}
+                          size={20}
+                          color="black"
+                        />
+                      </Pressable>
+                    </View>
 
                     {touched.password && errors.password && (
                       <Text className="text-red-600">{errors.password}</Text>
@@ -208,7 +212,7 @@ const LoginScreen = () => {
                   <Pressable
                     onPress={handleSubmit}
                     disabled={loading}
-                    className={`flex items-center p-5 mt-3 rounded-md ${
+                    className={`flex items-center p-4 my-4 rounded-md ${
                       loading ? 'bg-neutral-100' : ' bg-primary'
                     }`}
                   >
@@ -216,16 +220,16 @@ const LoginScreen = () => {
                       <ActivityIndicator size={22} color="#fff" />
                     ) : (
                       <Text
-                        className={`text-xl font-bold ${
+                        className={`text-base font-bold ${
                           loading ? 'text-neutral-200' : 'text-black'
                         }`}
                       >
-                        Sign In
+                        Log in
                       </Text>
                     )}
                   </Pressable>
 
-                  <Pressable onPress={goToEnterEmail}>
+                  <Pressable className="mt-5" onPress={goToEnterEmail}>
                     <Text className="text-base font-bold text-center text-primary">
                       Forgot password?
                     </Text>

@@ -120,6 +120,7 @@ const SignupScreen = () => {
                 <TextInput
                   ref={usernameRef}
                   placeholder="Enter username"
+                  placeholderTextColor="#d6d6d4"
                   onChangeText={handleChange('username')}
                   autoCapitalize="none"
                   onBlur={handleBlur('username')}
@@ -138,25 +139,32 @@ const SignupScreen = () => {
               <View className="flex flex-col py-3">
                 <AppText classProps="text-sm font-bold">Password</AppText>
 
-                <TextInput
-                  ref={passwordRef}
-                  placeholder="Enter Password"
-                  secureTextEntry={true}
-                  onChangeText={handleChange('password')}
-                  autoCapitalize="none"
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
-                  returnKeyType="next"
-                  onSubmitEditing={() => handleNext(confirmPasswordRef)}
-                />
+                <View className="flex flex-col ">
+                  <TextInput
+                    ref={passwordRef}
+                    placeholderTextColor="#d6d6d4"
+                    placeholder="Enter Password"
+                    secureTextEntry={show}
+                    onChangeText={handleChange('password')}
+                    autoCapitalize="none"
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
+                    returnKeyType="next"
+                    onSubmitEditing={() => handleNext(confirmPasswordRef)}
+                  />
 
-                <Pressable
-                  onPress={() => setShow(!show)}
-                  className="absolute right-4 bottom-8"
-                >
-                  <Entypo name={show ? `eye` : `eye-with-line`} size={16} />
-                </Pressable>
+                  <Pressable
+                    onPress={() => setShow(!show)}
+                    className="absolute right-0 flex items-center justify-center h-full p-4 pt-6 "
+                  >
+                    <Entypo
+                      name={show ? `eye` : `eye-with-line`}
+                      size={16}
+                      color="black"
+                    />
+                  </Pressable>
+                </View>
 
                 {touched.password && errors.password && (
                   <Text className="text-red-600">{errors.password}</Text>
@@ -172,7 +180,8 @@ const SignupScreen = () => {
                 <TextInput
                   ref={confirmPasswordRef}
                   placeholder="Confirm Password"
-                  secureTextEntry={true}
+                  secureTextEntry={show}
+                  placeholderTextColor="#d6d6d4"
                   autoCapitalize="none"
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}

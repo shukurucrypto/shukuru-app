@@ -178,6 +178,7 @@ const CreateProfileScreen = () => {
                   <TextInput
                     ref={phoneRef}
                     placeholder="xxxxxx"
+                    placeholderTextColor="#d6d6d4"
                     className="w-full p-2 mt-3 text-base text-black rounded-lg h-14 bg-neutral-100 "
                     disabled={loading}
                     autoCapitalize="none"
@@ -199,6 +200,7 @@ const CreateProfileScreen = () => {
                 <TextInput
                   ref={emailRef}
                   placeholder="example@mail.com"
+                  placeholderTextColor="#d6d6d4"
                   keyboardType="email-address"
                   disabled={loading}
                   autoCapitalize="none"
