@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import * as Yup from 'yup'
-
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -24,9 +23,6 @@ import {
   fetchedUser,
   fetchingUser,
 } from '../../features/user/userSlice'
-import { API_URL } from '../../apiURL'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import axios from 'axios'
 import LoginAnimator from '../Animators/LoginAnimator'
 
 const validationSchema = Yup.object().shape({

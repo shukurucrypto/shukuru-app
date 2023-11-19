@@ -24,7 +24,7 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
     <ActionSheet
       ref={receiveActionSheet}
       containerStyle={{
-        height: height / 2,
+        height: height / 3,
         padding: 15,
       }}
     >
@@ -65,29 +65,6 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             </AppText>
           </Pressable>
 
-          {/* BUSD  */}
-          <Pressable
-            onPress={() => {
-              receiveActionSheet.current?.hide()
-              navigation.navigate('ReceiveTerminal', {
-                token: 'BUSD',
-                refresh: refresh,
-                msg: 'Make sure your sending BUSD to this address',
-              })
-            }}
-            className="flex flex-row items-center w-full h-16 "
-          >
-            <View className="flex items-center justify-center bg-black rounded-full w-9 h-9">
-              <Image
-                source={require('../../assets/tokens/busd.png')}
-                style={{ width: 25, height: 25 }}
-              />
-            </View>
-            <AppText classProps="mx-4 text-xl font-medium ">
-              BUSD (Binance USD)
-            </AppText>
-          </Pressable>
-
           {/* cUSD */}
           <Pressable
             onPress={() => {
@@ -107,33 +84,6 @@ const RecieveSheet = ({ receiveActionSheet, refresh }) => {
             <AppText classProps="mx-4 text-xl font-medium ">
               cUSD (Celo Dollar)
             </AppText>
-          </Pressable>
-
-          {/* USDT */}
-          <Pressable
-            onPress={() => {
-              // receiveActionSheet.current?.hide()
-              // navigation.navigate('ReceiveTerminal', { token: 'USDT' })
-            }}
-            className="flex flex-row items-center w-full h-16 "
-          >
-            <View className="rounded-full h-9 w-9 bg-neutral-200" />
-            {/* <Image
-              source={require('../../assets/tokens/usdt.png')}
-              style={{ width: 40, height: 40 }}
-            /> */}
-            <View className="flex flex-row">
-              <Text className="mx-4 text-xl font-medium text-neutral-200">
-                USDT (Tether)
-              </Text>
-              <View className="flex flex-row">
-                {/* <Image
-                  source={require('../../assets/tokens/chain.png')}
-                  style={{ width: 18, height: 18 }}
-                /> */}
-                {/* <Text className="mx-1 text-xs text-neutral-200">BNB Chain</Text> */}
-              </View>
-            </View>
           </Pressable>
         </View>
       </ScrollView>

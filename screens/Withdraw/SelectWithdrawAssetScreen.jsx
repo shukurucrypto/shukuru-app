@@ -17,7 +17,7 @@ const SelectWithdrawAssetScreen = () => {
 
   const options = [
     { id: 1, name: 'Celo Dollar (cUSD)', network: 'celo' },
-    { id: 2, name: 'Binance Dollar (BUSD)', network: 'bnb' },
+    // { id: 2, name: 'Binance Dollar (BUSD)', network: 'bnb' },
   ]
 
   const [selected, setSelected] = useState(null)

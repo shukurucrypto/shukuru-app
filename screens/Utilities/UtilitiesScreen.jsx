@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 const UtilitiesScreen = () => {
   const navigation = useNavigation()
   // const coin = ['BITCOIN', 'CUSD', 'BUSD']
-  const coin = ['BITCOIN', 'CUSD', 'BUSD']
+  const coin = ['BITCOIN', 'CUSD']
   const [selectedCoin, setSelectedCoin] = useState('CUSD')
 
   const { balances } = useSelector((state) => state.balances)
@@ -68,16 +68,6 @@ const UtilitiesScreen = () => {
           <View className="flex items-center justify-center w-6 h-6 rounded-full">
             <Image
               source={require('../../assets/tokens/cusd.png')}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </View>
-        )
-
-      case 'BUSD':
-        return (
-          <View className="flex items-center justify-center w-6 h-6 p-1 bg-black rounded-full">
-            <Image
-              source={require('../../assets/tokens/busd.png')}
               style={{ width: '100%', height: '100%' }}
             />
           </View>

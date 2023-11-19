@@ -18,9 +18,10 @@ const ListSelector = ({ options, onSelect }) => {
 
     if (option.name.includes('cUSD')) {
       return balances.cusd > 0
-    } else if (option.name.includes('BUSD')) {
-      return balances.busd > 0
     }
+    // } else if (option.name.includes('BUSD')) {
+    //   return balances.busd > 0
+    // }
     return true // Show other currencies by default (you can adjust this as needed)
   })
 
@@ -41,12 +42,13 @@ const ListSelector = ({ options, onSelect }) => {
               style={{ width: 28, height: 28, marginRight: 8 }}
             />
           ) : (
-            <View className="flex items-center justify-center mr-2 bg-black rounded-full w-7 h-7">
-              <Image
-                source={require('../assets/tokens/busd.png')}
-                style={{ width: 18, height: 18 }}
-              />
-            </View>
+            <></>
+            // <View className="flex items-center justify-center mr-2 bg-black rounded-full w-7 h-7">
+            //   <Image
+            //     source={require('../assets/tokens/busd.png')}
+            //     style={{ width: 18, height: 18 }}
+            //   />
+            // </View>
           )}
           <Text style={styles.optionText}>{option.name}</Text>
         </TouchableOpacity>

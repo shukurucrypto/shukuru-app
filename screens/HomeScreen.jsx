@@ -294,13 +294,23 @@ const HomeScreen = () => {
               </View>
             </>
           }
-          data={transactionsState?.transactions?.slice(0, 3)}
+          data={transactionsState?.transactions?.slice(0, 10)}
           // data={transactionsState?.transactions}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           onRefresh={refresh}
           refreshing={balancesState.loading}
           className="flex flex-1"
+          ListFooterComponent={
+            <View>
+              <Pressable
+                onPress={() => navigation.navigate('TransactionsScreen')}
+                className="flex items-center justify-center w-full py-4"
+              >
+                <Text className="font-bold text-primary">View more</Text>
+              </Pressable>
+            </View>
+          }
         />
         <View className="flex flex-row w-full py-3 bg-transparent">
           {balancesState?.balances?.total?.toFixed(2) <= 0 ? (

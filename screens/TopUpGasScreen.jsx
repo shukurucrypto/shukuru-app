@@ -108,43 +108,6 @@ const TopUpGasScreen = () => {
               )}
             </View>
           </Pressable>
-
-          {/* Coin gas analysis */}
-          <Pressable
-            onPress={() => {
-              topUpGasSheet.current?.show()
-              setSelected('BNB')
-            }}
-            className="flex flex-row items-center w-full h-20 px-5 "
-          >
-            <View className="flex items-center justify-center w-10 h-10 bg-black rounded-full">
-              <Image
-                source={require('../assets/tokens/bnb.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </View>
-
-            <View className="flex flex-col flex-1 mx-4">
-              <AppText classProps="text-lg font-bold">
-                BNB
-                {/* <Text className="text-xs">(gas)</Text> */}
-              </AppText>
-              <Text className="text-xs">BNB Chain</Text>
-            </View>
-
-            <View className="flex flex-col">
-              <AppText classProps="text-lg font-bold">
-                {Number(gas.bnb) <= 0 ? '0.0' : Number(gas.bnb).toFixed(6)}
-              </AppText>
-              {gas.bnb <= 0 ? (
-                <Text className="text-xs font-bold text-red-600">ADD</Text>
-              ) : (
-                <Text className="text-xs font-bold text-green-600">
-                  REFILL?
-                </Text>
-              )}
-            </View>
-          </Pressable>
         </View>
       </ScrollView>
 

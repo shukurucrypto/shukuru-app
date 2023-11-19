@@ -1,22 +1,16 @@
+import React from 'react'
 import {
-  View,
-  Text,
-  Pressable,
-  useWindowDimensions,
   Image,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
+  View,
+  useWindowDimensions,
 } from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import React, { useEffect, useState } from 'react'
 import ActionSheet from 'react-native-actions-sheet'
-import LinearGradient from 'react-native-linear-gradient'
-import TypeWriter from 'react-native-typewriter'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-import AppText from '../AppText'
 import { useNavigation } from '@react-navigation/native'
+import AppText from '../AppText'
 
 const TopupSheet = ({ topupActionSheet }) => {
   const navigation = useNavigation()
@@ -26,7 +20,7 @@ const TopupSheet = ({ topupActionSheet }) => {
     <ActionSheet
       ref={topupActionSheet}
       containerStyle={{
-        height: height / 2,
+        height: height / 3,
         padding: 15,
         position: 'relative',
       }}
